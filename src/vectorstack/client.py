@@ -16,9 +16,7 @@ from vectorstack.utils import get_api_key
 from vectorstack.objects import EmbeddingsObject
 
 #TODO:
-# - Figure out base64 encoding if required
-# - Add checks for model, languages, is_query and instruction before sending to backend
-
+# - Base64 encoding
 
 class Client:
     """VectorStack AI Client
