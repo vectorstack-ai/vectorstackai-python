@@ -8,10 +8,9 @@ setup(
     install_requires=[
         "requests",
         "tenacity",
-        "tqdm",
     ],
     author="Shreyas Saxena",
     author_email="shreyas@vectorstack.ai",
-    description="VectorStack Official Python Library",
-    python_requires='>=3.6',
+    description="VectorStack AI's Official Python Library",
+    python_requires='>=3.10',
 )
