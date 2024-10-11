@@ -47,7 +47,7 @@ class Embedding(BaseAPIResource):
             'is_query': is_query,
             'instruction': instruction
         } 
-        
+        ipdb.set_trace()
         response = requests.post(cls.CLASS_URL, 
                                  headers=cls.HEADERS, 
                                  json=json_data, 
