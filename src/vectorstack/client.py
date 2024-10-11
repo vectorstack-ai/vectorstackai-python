@@ -17,7 +17,7 @@ from vectorstack.objects import EmbeddingsObject
 
 #TODO:
 # - Figure out base64 encoding if required
-# - See if the error/exception types need to be returned from the backend server for tenacity to work
+# - Add checks for model, languages, is_query and instruction before sending to backend
 
 
 class Client:
@@ -62,16 +62,14 @@ class Client:
         instruction: str = "",
     ) -> EmbeddingsObject:
 
-        # TODO: Add checks for model, languages, is_query and instruction
         for attempt in self.retry_controller:
             with attempt:
-                result = vectorstack.Embedding.encode(
-                    input=texts,
+                response = vectorstack.Embedding.encode(
+                    texts=texts,
                     model=model,
                     languages=languages,
                     is_query=is_query,
                     instruction=instruction,
                     **self._params,
                 )
-
-        return result
+        return EmbeddingsObject(response)
