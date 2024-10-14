@@ -33,13 +33,20 @@ def raise_error_from_response(response):
         This function assumes that the error response is in JSON format and follows
         a specific structure with an 'error' key containing error details.
     """
+    
     # Dynamically create mapping of error types to exception classes
     error_class_mapping = {
         name: getattr(error, name)
         for name in dir(error)
         if isinstance(getattr(error, name), type) and issubclass(getattr(error, name), error.VectorStackError)
     }
-    
+   
+    if response.status_code == 404:
+        raise error.ServiceUnavailableError(message='Server unavailable/down ..', 
+                                      http_status=404, 
+                                      json_body={}, 
+                                      headers=response.headers)
+
     # Get the error data from the response
     error_data = response.json().get('error', {})
     message = error_data.get('message')
