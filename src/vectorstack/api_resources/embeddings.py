@@ -1,5 +1,4 @@
 import requests
-import ipdb
 from vectorstack.objects import EmbeddingsObject
 from vectorstack import error
 from vectorstack.utils import raise_error_from_response
@@ -55,7 +54,7 @@ class Embedding(BaseAPIResource):
                                  headers=cls.HEADERS, 
                                  json=json_data, 
                                  timeout=kwargs.get("timeout", cls.DEFAULT_TIMEOUT)) 
-        
+       
         if response.status_code != 200:
             raise_error_from_response(response)
             
