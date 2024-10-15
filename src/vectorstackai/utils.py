@@ -1,17 +1,17 @@
 import os
 
-import vectorstack
-from vectorstack import error
+import vectorstackai
+from vectorstackai import error
 
 def get_api_key() -> str:
-    api_key = vectorstack.api_key or os.environ.get("VECTORSTACK_API_KEY")
+    api_key = vectorstackai.api_key or os.environ.get("VECTORSTACK_API_KEY")
 
     if api_key is not None:
         return api_key
     else:
-        raise vectorstack.error.AuthenticationError(
-            "No API key provided. You can set your API key in code using 'vectorstack.api_key = <API-KEY>', "
-            "or set the environment variable VECTORSTACK_API_KEY=<API-KEY>. "
+        raise vectorstackai.error.AuthenticationError(
+            "No API key provided. You can set your API key in code using 'vectorstackai.api_key = <API-KEY>', "
+            "or set the environment variable VECTORSTACKAI_API_KEY=<API-KEY>. "
             "Visit https://www.vectorstack.ai to sign up for a free API key.")
         
         
@@ -27,7 +27,7 @@ def raise_error_from_response(response):
         response (requests.Response): The API response object containing error information.
 
     Raises:
-        VectorStackError: An appropriate subclass of VectorStackError based on the error type.
+        VectorStackAIError: An appropriate subclass of VectorStackAIError based on the error type.
 
     Note:
         This function assumes that the error response is in JSON format and follows
@@ -38,7 +38,7 @@ def raise_error_from_response(response):
     error_class_mapping = {
         name: getattr(error, name)
         for name in dir(error)
-        if isinstance(getattr(error, name), type) and issubclass(getattr(error, name), error.VectorStackError)
+        if isinstance(getattr(error, name), type) and issubclass(getattr(error, name), error.VectorStackAIError)
     }
     
     # Handle server unavailable or bad gateway error
@@ -58,7 +58,7 @@ def raise_error_from_response(response):
     headers = response.headers
 
     # Get the corresponding exception class based on the error type
-    exception_class = error_class_mapping.get(error_data.get('type'), error.VectorStackError)
+    exception_class = error_class_mapping.get(error_data.get('type'), error.VectorStackAIError)
 
     # Raise the exception with the appropriate data
     raise exception_class(
