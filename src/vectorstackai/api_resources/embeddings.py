@@ -21,14 +21,13 @@ class Embedding(BaseAPIResource):
     CLASS_URL = "https://api.vectorstack.ai/embeddings"
 
     @classmethod
-    def encode(cls, texts, model, languages, is_query, instruction, **kwargs):
+    def encode(cls, texts, model, is_query, instruction, **kwargs):
         """
         Creates a new embedding for the provided input and parameters.
 
         Args:
             texts(list): A list of strings to be embedded.
             model (str): The name of the model to use for embedding.
-            languages (list): A list of languages corresponding to each input string.
             is_query (bool): Whether the input is a query or not.
             instruction (str): Additional instruction for the embedding process.
             **kwargs: Additional keyword arguments.
@@ -42,13 +41,12 @@ class Embedding(BaseAPIResource):
         
         json_data= {
             'input': {
-                'model': model,
                 'texts': texts,
-                'languages': languages,
                 'is_query': is_query,
                 'instruction': instruction,
             },
-            'api_key': kwargs.get("api_key")
+            'api_key': kwargs.get("api_key"),
+            'model': model,
         } 
         response = requests.post(cls.CLASS_URL, 
                                  headers=cls.HEADERS, 

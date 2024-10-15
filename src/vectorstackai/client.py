@@ -51,7 +51,6 @@ class Client:
     def embed(
         self,
         texts: List[str],
-        languages: List[str],
         model: str,
         is_query: bool = False,
         instruction: str = "",
@@ -61,10 +60,6 @@ class Client:
         # Validate input arguments
         if not isinstance(texts, list) or not all(isinstance(text, str) for text in texts):
             raise ValueError("'texts' must be a list of strings")
-        if not isinstance(languages, list) or not all(isinstance(lang, str) for lang in languages):
-            raise ValueError("'languages' must be a list of strings")
-        if len(texts) != len(languages):
-            raise ValueError("'texts' and 'languages' must have the same length")
         if not isinstance(model, str):
             raise ValueError("'model' must be a string")
         if not isinstance(is_query, bool):
@@ -77,7 +72,6 @@ class Client:
                 response = vectorstackai.Embedding.encode(
                     texts=texts,
                     model=model,
-                    languages=languages,
                     is_query=is_query,
                     instruction=instruction,
                     **self._params,
