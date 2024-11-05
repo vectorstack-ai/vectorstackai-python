@@ -51,7 +51,7 @@ class Embedding(BaseAPIResource):
         response = requests.post(cls.CLASS_URL, 
                                  headers=cls.HEADERS, 
                                  json=json_data, 
-                                 timeout=kwargs.get("timeout", cls.DEFAULT_TIMEOUT)) 
+                                 timeout=kwargs.get("request_timeout", cls.DEFAULT_TIMEOUT)) 
        
         if response.status_code != 200:
             raise_error_from_response(response)
