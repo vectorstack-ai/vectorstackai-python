@@ -2,12 +2,13 @@ from setuptools import setup, find_packages
 
 setup(
     name="vectorstackai",
-    version="0.1.4",
+    version="0.1.6",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
         "requests>=2.32.3",
         "tenacity==8.5.0",
+        "numpy>=1.26.0"
     ],
     license="MIT", 
     author="Shreyas Saxena",
