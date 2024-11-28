@@ -7,7 +7,7 @@ setup(
     package_dir={"": "src"},
     install_requires=[
         "requests>=2.32.3",
-        "tenacity==9.0.0",
+        "tenacity==8.5.0",
     ],
     license="MIT", 
     author="Shreyas Saxena",
