@@ -16,17 +16,27 @@ from vectorstackai.utils import raise_error_from_response
 class Store(BaseAPIResource):
     """Vector Store API interface for managing vector databases"""
 
-    CLASS_URL = "https://api.vectorstack.ai/vector_store"
-
-    def __init__(self, db_name: str, connection_params: Dict[str, Any]) -> None:
+    #CLASS_URL = "https://api.vectorstack.ai/vector_store"
+    CLASS_URL = "http://localhost:8000/"
+    def __init__(self, 
+                 db_name: str, 
+                 connection_params: Dict[str, Any]) -> None:
         super().__init__()
         self.db_name = db_name
         self.connection_params = connection_params
 
+    ### Vector Store high-level endpoints
+    @classmethod
+    def list_indexes(cls, connection_params: Dict[str, Any]):
+        ''' List all indexes in the vector store'''
+        return cls._make_request_class(method="POST", 
+                                       endpoint_name="/list_indexes", 
+                                       connection_params=connection_params)
+
     @classmethod
     def create(
         cls,
-        db_name: str,
+        name: str,
         dimension: int,
         index_type: str = "brute_force",
         metric: str = "cosine",
@@ -35,20 +45,18 @@ class Store(BaseAPIResource):
     ) -> Dict[str, Any]:
         """Create a new vector store"""
         json_data = {
-            "input": {
-                "db_name": db_name,
-                "dimension": dimension,
-                "index_type": index_type,
-                "metric": metric,
-                "dtype": dtype
-            },
-            "api_key": connection_params.get("api_key")
+            "name": name,
+            "dimension": dimension,
+            "index_type": index_type,
+            "metric": metric,
+            "dtype": dtype
         }
         
-        return cls._make_request(
+        return cls._make_request_class(
             method="POST",
             json_data=json_data,
-            timeout=connection_params.get("request_timeout", cls.DEFAULT_TIMEOUT)
+            endpoint_name="/create_store",
+            connection_params=connection_params
         )
 
     def upsert(

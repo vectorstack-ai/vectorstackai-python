@@ -1,4 +1,4 @@
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Dict
 
 from tenacity import (
     Retrying,
@@ -12,18 +12,25 @@ import vectorstackai.error as error
 from vectorstackai.utils import get_api_key
 from vectorstackai.objects import EmbeddingsObject
 import vectorstackai.api_resources as api_resources
-#TODO:
-# - Base64 encoding
+
 
 class Client:
-    """VectorStack AI Client
-
+    """VectorStack AI Client for interacting with the VectorStack API.
+    
+    This client provides methods to:
+    - Generate embeddings from text using various models
+    - Manage and search vector stores
     Args:
         api_key (str): Your API key.
         max_retries (int): Maximum number of retries if API call fails.
         timeout (float): Timeout in seconds.
     """
-
+    # TBD:
+    # Client is direclty implementing some functions for embedding and vector store management
+    # This is not a good practice. The client can return an object from api resource (eg. for embedding, vector store). The returned object can have methods specific to the api resource.
+    # This way, the client does not need to know about the api resource and the api resource does not need to know about the client.
+    
+    
     def __init__(
         self,
         api_key: Optional[str] = None,
@@ -77,36 +84,42 @@ class Client:
                     connection_params=self.connection_params
                 )
         return EmbeddingsObject(response_json, batch_size=len(texts))
-    
-    def create_index(
+   
+    def list_indexes(self) -> List[Dict[str, Any]]:
+        # Needs to return a list of indexes with name, dimension, metric, dtype
+        result = api_resources.Store.list_indexes(connection_params=self.connection_params)
+        return result['list_indexes']
+   
+    def init_index(
         self,
-        db_name: str,
+        name: str,
         dimension: int,
         index_type: str = "brute_force",
         metric: str = "cosine",
         dtype: str = "float32",
-    ) -> Store:
+    ) -> None:
         """Create a new vector store index.
         
         Args:
-            db_name (str): Name of the database to create
+            name (str): Name of the database to create
             dimension (int): Dimension of vectors to be stored
             index_type (str, optional): Type of index. Defaults to "brute_force"
             metric (str, optional): Distance metric to use. Defaults to "cosine"
             dtype (str, optional): Data type of vectors. Defaults to "float32"
         
         Returns:
-            Store: A Store instance connected to the newly created index
+            None
         """
-        Store.create(
-            db_name=db_name,
+        response = api_resources.Store.create(
+            name=name,
             dimension=dimension,
             index_type=index_type,
             metric=metric,
             dtype=dtype,
             connection_params=self.connection_params
         )
-        return self.connect_to_index(db_name)
+        print(response['message'])
+        
 
     def connect_to_index(self, db_name: str) -> Store:
         """Connect to an existing vector store index.
