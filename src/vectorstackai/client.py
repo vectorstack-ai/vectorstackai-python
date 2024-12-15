@@ -27,8 +27,8 @@ class Client:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        max_retries: int = 0,
-        timeout: Optional[float] = None,
+        max_retries: int = 3,
+        timeout: Optional[float] = 30,
     ) -> None:
 
         self.api_key = api_key or get_api_key()
