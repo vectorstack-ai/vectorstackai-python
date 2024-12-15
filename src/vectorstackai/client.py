@@ -33,7 +33,7 @@ class Client:
 
         self.api_key = api_key or get_api_key()
 
-        self._params = {
+        self.connection_params = {
             "api_key": self.api_key,
             "request_timeout": timeout,
         }
