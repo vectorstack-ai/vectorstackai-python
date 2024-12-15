@@ -90,9 +90,9 @@ class Client:
         result = api_resources.Store.list_indexes(connection_params=self.connection_params)
         return result['list_indexes']
    
-    def init_index(
+    def create_index(
         self,
-        name: str,
+        index_name: str,
         dimension: int,
         index_type: str = "brute_force",
         metric: str = "cosine",
@@ -101,7 +101,7 @@ class Client:
         """Create a new vector store index.
         
         Args:
-            name (str): Name of the database to create
+            index_name (str): Name of the database to create
             dimension (int): Dimension of vectors to be stored
             index_type (str, optional): Type of index. Defaults to "brute_force"
             metric (str, optional): Distance metric to use. Defaults to "cosine"
