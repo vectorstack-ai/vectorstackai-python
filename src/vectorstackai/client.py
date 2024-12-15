@@ -69,11 +69,11 @@ class Client:
 
         for attempt in self.retry_controller:
             with attempt:
-                response = vectorstackai.Embedding.encode(
+                response_json = vectorstackai.Embedding.encode(
                     texts=texts,
                     model=model,
                     is_query=is_query,
                     instruction=instruction,
                     **self._params,
                 )
-        return EmbeddingsObject(response, batch_size=len(texts))
+        return EmbeddingsObject(response_json, batch_size=len(texts))

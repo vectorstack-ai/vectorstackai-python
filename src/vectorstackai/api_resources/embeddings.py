@@ -1,14 +1,6 @@
-import requests
 from vectorstackai.objects import EmbeddingsObject
-from vectorstackai import error
-from vectorstackai.utils import raise_error_from_response
+from vectorstackai.api_resources.base import BaseAPIResource
 
-class BaseAPIResource(object):
-    DEFAULT_TIMEOUT = 300
-    HEADERS = {
-        "accept": "application/json",
-        "content-type": "application/json"
-    }
 
 class Embedding(BaseAPIResource):
     """
@@ -39,7 +31,7 @@ class Embedding(BaseAPIResource):
             VectorStackError: An appropriate subclass of VectorStackError based on the error type.
         """
         
-        json_data= {
+        json_data = {
             'input': {
                 'texts': texts,
                 'is_query': is_query,
@@ -47,15 +39,11 @@ class Embedding(BaseAPIResource):
             },
             'api_key': kwargs.get("api_key"),
             'model': model,
-        } 
-        response = requests.post(cls.CLASS_URL, 
-                                 headers=cls.HEADERS, 
-                                 json=json_data, 
-                                 timeout=kwargs.get("request_timeout", cls.DEFAULT_TIMEOUT)) 
-       
-        if response.status_code != 200:
-            raise_error_from_response(response)
-            
-        return response
+        }
+
+        return cls._make_request(
+            method="POST",
+            json_data=json_data
+        )
     
     
