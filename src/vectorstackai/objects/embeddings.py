@@ -1,22 +1,17 @@
-import requests
 import base64
 import numpy as np
-class BaseObject:
-    response: requests.Response = None
 
-class EmbeddingsObject(BaseObject):
+class EmbeddingsObject:
     """
     Object returned by the Embedding API
 
     Attributes:
-        response: requests.Response
         embeddings (List[List[float]]): The list of embeddings returned by the API
     """
     def __init__(self, response_json, batch_size):
         self.embeddings = None
         # Get the base64 encoded embeddings string
         embeddings_base64 = response_json['output']['embeddings']
-        
         # Decode the base64 string back into bytes
         embeddings_bytes = base64.b64decode(embeddings_base64)
         
