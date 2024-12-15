@@ -74,6 +74,6 @@ class Client:
                     model=model,
                     is_query=is_query,
                     instruction=instruction,
-                    **self._params,
+                    connection_params=self.connection_params
                 )
         return EmbeddingsObject(response_json, batch_size=len(texts))
