@@ -20,7 +20,6 @@ from vectorstack.objects import EmbeddingsObject
 # - See if the error/exception types need to be returned from the backend server for tenacity to work
 
 
-
 class Client:
     """VectorStack AI Client
 
