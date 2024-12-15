@@ -76,5 +76,4 @@ class Client:
                     instruction=instruction,
                     **self._params,
                 )
-        #TODO: get dimension from model
-        return EmbeddingsObject(response, dimension=1536)
+        return EmbeddingsObject(response, batch_size=len(texts))

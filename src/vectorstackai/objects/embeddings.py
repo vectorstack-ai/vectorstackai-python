@@ -9,9 +9,10 @@ class EmbeddingsObject(BaseObject):
     Object returned by the Embedding API
 
     Attributes:
+        response: requests.Response
         embeddings (List[List[float]]): The list of embeddings returned by the API
     """
-    def __init__(self, response, dimension):
+    def __init__(self, response, batch_size):
         self.response = response
         self.embeddings = None
         if response.status_code == 200:
@@ -22,7 +23,7 @@ class EmbeddingsObject(BaseObject):
             embeddings_bytes = base64.b64decode(embeddings_base64)
             
             # Convert the byte string back into a NumPy array
-            self.embeddings = np.frombuffer(embeddings_bytes, dtype=np.float32).reshape(-1, dimension)
+            self.embeddings = np.frombuffer(embeddings_bytes, dtype=np.float16).reshape(batch_size, -1)
         
     def __str__(self) -> str:
         if self.embeddings:
