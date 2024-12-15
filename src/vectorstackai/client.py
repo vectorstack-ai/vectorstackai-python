@@ -10,7 +10,7 @@ from tenacity import (
 import vectorstackai
 import vectorstackai.error as error
 from vectorstackai.utils import get_api_key
-from vectorstackai.objects import EmbeddingsObject
+from vectorstackai.objects import EmbeddingsObject, StoreObject
 import vectorstackai.api_resources as api_resources
 
 
@@ -110,8 +110,8 @@ class Client:
         Returns:
             None
         """
-        response = api_resources.Store.create(
-            name=name,
+        response = api_resources.Store.create_index(
+            index_name=index_name,
             dimension=dimension,
             index_type=index_type,
             metric=metric,
@@ -120,14 +120,14 @@ class Client:
         )
         print(response['message'])
         
-
-    def connect_to_index(self, db_name: str) -> Store:
+    def connect_to_index(self, index_name: str) -> StoreObject:
         """Connect to an existing vector store index.
         
         Args:
-            db_name (str): Name of the database to connect to
+            index_name (str): Name of the database to connect to
         
         Returns:
-            Store: A Store instance connected to the specified index
+            StoreObject: A StoreObject instance connected to the specified index
         """
-        return Store(db_name, connection_params=self.connection_params)
+        return StoreObject(index_name, 
+                        connection_params=self.connection_params)
