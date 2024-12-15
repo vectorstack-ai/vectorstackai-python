@@ -34,9 +34,9 @@ class Store(BaseAPIResource):
                                        connection_params=connection_params)
 
     @classmethod
-    def create(
+    def create_index(
         cls,
-        name: str,
+        index_name: str,
         dimension: int,
         index_type: str = "brute_force",
         metric: str = "cosine",
@@ -45,7 +45,7 @@ class Store(BaseAPIResource):
     ) -> Dict[str, Any]:
         """Create a new vector store"""
         json_data = {
-            "name": name,
+            "index_name": index_name,
             "dimension": dimension,
             "index_type": index_type,
             "metric": metric,
@@ -55,7 +55,7 @@ class Store(BaseAPIResource):
         return cls._make_request_class(
             method="POST",
             json_data=json_data,
-            endpoint_name="/create_store",
+            endpoint_name="/create_index",
             connection_params=connection_params
         )
 
