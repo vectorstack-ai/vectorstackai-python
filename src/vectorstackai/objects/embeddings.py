@@ -1,5 +1,6 @@
 import requests
-
+import base64
+import numpy as np
 class BaseObject:
     response: requests.Response = None
 
@@ -10,11 +11,18 @@ class EmbeddingsObject(BaseObject):
     Attributes:
         embeddings (List[List[float]]): The list of embeddings returned by the API
     """
-    def __init__(self, response):
+    def __init__(self, response, dimension):
         self.response = response
         self.embeddings = None
         if response.status_code == 200:
-            self.embeddings = response.json()['output']['embeddings']
+            # Get the base64 encoded embeddings string
+            embeddings_base64 = response.json()['output']['embeddings']
+            
+            # Decode the base64 string back into bytes
+            embeddings_bytes = base64.b64decode(embeddings_base64)
+            
+            # Convert the byte string back into a NumPy array
+            self.embeddings = np.frombuffer(embeddings_bytes, dtype=np.float32).reshape(-1, dimension)
         
     def __str__(self) -> str:
         if self.embeddings:

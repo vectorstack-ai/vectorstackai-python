@@ -76,4 +76,5 @@ class Client:
                     instruction=instruction,
                     **self._params,
                 )
-        return EmbeddingsObject(response)
+        #TODO: get dimension from model
+        return EmbeddingsObject(response, dimension=1536)
