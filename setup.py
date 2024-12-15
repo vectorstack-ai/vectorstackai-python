@@ -12,5 +12,5 @@ setup(
     author="Shreyas Saxena",
     author_email="shreyas@vectorstack.ai",
     description="VectorStack AI's Official Python Library",
-    python_requires='>=3.10',
+    python_requires='>=3.7',
 )
