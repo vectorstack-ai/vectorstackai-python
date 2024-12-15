@@ -1,4 +1,5 @@
 import os
+import requests
 
 import vectorstackai
 from vectorstackai import error
@@ -49,7 +50,13 @@ def raise_error_from_response(response):
                                       headers=response.headers)
 
     # Get the error data from the response
-    error_data = response.json().get('error', {})
+    try:
+        error_data = response.json().get('error', {})
+    except requests.exceptions.JSONDecodeError:
+        # Handle the case where the response does not contain valid JSON
+        error_data = {}
+        error_data['message'] = response.content.decode('utf-8', errors='replace')
+        
     message = error_data.get('message')
     http_status = error_data.get('http_status')
     code = error_data.get('code')
