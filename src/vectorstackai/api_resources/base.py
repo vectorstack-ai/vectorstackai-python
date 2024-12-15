@@ -5,37 +5,35 @@ from vectorstackai.utils import raise_error_from_response
 
 class BaseAPIResource(object):
     """Base class for API resources"""
-
-    DEFAULT_TIMEOUT = 300
+    CLASS_URL = None
     HEADERS = {
         "accept": "application/json",
         "content-type": "application/json"
     }
+    DEFAULT_TIMEOUT = 30
 
     @classmethod
     def _make_request(
         cls,
         method: str,
-        params: Optional[Dict[str, Any]] = None,
         json_data: Optional[Dict[str, Any]] = None,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
     ) -> Dict[str, Any]:
         """Make HTTP request to API endpoint
         
         Args:
             method (str): HTTP method (GET, POST, DELETE)
-            params (Optional[Dict[str, Any]]): Query parameters
             json_data (Optional[Dict[str, Any]]): JSON body data
-            
+            timeout (Optional[float]): Request timeout
         Returns:
             Dict[str, Any]: Response data
         """
         response = requests.request(
             method=method,
             url=cls.CLASS_URL,
-            params=params,
             json=json_data,
             headers=cls.HEADERS,
-            timeout=cls.DEFAULT_TIMEOUT
+            timeout=timeout
         )
         
         if response.status_code != 200:
