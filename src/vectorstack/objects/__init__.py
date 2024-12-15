@@ -1,0 +1,1 @@
+from vectorstack.objects.embeddings import EmbeddingsObject
