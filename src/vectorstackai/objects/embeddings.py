@@ -26,7 +26,7 @@ class EmbeddingsObject(BaseObject):
             self.embeddings = np.frombuffer(embeddings_bytes, dtype=np.float16).reshape(batch_size, -1)
         
     def __str__(self) -> str:
-        if self.embeddings:
+        if self.embeddings is not None:
             num_embeddings = len(self.embeddings)
             embedding_dims = len(self.embeddings[0])
             return f"EmbeddingsObject(num_embeddings={num_embeddings}, embedding_dims={embedding_dims})"
