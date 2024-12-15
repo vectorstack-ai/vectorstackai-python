@@ -11,8 +11,7 @@ class Embedding(BaseAPIResource):
     """
     CLASS_URL = "https://api.vectorstack.ai/embeddings"
 
-    @classmethod
-    def encode(cls, texts, model, is_query, instruction, connection_params):
+    def encode(self, texts, model, is_query, instruction, connection_params):
         """
         Creates a new embedding for the provided input and parameters.
 
@@ -29,6 +28,7 @@ class Embedding(BaseAPIResource):
         Raises:
             VectorStackError: An appropriate subclass of VectorStackError based on the error type.
         """
+        self.CONNECTION_PARAMS = connection_params
         
         json_data = {
             'input': {
@@ -36,14 +36,12 @@ class Embedding(BaseAPIResource):
                 'is_query': is_query,
                 'instruction': instruction,
             },
-            'api_key': connection_params.get("api_key"),
             'model': model,
         }
 
-        return cls._make_request(
+        return self._make_request(
             method="POST",
             json_data=json_data,
-            timeout=connection_params.get("request_timeout", cls.DEFAULT_TIMEOUT)
         )
     
     
