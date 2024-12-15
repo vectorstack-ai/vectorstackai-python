@@ -15,7 +15,15 @@ class IndexObject:
         
     def __repr__(self) -> str:
         return self.__str__()   
-
+    
+    def index_info(self, **kwargs) -> Dict[str, Any]:
+        """Get information about the vector index"""
+        return self.index_api._make_request(
+            method="POST",
+            endpoint_name="/index_info",
+            json_data={"index_name": self.db_name}
+        )
+ 
     def upsert(
         self,
         vector_ids: List[str],
@@ -76,15 +84,7 @@ class IndexObject:
             json_data=json_data,
             endpoint_name="/vectors/delete"
         )
-
-    def index_info(self, **kwargs) -> Dict[str, Any]:
-        """Get information about the vector index"""
-        return self.index_api._make_request(
-            method="POST",
-            endpoint_name="/index_info",
-            json_data={"index_name": self.db_name}
-        )
-    
+   
     def delete(self, **kwargs) -> Dict[str, Any]:
         """Delete the vector index"""
         json_data = {
