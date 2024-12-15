@@ -1,5 +1,5 @@
 
-class VectorStackError(Exception):
+class VectorStackAIError(Exception):
     """
     Custom exception class for VectorStack-related errors.
 
@@ -21,7 +21,7 @@ class VectorStackError(Exception):
         headers=None,
         code=None,
     ):
-        super(VectorStackError, self).__init__(message)
+        super(VectorStackAIError, self).__init__(message)
 
         if http_body and hasattr(http_body, "decode"):
             try:
@@ -76,18 +76,18 @@ class VectorStackError(Exception):
     
     
     
-class AuthenticationError(VectorStackError):
+class AuthenticationError(VectorStackAIError):
     """
     Exception raised when there is an authentication error.
 
     This error occurs when the API key is invalid, missing, or there are other
-    authentication-related issues when trying to access the VectorStack API.
+    authentication-related issues when trying to access the VectorStack AI API.
     """
     pass
 
 
     
-class RateLimitError(VectorStackError):
+class RateLimitError(VectorStackAIError):
     """
     Exception raised when there is a rate limit error.
 
@@ -95,14 +95,14 @@ class RateLimitError(VectorStackError):
     """
     pass
 
-class ServiceUnavailableError(VectorStackError):
+class ServiceUnavailableError(VectorStackAIError):
     """
     Exception raised when the service is unavailable.
     """
     pass
 
 
-class Timeout(VectorStackError):
+class Timeout(VectorStackAIError):
     """
     Exception raised when the request times out.
     """

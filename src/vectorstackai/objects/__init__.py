@@ -1,0 +1,1 @@
+from vectorstackai.objects.embeddings import EmbeddingsObject

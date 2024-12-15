@@ -7,10 +7,10 @@ from tenacity import (
     retry_if_exception_type,
 )
 
-import vectorstack
-import vectorstack.error as error
-from vectorstack.utils import get_api_key
-from vectorstack.objects import EmbeddingsObject
+import vectorstackai
+import vectorstackai.error as error
+from vectorstackai.utils import get_api_key
+from vectorstackai.objects import EmbeddingsObject
 
 #TODO:
 # - Base64 encoding
@@ -74,7 +74,7 @@ class Client:
 
         for attempt in self.retry_controller:
             with attempt:
-                response = vectorstack.Embedding.encode(
+                response = vectorstackai.Embedding.encode(
                     texts=texts,
                     model=model,
                     languages=languages,

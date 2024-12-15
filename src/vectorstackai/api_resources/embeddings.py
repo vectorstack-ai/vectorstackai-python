@@ -1,7 +1,7 @@
 import requests
-from vectorstack.objects import EmbeddingsObject
-from vectorstack import error
-from vectorstack.utils import raise_error_from_response
+from vectorstackai.objects import EmbeddingsObject
+from vectorstackai import error
+from vectorstackai.utils import raise_error_from_response
 
 class BaseAPIResource(object):
     DEFAULT_TIMEOUT = 300
