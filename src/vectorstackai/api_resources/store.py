@@ -18,14 +18,18 @@ class Store(BaseAPIResource):
 
     #CLASS_URL = "https://api.vectorstack.ai/vector_store"
     CLASS_URL = "http://localhost:8000/"
-    def __init__(self, 
-                 db_name: str, 
-                 connection_params: Dict[str, Any]) -> None:
-        super().__init__()
+   
+    def __init__(self, db_name: str, connection_params: Dict[str, Any]):
         self.db_name = db_name
-        self.connection_params = connection_params
+        self.CONNECTION_PARAMS = connection_params
+        self.validate_index()
 
     ### Vector Store high-level endpoints
+    def validate_index(self):
+        self._make_request(method="POST", 
+                            endpoint_name="/validate_index", 
+                            json_data={"index_name": self.db_name})
+    
     @classmethod
     def list_indexes(cls, connection_params: Dict[str, Any]):
         ''' List all indexes in the vector store'''
@@ -59,96 +63,3 @@ class Store(BaseAPIResource):
             connection_params=connection_params
         )
 
-    def upsert(
-        self,
-        vector_ids: List[str],
-        vectors: List[List[float]],
-        metadata: Optional[List[Dict]] = None,
-        **kwargs
-    ) -> Dict[str, Any]:
-        """Upsert vectors into the store"""
-        json_data = {
-            "input": {
-                "db_name": self.db_name,
-                "vector_ids": vector_ids,
-                "vectors": vectors,
-                "metadata": metadata
-            },
-            "api_key": self.connection_params.get("api_key")
-        }
-        
-        return self._make_request(
-            method="POST",
-            json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT)
-        )
-
-    def search(
-        self,
-        query: List[float],
-        top_k: int = 10,
-        return_metadata: bool = False,
-        **kwargs
-    ) -> List[Dict[str, Any]]:
-        """Search for similar vectors"""
-        json_data = {
-            "input": {
-                "db_name": self.db_name,
-                "query": query,
-                "top_k": top_k,
-                "return_metadata": return_metadata
-            },
-            "api_key": self.connection_params.get("api_key")
-        }
-        
-        return self._make_request(
-            method="POST",
-            json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT)
-        )
-
-    def delete_vectors(self, vector_ids: List[str], **kwargs) -> Dict[str, Any]:
-        """Delete vectors by their IDs"""
-        json_data = {
-            "input": {
-                "db_name": self.db_name,
-                "vector_ids": vector_ids
-            },
-            "api_key": self.connection_params.get("api_key")
-        }
-        
-        return self._make_request(
-            method="DELETE",
-            json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT)
-        )
-
-    def info(self, **kwargs) -> Dict[str, Any]:
-        """Get information about the vector store"""
-        json_data = {
-            "input": {
-                "db_name": self.db_name
-            },
-            "api_key": self.connection_params.get("api_key")
-        }
-        
-        return self._make_request(
-            method="GET",
-            json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT)
-        )
-
-    def delete(self, **kwargs) -> Dict[str, Any]:
-        """Delete the vector store"""
-        json_data = {
-            "input": {
-                "db_name": self.db_name
-            },
-            "api_key": self.connection_params.get("api_key")
-        }
-        
-        return self._make_request(
-            method="DELETE",
-            json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT)
-        )
