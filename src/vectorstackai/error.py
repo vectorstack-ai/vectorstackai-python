@@ -107,3 +107,11 @@ class Timeout(VectorStackAIError):
     Exception raised when the request times out.
     """
     pass
+
+
+class BadRequestError(VectorStackAIError):
+    """
+    Exception raised when the request is bad.
+    """
+    pass
+
