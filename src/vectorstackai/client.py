@@ -11,6 +11,7 @@ import vectorstackai
 import vectorstackai.error as error
 from vectorstackai.utils import get_api_key
 from vectorstackai.objects import EmbeddingsObject
+from vectorstackai.api_resources.store import Store
 
 #TODO:
 # - Base64 encoding
@@ -77,3 +78,44 @@ class Client:
                     connection_params=self.connection_params
                 )
         return EmbeddingsObject(response_json, batch_size=len(texts))
+    
+    def create_index(
+        self,
+        db_name: str,
+        dimension: int,
+        index_type: str = "brute_force",
+        metric: str = "cosine",
+        dtype: str = "float32",
+    ) -> Store:
+        """Create a new vector store index.
+        
+        Args:
+            db_name (str): Name of the database to create
+            dimension (int): Dimension of vectors to be stored
+            index_type (str, optional): Type of index. Defaults to "brute_force"
+            metric (str, optional): Distance metric to use. Defaults to "cosine"
+            dtype (str, optional): Data type of vectors. Defaults to "float32"
+        
+        Returns:
+            Store: A Store instance connected to the newly created index
+        """
+        Store.create(
+            db_name=db_name,
+            dimension=dimension,
+            index_type=index_type,
+            metric=metric,
+            dtype=dtype,
+            connection_params=self.connection_params
+        )
+        return self.connect_to_index(db_name)
+
+    def connect_to_index(self, db_name: str) -> Store:
+        """Connect to an existing vector store index.
+        
+        Args:
+            db_name (str): Name of the database to connect to
+        
+        Returns:
+            Store: A Store instance connected to the specified index
+        """
+        return Store(db_name, connection_params=self.connection_params)
