@@ -11,10 +11,9 @@ class Embedding(BaseAPIResource):
     specified models and parameters.
     """
     CLASS_URL = "https://api.vectorstack.ai/embeddings"
-    def __init__(self, connection_params: Dict[str, Any]) -> None:
-        self.CONNECTION_PARAMS = connection_params
 
-    def encode(self, texts, model, is_query, instruction):
+    @classmethod
+    def encode(cls, texts, model, is_query, instruction, connection_params: Dict[str, Any]):
         """
         Creates a new embedding for the provided input and parameters.
 
@@ -23,7 +22,7 @@ class Embedding(BaseAPIResource):
             model (str): The name of the model to use for embedding.
             is_query (bool): Whether the input is a query or not.
             instruction (str): Additional instruction for the embedding process.
-
+            connection_params (Dict[str, Any]): Connection parameters.
         Returns:
             EmbeddingsObject: An object containing the generated embeddings and related information.
 
@@ -40,9 +39,10 @@ class Embedding(BaseAPIResource):
             'model': model,
         }
 
-        return self._make_request(
+        return cls._make_request_class(
             method="POST",
             json_data=json_data,
+            connection_params=connection_params
         )
     
     
