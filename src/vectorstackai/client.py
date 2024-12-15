@@ -11,8 +11,7 @@ import vectorstackai
 import vectorstackai.error as error
 from vectorstackai.utils import get_api_key
 from vectorstackai.objects import EmbeddingsObject
-from vectorstackai.api_resources.store import Store
-
+import vectorstackai.api_resources as api_resources
 #TODO:
 # - Base64 encoding
 
@@ -70,7 +69,7 @@ class Client:
 
         for attempt in self.retry_controller:
             with attempt:
-                response_json = vectorstackai.Embedding.encode(
+                response_json = api_resources.Embedding.encode(
                     texts=texts,
                     model=model,
                     is_query=is_query,
