@@ -40,10 +40,11 @@ def raise_error_from_response(response):
         for name in dir(error)
         if isinstance(getattr(error, name), type) and issubclass(getattr(error, name), error.VectorStackError)
     }
-   
-    if response.status_code == 404:
+    
+    # Handle server unavailable or bad gateway error
+    if response.status_code in [404, 502]:
         raise error.ServiceUnavailableError(message='Server unavailable/down ..', 
-                                      http_status=404, 
+                                      http_status=response.status_code, 
                                       json_body={}, 
                                       headers=response.headers)
 
