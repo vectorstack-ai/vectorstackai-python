@@ -41,7 +41,13 @@ def raise_error_from_response(response):
         for name in dir(error)
         if isinstance(getattr(error, name), type) and issubclass(getattr(error, name), error.VectorStackAIError)
     }
-    
+    # Handle 405 method not allowed error
+    if response.status_code == 405:
+        raise error.MethodNotAllowedError(message='Method not allowed', 
+                                      http_status=response.status_code, 
+                                      json_body={}, 
+                                      headers=response.headers)
+        
     # Handle server unavailable or bad gateway error
     if response.status_code in [404, 502]:
         raise error.ServiceUnavailableError(message='Server unavailable/down ..', 

@@ -101,6 +101,11 @@ class ServiceUnavailableError(VectorStackAIError):
     """
     pass
 
+class MethodNotAllowedError(VectorStackAIError):
+    """
+    Exception raised when the GET/POSTmethod is not allowed.
+    """
+    pass
 
 class Timeout(VectorStackAIError):
     """
