@@ -69,13 +69,12 @@ class Client:
 
         for attempt in self.retry_controller:
             with attempt:
-                response_json = api_resources.Embedding(
-                    connection_params=self.connection_params
-                ).encode(
+                response_json = api_resources.Embedding.encode(
                     texts=texts,
                     model=model,
                     is_query=is_query,
                     instruction=instruction,
+                    connection_params=self.connection_params
                 )
         return EmbeddingsObject(response_json, batch_size=len(texts))
     

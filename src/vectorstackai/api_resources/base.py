@@ -16,10 +16,11 @@ class BaseAPIResource(object):
     def _make_request(
         self,
         method: str,
-        json_data: Optional[Dict[str, Any]] = None,
+        json_data: Optional[Dict[str, Any]] = {},
         endpoint_name: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Make HTTP request to API endpoint
+        """Make HTTP request to API endpoint via instance method. 
+        This is used for instance methods that require an instance of the class.
         
         Args:
             method (str): HTTP method (GET, POST, DELETE)
@@ -40,6 +41,41 @@ class BaseAPIResource(object):
             json=json_data,
             headers=self.HEADERS,
             timeout=self.CONNECTION_PARAMS.get("request_timeout", self.DEFAULT_TIMEOUT)
+        )
+        if response.status_code != 200:
+            raise_error_from_response(response)
+            
+        return response.json()
+    
+    @classmethod
+    def _make_request_class(
+        cls,
+        method: str,
+        json_data: Optional[Dict[str, Any]] = {},
+        endpoint_name: Optional[str] = None,
+        connection_params: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """Make HTTP request to API endpoint via class method. 
+        This is used for class methods that do not require an instance of the class.
+        Args:
+            method (str): HTTP method (GET, POST, DELETE)
+            json_data (Optional[Dict[str, Any]]): JSON body data
+            endpoint_name (Optional[str]): Endpoint name to append to the base URL
+            connection_params (Optional[Dict[str, Any]]): Connection parameters
+        Returns:
+            Dict[str, Any]: Response data
+        """
+        url = cls.CLASS_URL + endpoint_name if endpoint_name else cls.CLASS_URL
+        
+        # Fetch api key from connection params
+        json_data['api_key'] = connection_params['api_key']
+            
+        response = requests.request(
+            method=method,
+            url=url,
+            json=json_data,
+            headers=cls.HEADERS,
+            timeout=connection_params.get("request_timeout", cls.DEFAULT_TIMEOUT)
         )
         if response.status_code != 200:
             raise_error_from_response(response)
