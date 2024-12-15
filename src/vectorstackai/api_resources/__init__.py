@@ -1,2 +1,2 @@
 from vectorstackai.api_resources.embeddings import Embedding
-from vectorstackai.api_resources.store import Store
+from vectorstackai.api_resources.index import Index

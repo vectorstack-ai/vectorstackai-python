@@ -1,18 +1,17 @@
 from typing import Dict, Any, List, Optional
 import vectorstackai.api_resources as api_resources
 
-class StoreObject:
+class IndexObject:
     """
-    Class which implements various vector store operations
-
+    Class which implements various vector index operations
     """
     def __init__(self, db_name: str, connection_params: Dict[str, Any]):
         self.db_name = db_name
-        self.store_api = api_resources.Store(db_name, connection_params)
+        self.index_api = api_resources.Index(db_name, connection_params)
         
     def __str__(self) -> str:
         #TODO: Add more info
-        return f"VstackAI Vector Store (name={self.db_name})"
+        return f"VstackAI Vector Index (name={self.db_name})"
         
     def __repr__(self) -> str:
         return self.__str__()   
@@ -24,21 +23,19 @@ class StoreObject:
         metadata: Optional[List[Dict]] = None,
         **kwargs
     ) -> Dict[str, Any]:
-        """Upsert vectors into the store"""
+        """Upsert vectors into the index"""
         json_data = {
             "input": {
                 "db_name": self.db_name,
                 "vector_ids": vector_ids,
                 "vectors": vectors,
                 "metadata": metadata
-            },
-            "api_key": self.connection_params.get("api_key")
+            }
         }
         
-        return self._make_request(
+        return self.index_api._make_request(
             method="POST",
             json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT),
             endpoint_name="/vectors/upsert"
         )
 
@@ -56,14 +53,12 @@ class StoreObject:
                 "query": query,
                 "top_k": top_k,
                 "return_metadata": return_metadata
-            },
-            "api_key": self.connection_params.get("api_key")
+            }
         }
         
-        return self._make_request(
+        return self.index_api._make_request(
             method="POST",
             json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT),
             endpoint_name="/vectors/search"
         )
 
@@ -73,45 +68,33 @@ class StoreObject:
             "input": {
                 "db_name": self.db_name,
                 "vector_ids": vector_ids
-            },
-            "api_key": self.connection_params.get("api_key")
+            }
         }
         
-        return self._make_request(
+        return self.index_api._make_request(
             method="DELETE",
             json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT),
             endpoint_name="/vectors/delete"
         )
 
-    def info(self, **kwargs) -> Dict[str, Any]:
-        """Get information about the vector store"""
-        json_data = {
-            "input": {
-                "db_name": self.db_name
-            },
-            "api_key": self.connection_params.get("api_key")
-        }
-        
-        return self._make_request(
-            method="GET",
-            json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT),
-            endpoint_name="/info_store"
+    def index_info(self, **kwargs) -> Dict[str, Any]:
+        """Get information about the vector index"""
+        return self.index_api._make_request(
+            method="POST",
+            endpoint_name="/index_info",
+            json_data={"index_name": self.db_name}
         )
-
+    
     def delete(self, **kwargs) -> Dict[str, Any]:
-        """Delete the vector store"""
+        """Delete the vector index"""
         json_data = {
             "input": {
                 "db_name": self.db_name
-            },
-            "api_key": self.connection_params.get("api_key")
+            }
         }
         
-        return self._make_request(
+        return self.index_api._make_request(
             method="DELETE",
             json_data=json_data,
-            timeout=self.connection_params.get("request_timeout", self.DEFAULT_TIMEOUT),
-            endpoint_name="/delete_store"
+            endpoint_name="/delete_index"
         )

@@ -1,2 +1,2 @@
 from vectorstackai.objects.embeddings import EmbeddingsObject
-from vectorstackai.objects.store import StoreObject
+from vectorstackai.objects.index import IndexObject

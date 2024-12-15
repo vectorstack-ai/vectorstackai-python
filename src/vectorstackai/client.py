@@ -10,7 +10,7 @@ from tenacity import (
 import vectorstackai
 import vectorstackai.error as error
 from vectorstackai.utils import get_api_key
-from vectorstackai.objects import EmbeddingsObject, StoreObject
+from vectorstackai.objects import EmbeddingsObject, IndexObject
 import vectorstackai.api_resources as api_resources
 
 
@@ -87,7 +87,7 @@ class Client:
    
     def list_indexes(self) -> List[Dict[str, Any]]:
         # Needs to return a list of indexes with name, dimension, metric, dtype
-        result = api_resources.Store.list_indexes(connection_params=self.connection_params)
+        result = api_resources.Index.list_indexes(connection_params=self.connection_params)
         return result['list_indexes']
    
     def create_index(
@@ -98,7 +98,7 @@ class Client:
         metric: str = "cosine",
         dtype: str = "float32",
     ) -> None:
-        """Create a new vector store index.
+        """Create a new vector index.
         
         Args:
             index_name (str): Name of the database to create
@@ -110,7 +110,7 @@ class Client:
         Returns:
             None
         """
-        response = api_resources.Store.create_index(
+        response = api_resources.Index.create_index(
             index_name=index_name,
             dimension=dimension,
             index_type=index_type,
@@ -120,14 +120,14 @@ class Client:
         )
         print(response['message'])
         
-    def connect_to_index(self, index_name: str) -> StoreObject:
-        """Connect to an existing vector store index.
+    def connect_to_index(self, index_name: str) -> IndexObject:
+        """Connect to an existing vector index.
         
         Args:
             index_name (str): Name of the database to connect to
         
         Returns:
-            StoreObject: A StoreObject instance connected to the specified index
+            IndexObject: An IndexObject instance connected to the specified index
         """
-        return StoreObject(index_name, 
+        return IndexObject(index_name, 
                         connection_params=self.connection_params)

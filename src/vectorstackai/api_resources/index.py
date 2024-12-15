@@ -1,22 +1,13 @@
-# Implement a class for the vector store API
-# Should support the following operations:
-# - Create index
-# - Upsert vectors
-# - Search for vectors
-# - Delete vectors
-# - Get info about the vector store
-# - Delete the vector store
-
 import requests
 from typing import List, Dict, Optional, Any
 
 from vectorstackai.api_resources.base import BaseAPIResource
 from vectorstackai.utils import raise_error_from_response
 
-class Store(BaseAPIResource):
-    """Vector Store API interface for managing vector databases"""
+class Index(BaseAPIResource):
+    """Vector Index API interface for managing vector databases"""
 
-    #CLASS_URL = "https://api.vectorstack.ai/vector_store"
+    #CLASS_URL = "https://api.vectorstack.ai/vector_index"
     CLASS_URL = "http://localhost:8000/"
    
     def __init__(self, db_name: str, connection_params: Dict[str, Any]):
@@ -24,7 +15,7 @@ class Store(BaseAPIResource):
         self.CONNECTION_PARAMS = connection_params
         self.validate_index()
 
-    ### Vector Store high-level endpoints
+    ### Vector Index high-level endpoints
     def validate_index(self):
         self._make_request(method="POST", 
                             endpoint_name="/validate_index", 
@@ -32,7 +23,7 @@ class Store(BaseAPIResource):
     
     @classmethod
     def list_indexes(cls, connection_params: Dict[str, Any]):
-        ''' List all indexes in the vector store'''
+        ''' List all indexes'''
         return cls._make_request_class(method="POST", 
                                        endpoint_name="/list_indexes", 
                                        connection_params=connection_params)
@@ -47,7 +38,7 @@ class Store(BaseAPIResource):
         dtype: str = "float32",
         connection_params: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Create a new vector store"""
+        """Create a new vector index"""
         json_data = {
             "index_name": index_name,
             "dimension": dimension,
@@ -61,5 +52,4 @@ class Store(BaseAPIResource):
             json_data=json_data,
             endpoint_name="/create_index",
             connection_params=connection_params
-        )
-
+        ) 
