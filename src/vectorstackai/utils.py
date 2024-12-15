@@ -5,7 +5,7 @@ import vectorstackai
 from vectorstackai import error
 
 def get_api_key() -> str:
-    api_key = vectorstackai.api_key or os.environ.get("VECTORSTACK_API_KEY")
+    api_key = getattr(vectorstackai, 'api_key', None) or os.environ.get("VECTORSTACK_API_KEY")
 
     if api_key is not None:
         return api_key
