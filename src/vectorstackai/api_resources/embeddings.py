@@ -1,6 +1,7 @@
+from typing import Dict, Any
+
 from vectorstackai.objects import EmbeddingsObject
 from vectorstackai.api_resources.base import BaseAPIResource
-
 
 class Embedding(BaseAPIResource):
     """
@@ -10,8 +11,10 @@ class Embedding(BaseAPIResource):
     specified models and parameters.
     """
     CLASS_URL = "https://api.vectorstack.ai/embeddings"
+    def __init__(self, connection_params: Dict[str, Any]) -> None:
+        self.CONNECTION_PARAMS = connection_params
 
-    def encode(self, texts, model, is_query, instruction, connection_params):
+    def encode(self, texts, model, is_query, instruction):
         """
         Creates a new embedding for the provided input and parameters.
 
@@ -20,7 +23,6 @@ class Embedding(BaseAPIResource):
             model (str): The name of the model to use for embedding.
             is_query (bool): Whether the input is a query or not.
             instruction (str): Additional instruction for the embedding process.
-            connection_params (Dict[str, Any]): Connection parameters.
 
         Returns:
             EmbeddingsObject: An object containing the generated embeddings and related information.
@@ -28,7 +30,6 @@ class Embedding(BaseAPIResource):
         Raises:
             VectorStackError: An appropriate subclass of VectorStackError based on the error type.
         """
-        self.CONNECTION_PARAMS = connection_params
         
         json_data = {
             'input': {
