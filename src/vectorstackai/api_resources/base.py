@@ -32,14 +32,15 @@ class BaseAPIResource(object):
         """
         url = self.CLASS_URL + endpoint_name if endpoint_name else self.CLASS_URL
         
-        # Fetch api key from connection params
-        json_data['api_key'] = self.CONNECTION_PARAMS['api_key']
+        # Fetch api key from connection params and add to headers
+        headers = self.HEADERS.copy()
+        headers["Authorization"] = f"{self.CONNECTION_PARAMS['api_key']}"
             
         response = requests.request(
             method=method,
             url=url,
             json=json_data,
-            headers=self.HEADERS,
+            headers=headers,
             timeout=self.CONNECTION_PARAMS.get("request_timeout", self.DEFAULT_TIMEOUT)
         )
         if response.status_code != 200:
@@ -67,14 +68,15 @@ class BaseAPIResource(object):
         """
         url = cls.CLASS_URL + endpoint_name if endpoint_name else cls.CLASS_URL
         
-        # Fetch api key from connection params
-        json_data['api_key'] = connection_params['api_key']
+        # Fetch api key from connection params and add to headers
+        headers = cls.HEADERS.copy()
+        headers["Authorization"] = f"{connection_params['api_key']}"
             
         response = requests.request(
             method=method,
             url=url,
             json=json_data,
-            headers=cls.HEADERS,
+            headers=headers,
             timeout=connection_params.get("request_timeout", cls.DEFAULT_TIMEOUT)
         )
         if response.status_code != 200:
