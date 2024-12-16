@@ -1,5 +1,6 @@
 from typing import Dict, Any, List, Optional
 import vectorstackai.api_resources as api_resources
+from vectorstackai.objects.points import PointObject
 
 class IndexObject:
     """
@@ -26,19 +27,24 @@ class IndexObject:
  
     def upsert(
         self,
-        vector_ids: List[str],
-        vectors: List[List[float]],
-        metadata: Optional[List[Dict]] = None,
+        points: List[PointObject],
         **kwargs
     ) -> Dict[str, Any]:
         """Upsert vectors into the index"""
+        # TODO: Put a check of max number of data points which can be uploaded
+        if not all(isinstance(point, PointObject) for point in points):
+            raise ValueError("All elements in points must be of type PointObject")
+        
+        # Unpack points dataclass into separate lists
+        ids = [point.id for point in points]
+        vectors = [point.vector.tolist() for point in points]
+        metadata = [point.metadata for point in points]
+        
         json_data = {
-            "input": {
-                "db_name": self.db_name,
-                "vector_ids": vector_ids,
-                "vectors": vectors,
-                "metadata": metadata
-            }
+            "index_name": self.db_name,
+            "ids": ids,
+            "vectors": vectors,
+            "metadata": metadata
         }
         
         return self.index_api._make_request(
