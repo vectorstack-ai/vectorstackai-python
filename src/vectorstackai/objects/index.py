@@ -11,7 +11,7 @@ class IndexObject:
         self.index_api = api_resources.Index(db_name, connection_params)
         
     def __str__(self) -> str:
-        #TODO: Add more info
+        #TODO: Add more info via index_info()
         return f"VstackAI Vector Index (name={self.db_name})"
         
     def __repr__(self) -> str:
@@ -55,19 +55,16 @@ class IndexObject:
 
     def search(
         self,
-        query: List[float],
+        vector: List[float],
         top_k: int = 10,
         return_metadata: bool = False,
-        **kwargs
     ) -> List[Dict[str, Any]]:
         """Search for similar vectors"""
         json_data = {
-            "input": {
-                "db_name": self.db_name,
-                "query": query,
-                "top_k": top_k,
-                "return_metadata": return_metadata
-            }
+            "index_name": self.db_name,
+            "vector": vector,
+            "top_k": top_k,
+            "return_metadata": return_metadata
         }
         
         return self.index_api._make_request(
