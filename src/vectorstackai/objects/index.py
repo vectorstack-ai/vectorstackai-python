@@ -17,11 +17,11 @@ class IndexObject:
     def __repr__(self) -> str:
         return self.__str__()   
     
-    def index_info(self, **kwargs) -> Dict[str, Any]:
+    def info(self, **kwargs) -> Dict[str, Any]:
         """Get information about the vector index"""
         return self.index_api._make_request(
             method="POST",
-            endpoint_name="/index_info",
+            endpoint_name="/info",
             json_data={"index_name": self.db_name}
         )
  
