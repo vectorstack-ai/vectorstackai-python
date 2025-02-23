@@ -1,3 +1,4 @@
+import re
 import requests
 from typing import List, Dict, Optional, Any
 
@@ -5,51 +6,74 @@ from vectorstackai.api_resources.base import BaseAPIResource
 from vectorstackai.utils import raise_error_from_response
 
 class Index(BaseAPIResource):
-    """Vector Index API interface for managing vector databases"""
-
-    #CLASS_URL = "https://api.vectorstack.ai/vector_index"
-    CLASS_URL = "http://localhost:8000/"
-   
-    def __init__(self, db_name: str, connection_params: Dict[str, Any]):
-        self.db_name = db_name
-        self.CONNECTION_PARAMS = connection_params
-        self.validate_index()
-
-    ### Vector Index high-level endpoints
-    def validate_index(self):
-        self._make_request(method="POST", 
-                            endpoint_name="/validate_index", 
-                            json_data={"index_name": self.db_name})
+    """API Resource for vector store (index) operations."""
+    #CLASS_URL = "https://api.vectorstack.ai/vector2search"
+    CLASS_URL = "http://localhost:8000/vector2search/"
     
     @classmethod
-    def list_indexes(cls, connection_params: Dict[str, Any]):
-        ''' List all indexes'''
-        return cls._make_request_class(method="POST", 
-                                       endpoint_name="/list_indexes", 
-                                       connection_params=connection_params)
-
-    @classmethod
-    def create_index(
-        cls,
-        index_name: str,
-        dimension: int,
-        index_type: str = "brute_force",
-        metric: str = "cosine",
-        dtype: str = "float32",
-        connection_params: Dict[str, Any] = None
-    ) -> Dict[str, Any]:
+    def create_index(cls, json_data: Dict[str, Any], connection_params: Dict[str, Any]):
         """Create a new vector index"""
-        json_data = {
-            "index_name": index_name,
-            "dimension": dimension,
-            "index_type": index_type,
-            "metric": metric,
-            "dtype": dtype
-        }
-        
         return cls._make_request_class(
             method="POST",
             json_data=json_data,
-            endpoint_name="/create_index",
-            connection_params=connection_params
-        ) 
+            connection_params=connection_params,
+            endpoint_name="create_index"
+        )
+
+    @classmethod
+    def upsert(cls, index_name: str, json_data: Dict[str, Any], connection_params: Dict[str, Any]):
+        """Upsert vectors into the index."""
+        return cls._make_request_class(
+            method="POST",
+            json_data=json_data,
+            connection_params=connection_params,
+            endpoint_name=f"upsert/{index_name}"
+        )
+
+    @classmethod 
+    def search(cls, index_name: str, json_data: Dict[str, Any], connection_params: Dict[str, Any]):
+        """Search for similar vectors in index specified by index_name"""
+        return cls._make_request_class(
+            method="POST",
+            json_data=json_data,
+            connection_params=connection_params,
+            endpoint_name=f"search/{index_name}"
+        )
+    
+    @classmethod 
+    def delete_vectors(cls, index_name: str, json_data: Dict[str, Any], connection_params: Dict[str, Any]):
+        """Delete vectors from the index."""
+        return cls._make_request_class(
+            method="DELETE",
+            json_data=json_data,
+            connection_params=connection_params,
+            endpoint_name=f"delete_vectors/{index_name}"
+        )
+    
+    @classmethod 
+    def list_indexes(cls, connection_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Returns a list of dictionaries containing info of all the indexes"""
+        return cls._make_request_class(
+            method="GET",
+            connection_params=connection_params,
+            endpoint_name="list_indexes"
+        )
+    
+    @classmethod 
+    def info(cls, index_name: str, connection_params: Dict[str, Any]) -> Dict[str, Any]:
+        """Get information about the index."""
+        return cls._make_request_class(
+            method="GET",
+            connection_params=connection_params,
+            endpoint_name=f"info/{index_name}"
+        )
+    
+    @classmethod 
+    def delete_index(cls, index_name: str, connection_params: Dict[str, Any]):
+        """Delete the index."""
+        return cls._make_request_class(
+            method="DELETE",
+            connection_params=connection_params,
+            endpoint_name=f"delete_index/{index_name}"
+        )
+   
