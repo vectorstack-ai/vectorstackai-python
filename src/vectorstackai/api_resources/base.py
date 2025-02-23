@@ -1,6 +1,6 @@
 from typing import Optional, Dict, Any
 import requests
-
+from urllib.parse import urljoin
 from vectorstackai.utils import raise_error_from_response
 
 class BaseAPIResource(object):
@@ -30,7 +30,7 @@ class BaseAPIResource(object):
         Returns:
             Dict[str, Any]: Response data
         """
-        url = self.CLASS_URL + endpoint_name if endpoint_name else self.CLASS_URL
+        url = urljoin(self.CLASS_URL, endpoint_name) if endpoint_name else self.CLASS_URL
         
         # Fetch api key from connection params and add to headers
         headers = self.HEADERS.copy()
@@ -43,7 +43,7 @@ class BaseAPIResource(object):
             headers=headers,
             timeout=self.CONNECTION_PARAMS.get("request_timeout", self.DEFAULT_TIMEOUT)
         )
-        if response.status_code != 200:
+        if response.status_code not in [200, 202]:
             raise_error_from_response(response)
             
         return response.json()
@@ -57,7 +57,7 @@ class BaseAPIResource(object):
         connection_params: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Make HTTP request to API endpoint via class method. 
-        This is used for class methods that do not require an instance of the class.
+        This is used for class methods that do not require an instance of the class (eg. encode under embeddings.py).
         Args:
             method (str): HTTP method (GET, POST, DELETE)
             json_data (Optional[Dict[str, Any]]): JSON body data
@@ -66,12 +66,12 @@ class BaseAPIResource(object):
         Returns:
             Dict[str, Any]: Response data
         """
-        url = cls.CLASS_URL + endpoint_name if endpoint_name else cls.CLASS_URL
+        url = urljoin(cls.CLASS_URL, endpoint_name) if endpoint_name else cls.CLASS_URL
         
         # Fetch api key from connection params and add to headers
         headers = cls.HEADERS.copy()
         headers["Authorization"] = f"{connection_params['api_key']}"
-            
+        
         response = requests.request(
             method=method,
             url=url,
@@ -79,7 +79,7 @@ class BaseAPIResource(object):
             headers=headers,
             timeout=connection_params.get("request_timeout", cls.DEFAULT_TIMEOUT)
         )
-        if response.status_code != 200:
+        if response.status_code not in [200, 202]:
             raise_error_from_response(response)
             
         return response.json()
