@@ -19,17 +19,13 @@ class Client:
     
     This client provides methods to:
     - Generate embeddings from text using various models
-    - Manage and search vector stores
+    - Manage and search vector search indexes
+    
     Args:
         api_key (str): Your API key.
         max_retries (int): Maximum number of retries if API call fails.
         timeout (float): Timeout in seconds.
     """
-    # TBD:
-    # Client is direclty implementing some functions for embedding and vector store management
-    # This is not a good practice. The client can return an object from api resource (eg. for embedding, vector store). The returned object can have methods specific to the api resource.
-    # This way, the client does not need to know about the api resource and the api resource does not need to know about the client.
-    
     
     def __init__(
         self,
@@ -62,8 +58,6 @@ class Client:
         is_query: bool = False,
         instruction: str = "",
     ) -> EmbeddingsObject:
-        
-        
         # Validate input arguments
         if not isinstance(texts, list) or not all(isinstance(text, str) for text in texts):
             raise ValueError("'texts' must be a list of strings")
@@ -84,50 +78,106 @@ class Client:
                     connection_params=self.connection_params
                 )
         return EmbeddingsObject(response_json, batch_size=len(texts))
-   
+    
+    # High-level endpoints for VectorSearch API
+    #########################################################
     def list_indexes(self) -> List[Dict[str, Any]]:
-        # Needs to return a list of indexes with name, dimension, metric, dtype
-        result = api_resources.Index.list_indexes(connection_params=self.connection_params)
-        return result['list_indexes']
-   
-    def create_index(
-        self,
-        index_name: str,
-        dimension: int,
-        index_type: str = "brute_force",
-        metric: str = "cosine",
-        dtype: str = "float32",
-    ) -> None:
-        """Create a new vector index.
-        
-        Args:
-            index_name (str): Name of the database to create
-            dimension (int): Dimension of vectors to be stored
-            index_type (str, optional): Type of index. Defaults to "brute_force"
-            metric (str, optional): Distance metric to use. Defaults to "cosine"
-            dtype (str, optional): Data type of vectors. Defaults to "float32"
+        """
+        List info of all the indexes
         
         Returns:
-            None
+            List[Dict[str, Any]]: List of dictionaries containing info of all the indexes.
         """
-        response = api_resources.Index.create_index(
-            index_name=index_name,
-            dimension=dimension,
-            index_type=index_type,
-            metric=metric,
-            dtype=dtype,
-            connection_params=self.connection_params
-        )
-        print(response['message'])
+        return api_resources.Index.list_indexes(connection_params=self.connection_params)
+  
+    def create_index(self, 
+                     index_name: str, 
+                     embedding_model_name: str, 
+                     dimension: Optional[int] = None, 
+                     metric: Optional[str] = 'dotproduct', 
+                     features_type: Optional[str] = 'hybrid') -> None:
+        """
+        Create a new vector index
         
+        Args:
+            index_name (str): Name of the index to create.
+            embedding_model_name (str): Name of the embedding model to use. There are two kinds of embedding models:  
+                - Integrated models: These are pre-trained models hosted on the vector2search platform.  
+                - Non-integrated models: These are custom models hosted on your platform/ application.  
+                - Set "embedding_model_name" to None for using your own embedding model (i.e. non-integrated model).
+            dimension (int): Vector dimension (required for non-integrated models).
+            metric (str): Distance metric for comparing dense and sparse vectors. Must be one of "cosine" or "dotproduct".
+            features_type (str): Type of features used in the index. Must be one of "dense" or "hybrid" (sparse + dense).
+        """
+        json_data = {
+            "index_name": index_name,
+            "embedding_model_name": embedding_model_name,
+            "dimension": dimension,
+            "metric": metric,
+            "features_type": features_type,
+        }
+        response_json = api_resources.Index.create_index(json_data=json_data, 
+                                                         connection_params=self.connection_params)
+        print(f"{response_json['detail']}")
+ 
+    def delete_index(self, index_name: str, ask_for_confirmation: bool = True) -> None:
+        """
+        Delete a vector index by its name.
+
+        Permanently deletes the specified index and all its contents. The deletion is asynchronous, and the deleted index cannot be recovered.
+
+        Args:
+            index_name (str): Name of the index to delete.
+            ask_for_confirmation (bool): Whether to ask for confirmation before deleting the index.
+        """
+        
+        # Ask the user to confirm the deletion
+        #########################################################
+        if ask_for_confirmation:
+            print(f"Are you sure you want to delete index '{index_name}'? "
+                  f"This action is irreversible.")
+            confirm = input("Type 'yes' to confirm: ")
+            if confirm != 'yes':
+                print("Deletion cancelled.")
+                return
+        
+        response_json = api_resources.Index.delete_index(index_name=index_name, 
+                                         connection_params=self.connection_params)
+        print(f"{response_json['detail']}")
+       
+    def get_index_info(self, index_name: str) -> Dict[str, Any]:
+        """
+        Get info of an index by its name.
+
+        Args:
+            index_name (str): Name of the index to get info of.
+
+        Returns:
+            Dict[str, Any]: Dictionary containing info of the index.
+        """
+        info_all_indexes = self.list_indexes()
+        for info_index in info_all_indexes:
+            if info_index['index_name'] == index_name:
+                return info_index
+            
+        raise ValueError(f"Index {index_name} not found in the list of existing indexes")
+    
     def connect_to_index(self, index_name: str) -> IndexObject:
-        """Connect to an existing vector index.
-        
-        Args:
-            index_name (str): Name of the database to connect to
-        
-        Returns:
-            IndexObject: An IndexObject instance connected to the specified index
         """
-        return IndexObject(index_name, 
-                        connection_params=self.connection_params)
+        Connect to an existing vector index and return an IndexObject for further operations.
+
+        This method searches for the index specified by `index_name` within the list of available indexes. If the index exists, it returns an `IndexObject` configured with the current connection parameters, which can be used to perform operations such as upsert, search, and more on the index.
+
+        Args:
+            index_name (str): The name of the index to connect to.
+
+        Returns:
+            IndexObject: An object that provides methods to interact with the specified vector index.
+        """ 
+        
+        info_all_indexes = self.list_indexes()
+        for index in info_all_indexes:
+            if index['index_name'] == index_name:
+                return IndexObject(index_name=index_name, connection_params=self.connection_params)
+            
+        raise ValueError(f"Index {index_name} not found in the list of existing indexes")
