@@ -92,7 +92,8 @@ class IndexObject:
             "query_sparse_values": query_sparse_values,
             "query_sparse_indices": query_sparse_indices,
         }
-        return api_resources.Index.search(self.index_name, json_data, self.connection_params)
+        response = api_resources.Index.search(self.index_name, json_data, self.connection_params)
+        return response['search_results']
 
     def info(self) -> Dict[str, Any]:
         """
