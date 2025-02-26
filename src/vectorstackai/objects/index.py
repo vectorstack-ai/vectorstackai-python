@@ -112,6 +112,7 @@ class IndexObject:
             - metric (str): The distance metric used for similarity search.
             - features_type (str): The type of features (e.g., "dense" or "hybrid").
             - embedding_model_name (str): The name of the embedding model used.
+            - optimized_for_latency (bool): Whether the index is optimized for latency.
         """
         return api_resources.Index.info(self.index_name, self.connection_params)
 
@@ -156,7 +157,14 @@ class IndexObject:
         }
         api_resources.Index.delete_vectors(self.index_name, json_data, self.connection_params)
         print(f"Successfully deleted {len(ids)} vectors from index {self.index_name}")
-           
+    
+    def optimize_for_latency(self) -> None:
+        """
+        Optimize the index for better latency and throughput.
+        """
+        api_resources.Index.optimize_for_latency(self.index_name, self.connection_params)
+        print(f"Request accepted: Index '{self.index_name}' optimization scheduled.")
+        
     def _validate_upsert_input(self, 
                                batch_ids: List[str], 
                                batch_metadata: List[Dict[str, Any]], 

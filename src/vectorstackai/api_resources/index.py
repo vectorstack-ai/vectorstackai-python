@@ -76,4 +76,12 @@ class Index(BaseAPIResource):
             connection_params=connection_params,
             endpoint_name=f"delete_index/{index_name}"
         )
-   
+    
+    @classmethod
+    def optimize_for_latency(cls, index_name: str, connection_params: Dict[str, Any]):
+        """Optimize the index for better latency and throughput."""
+        return cls._make_request_class(
+            method="POST",
+            connection_params=connection_params,
+            endpoint_name=f"optimize_for_latency/{index_name}"
+        )
