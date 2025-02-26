@@ -16,9 +16,43 @@ class IndexObject:
         self.embedding_model_name = _info['embedding_model_name']
         self.features_type = _info['features_type']
         
+        # Scale values for dense and sparse features
+        self.dense_similarity_scale = 1.0
+        self.sparse_similarity_scale = 1.0
+        
     def __str__(self):
         info = self.info()
         return f"Index(Name: {info['index_name']}, Status: {info['status']})"
+   
+   
+    def set_similarity_scale(self, 
+                            dense_similarity_scale: float = 1.0, 
+                            sparse_similarity_scale: float = 1.0) -> None:
+        """
+        The similarity in a hybrid index is computed as a weighted sum of the dense and sparse similarity scores, 
+        i.e. similarity = dense_similarity * dense_similarity_scale + sparse_similarity * sparse_similarity_scale.
+        This method allows you to set the scale values for the dense and sparse similarity scores. Note, in a dense index, the scale values for dense and sparse features are ignored, i.e. similarity = dense_similarity.
+        The scale values must be between 0 and 1.
+        
+        Args:
+            dense_similarity_scale (float): The scale value for the dense similarity score.
+            sparse_similarity_scale (float): The scale value for the sparse similarity score.
+        """
+        if self.features_type == 'dense':
+            warnings.warn("Scale values for dense and sparse features are ignored for dense indexes; "
+                         "will not be used for search..")
+        else:
+            if dense_similarity_scale == 0.0 and sparse_similarity_scale == 0.0:
+                raise ValueError("At least one of the scale values must be set to a non-zero value.")
+            
+            self.dense_similarity_scale = dense_similarity_scale
+            self.sparse_similarity_scale = sparse_similarity_scale
+            
+            if sparse_similarity_scale == 0.0:
+                warnings.warn("Sparse similarity scale is set to 0.0; sparse features will not be used for search..")
+            if dense_similarity_scale == 0.0:
+                warnings.warn("Dense similarity scale is set to 0.0; dense features will not be used for search..")
+             
     
     def upsert(self, 
                batch_ids: List[str], 
@@ -91,6 +125,8 @@ class IndexObject:
             "query_vector": query_vector,
             "query_sparse_values": query_sparse_values,
             "query_sparse_indices": query_sparse_indices,
+            "dense_similarity_scale": self.dense_similarity_scale,
+            "sparse_similarity_scale": self.sparse_similarity_scale
         }
         response = api_resources.Index.search(self.index_name, json_data, self.connection_params)
         return response['search_results']
