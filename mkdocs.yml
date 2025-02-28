@@ -1,0 +1,29 @@
+site_name: PreciseSearch Documentation
+
+theme:
+  name: material
+  highlightjs: true
+  hljs_languages:
+    - python
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+              show_source: true  # Hide source code
+              heading_level: 3
+              docstring_style: google  # Use Google-style docstrings
+              show_signature: true  # Show function signatures
+              show_root_heading: true  # Show module/class headings
+              separate_signature: true # Keep function signature separate from docstring
+              line_length: 80  # Wrap text at 80 characters for better readability 
+              filters: ["!^vectorstackai.objects.index"]  # Hides long path prefixes
+
+nav:
+  - Home: index.md
+  - How-To Guides: how-to-guides.md
+  - Python Client Reference: reference.md
+  - Tutorials: tutorials.md
+  - Explanation: explanation.md
+

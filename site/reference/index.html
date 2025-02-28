@@ -1,0 +1,2270 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../how-to-guides/">
+      
+      
+        <link rel="next" href="../tutorials/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
+    
+    
+      
+        <title>Python Client Reference - VectorStackAI Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8608ea7d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vector-index-api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="VectorStackAI Documentation" class="md-header__button md-logo" aria-label="VectorStackAI Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            VectorStackAI Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Python Client Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="VectorStackAI Documentation" class="md-nav__button md-logo" aria-label="VectorStackAI Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    VectorStackAI Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-guides/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How-To Guides
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Python Client Reference
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Python Client Reference
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#client-level-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client-Level Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Client-Level Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.list_indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      list_indexes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.create_index" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.get_index_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_index_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.connect_to_index" class="md-nav__link">
+    <span class="md-ellipsis">
+      connect_to_index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.delete_index" class="md-nav__link">
+    <span class="md-ellipsis">
+      delete_index
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-level-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index-Level Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Index-Level Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.set_similarity_scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_similarity_scale
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.upsert" class="md-nav__link">
+    <span class="md-ellipsis">
+      upsert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.search" class="md-nav__link">
+    <span class="md-ellipsis">
+      search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.info" class="md-nav__link">
+    <span class="md-ellipsis">
+      info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      delete
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.delete_vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      delete_vectors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.optimize_for_latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      optimize_for_latency
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../explanation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Explanation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#client-level-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client-Level Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Client-Level Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.list_indexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      list_indexes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.create_index" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.get_index_info" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_index_info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.connect_to_index" class="md-nav__link">
+    <span class="md-ellipsis">
+      connect_to_index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.client.Client.delete_index" class="md-nav__link">
+    <span class="md-ellipsis">
+      delete_index
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-level-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Index-Level Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Index-Level Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.set_similarity_scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      set_similarity_scale
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.upsert" class="md-nav__link">
+    <span class="md-ellipsis">
+      upsert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.search" class="md-nav__link">
+    <span class="md-ellipsis">
+      search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.info" class="md-nav__link">
+    <span class="md-ellipsis">
+      info
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      delete
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.delete_vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      delete_vectors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectorstackai.objects.index.IndexObject.optimize_for_latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      optimize_for_latency
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="vector-index-api-reference">Vector Index API Reference</h1>
+<h2 id="client-level-operations">Client-Level Operations</h2>
+<p>These operations are performed at the client level and don't require connecting to a specific index.</p>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.client.Client.list_indexes" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.client.Client.list_indexes</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">list_indexes</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Lists information about all available indexes.</p>
+<p>Retrieves metadata for all indexes associated with the current API key.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>list_info</code></td>            <td>
+                  <code><span title="typing.List">List</span>[<span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A list of dictionaries, where each dictionary 
+contains metadata about an index, including properties such as 
+name, dimension, metric type, etc.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/client.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">list_indexes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lists information about all available indexes.</span>
+
+<span class="sd">    Retrieves metadata for all indexes associated with the current API key.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list_info: A list of dictionaries, where each dictionary </span>
+<span class="sd">            contains metadata about an index, including properties such as </span>
+<span class="sd">            name, dimension, metric type, etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">api_resources</span><span class="o">.</span><span class="n">Index</span><span class="o">.</span><span class="n">list_indexes</span><span class="p">(</span><span class="n">connection_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.client.Client.create_index" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.client.Client.create_index</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">create_index</span><span class="p">(</span><span class="n">index_name</span><span class="p">,</span> <span class="n">embedding_model_name</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;dotproduct&#39;</span><span class="p">,</span> <span class="n">features_type</span><span class="o">=</span><span class="s1">&#39;hybrid&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Creates a new vector index with the specified parameters.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>index_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the index to create.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>embedding_model_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the embedding model to use. There are two kinds of embedding models:
+- Integrated models: These are pre-trained models hosted on the vector2search platform.
+- Non-integrated models: These are custom models hosted on your platform/application.
+- Set "embedding_model_name" to None for using your own embedding model (i.e. non-integrated model).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dimension</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="int">int</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Vector dimension (required for non-integrated models).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>metric</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance metric for comparing dense and sparse vectors. Must be one of "cosine" or "dotproduct".</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;dotproduct&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>features_type</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Type of features used in the index. Must be one of "dense" or "hybrid" (sparse + dense).</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;hybrid&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/client.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">index_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                 <span class="n">embedding_model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                 <span class="n">dimension</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">metric</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;dotproduct&#39;</span><span class="p">,</span> 
+                 <span class="n">features_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;hybrid&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a new vector index with the specified parameters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        index_name: Name of the index to create.</span>
+<span class="sd">        embedding_model_name: Name of the embedding model to use. There are two kinds of embedding models:</span>
+<span class="sd">            - Integrated models: These are pre-trained models hosted on the vector2search platform.</span>
+<span class="sd">            - Non-integrated models: These are custom models hosted on your platform/application.</span>
+<span class="sd">            - Set &quot;embedding_model_name&quot; to None for using your own embedding model (i.e. non-integrated model).</span>
+<span class="sd">        dimension: Vector dimension (required for non-integrated models).</span>
+<span class="sd">        metric: Distance metric for comparing dense and sparse vectors. Must be one of &quot;cosine&quot; or &quot;dotproduct&quot;.</span>
+<span class="sd">        features_type: Type of features used in the index. Must be one of &quot;dense&quot; or &quot;hybrid&quot; (sparse + dense).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;index_name&quot;</span><span class="p">:</span> <span class="n">index_name</span><span class="p">,</span>
+        <span class="s2">&quot;embedding_model_name&quot;</span><span class="p">:</span> <span class="n">embedding_model_name</span><span class="p">,</span>
+        <span class="s2">&quot;dimension&quot;</span><span class="p">:</span> <span class="n">dimension</span><span class="p">,</span>
+        <span class="s2">&quot;metric&quot;</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span>
+        <span class="s2">&quot;features_type&quot;</span><span class="p">:</span> <span class="n">features_type</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">response_json</span> <span class="o">=</span> <span class="n">api_resources</span><span class="o">.</span><span class="n">Index</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span><span class="n">json_data</span><span class="o">=</span><span class="n">json_data</span><span class="p">,</span> 
+                                                     <span class="n">connection_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;detail&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.client.Client.get_index_info" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.client.Client.get_index_info</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_index_info</span><span class="p">(</span><span class="n">index_name</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Retrieves information about a specific vector index.</p>
+<p>This method searches for the index specified by <code>index_name</code> within the list of available indexes. 
+If the index exists, it returns a dictionary containing information about the index. This method 
+is useful to get information about the index without having to connect to it.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>index_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the index to retrieve information for.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>index_info</code></td>            <td>
+                  <code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A dictionary containing information about the index with the following keys:</p>
+<ul>
+<li>index_name (str): The name of the index.</li>
+<li>status (str): The current status of the index ("initializing" or "ready").</li>
+<li>num_records (int): The number of records stored in the index.</li>
+<li>dimension (int): The dimensionality of the vectors in the index.</li>
+<li>metric (str): The distance metric used for similarity search.</li>
+<li>features_type (str): The type of features stored.</li>
+<li>embedding_model_name (str): The name of the embedding model used (if applicable).</li>
+<li>optimized_for_latency (bool): Whether the index is optimized for low-latency queries.</li>
+</ul>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/client.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_index_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieves information about a specific vector index.</span>
+
+<span class="sd">    This method searches for the index specified by `index_name` within the list of available indexes. </span>
+<span class="sd">    If the index exists, it returns a dictionary containing information about the index. This method </span>
+<span class="sd">    is useful to get information about the index without having to connect to it.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        index_name: Name of the index to retrieve information for.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        index_info: A dictionary containing information about the index with the following keys:</span>
+
+<span class="sd">            - index_name (str): The name of the index.</span>
+<span class="sd">            - status (str): The current status of the index (&quot;initializing&quot; or &quot;ready&quot;).</span>
+<span class="sd">            - num_records (int): The number of records stored in the index.</span>
+<span class="sd">            - dimension (int): The dimensionality of the vectors in the index.</span>
+<span class="sd">            - metric (str): The distance metric used for similarity search.</span>
+<span class="sd">            - features_type (str): The type of features stored.</span>
+<span class="sd">            - embedding_model_name (str): The name of the embedding model used (if applicable).</span>
+<span class="sd">            - optimized_for_latency (bool): Whether the index is optimized for low-latency queries.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">info_all_indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_indexes</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">info_index</span> <span class="ow">in</span> <span class="n">info_all_indexes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">info_index</span><span class="p">[</span><span class="s1">&#39;index_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">index_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">info_index</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2"> not found in the list of existing indexes&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.client.Client.connect_to_index" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.client.Client.connect_to_index</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">connect_to_index</span><span class="p">(</span><span class="n">index_name</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Connects to an existing vector index and returns an IndexObject for further operations.</p>
+<p>This method searches for the index specified by <code>index_name</code> within the list of available indexes. If the index exists, it returns an <code>IndexObject</code> configured with the current connection parameters, which can be used to perform operations such as upsert, search, and more on the index.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>index_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The name of the index to connect to.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>IndexObject</code></td>            <td>
+                  <code><span title="vectorstackai.objects.IndexObject">IndexObject</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>An object that provides methods to interact with the specified vector index.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/client.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">connect_to_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IndexObject</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Connects to an existing vector index and returns an IndexObject for further operations.</span>
+
+<span class="sd">    This method searches for the index specified by `index_name` within the list of available indexes. If the index exists, it returns an `IndexObject` configured with the current connection parameters, which can be used to perform operations such as upsert, search, and more on the index.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        index_name (str): The name of the index to connect to.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        IndexObject: An object that provides methods to interact with the specified vector index.</span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+
+    <span class="n">info_all_indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_indexes</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">info_all_indexes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">index</span><span class="p">[</span><span class="s1">&#39;index_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">index_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">IndexObject</span><span class="p">(</span><span class="n">index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span> <span class="n">connection_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2"> not found in the list of existing indexes&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.client.Client.delete_index" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.client.Client.delete_index</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">delete_index</span><span class="p">(</span><span class="n">index_name</span><span class="p">,</span> <span class="n">ask_for_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Deletes a vector index by its name.</p>
+<p>Permanently deletes the specified index and all its contents. The deletion is asynchronous, and the deleted index cannot be recovered. Note, this method is useful for deleting an index without having to connect to it.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>index_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the index to delete.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ask_for_confirmation</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to ask for confirmation before deleting the index.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/client.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">delete_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ask_for_confirmation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deletes a vector index by its name.</span>
+
+<span class="sd">    Permanently deletes the specified index and all its contents. The deletion is asynchronous, and the deleted index cannot be recovered. Note, this method is useful for deleting an index without having to connect to it.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        index_name (str): Name of the index to delete.</span>
+<span class="sd">        ask_for_confirmation (bool): Whether to ask for confirmation before deleting the index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Ask the user to confirm the deletion</span>
+    <span class="c1">#########################################################</span>
+    <span class="k">if</span> <span class="n">ask_for_confirmation</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Are you sure you want to delete index &#39;</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">&#39;? &quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;This action is irreversible.&quot;</span><span class="p">)</span>
+        <span class="n">confirm</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Type &#39;yes&#39; to confirm: &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">confirm</span> <span class="o">!=</span> <span class="s1">&#39;yes&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deletion cancelled.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+    <span class="n">response_json</span> <span class="o">=</span> <span class="n">api_resources</span><span class="o">.</span><span class="n">Index</span><span class="o">.</span><span class="n">delete_index</span><span class="p">(</span><span class="n">index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span> 
+                                     <span class="n">connection_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;detail&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><h2 id="index-level-operations">Index-Level Operations</h2>
+<p>These operations are performed on a specific index after connecting to it.</p>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.objects.index.IndexObject.set_similarity_scale" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.objects.index.IndexObject.set_similarity_scale</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_similarity_scale</span><span class="p">(</span><span class="n">dense_similarity_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sparse_similarity_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Set the scale values for dense and sparse similarity scores in hybrid search.</p>
+<p>The similarity in a hybrid index is computed as a weighted sum of the dense and 
+sparse similarity scores:</p>
+<pre><code>similarity = dense_similarity * dense_similarity_scale + 
+             sparse_similarity * sparse_similarity_scale
+</code></pre>
+<p>This method allows you to set the scale values for the dense and sparse similarity 
+scores. The scale values must be between 0 and 1.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>In a dense index, the scale values are ignored. The similarity is computed as:</p>
+<pre><code>similarity = dense_similarity.
+</code></pre>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>dense_similarity_scale</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The scale value for the dense similarity score.
+Defaults to 1.0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>sparse_similarity_scale</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The scale value for the sparse similarity score.
+Defaults to 1.0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/objects/index.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_similarity_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                        <span class="n">dense_similarity_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> 
+                        <span class="n">sparse_similarity_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the scale values for dense and sparse similarity scores in hybrid search.</span>
+
+<span class="sd">    The similarity in a hybrid index is computed as a weighted sum of the dense and </span>
+<span class="sd">    sparse similarity scores:</span>
+
+<span class="sd">        similarity = dense_similarity * dense_similarity_scale + </span>
+<span class="sd">                     sparse_similarity * sparse_similarity_scale</span>
+
+<span class="sd">    This method allows you to set the scale values for the dense and sparse similarity </span>
+<span class="sd">    scores. The scale values must be between 0 and 1.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        In a dense index, the scale values are ignored. The similarity is computed as:</span>
+
+<span class="sd">            similarity = dense_similarity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dense_similarity_scale: The scale value for the dense similarity score.</span>
+<span class="sd">            Defaults to 1.0.</span>
+<span class="sd">        sparse_similarity_scale: The scale value for the sparse similarity score.</span>
+<span class="sd">            Defaults to 1.0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">features_type</span> <span class="o">==</span> <span class="s1">&#39;dense&#39;</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Scale values for dense and sparse features are ignored for dense indexes; &quot;</span>
+                     <span class="s2">&quot;will not be used for search..&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dense_similarity_scale</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">sparse_similarity_scale</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At least one of the scale values must be set to a non-zero value.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_similarity_scale</span> <span class="o">=</span> <span class="n">dense_similarity_scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sparse_similarity_scale</span> <span class="o">=</span> <span class="n">sparse_similarity_scale</span>
+
+        <span class="k">if</span> <span class="n">sparse_similarity_scale</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Sparse similarity scale is set to 0.0; sparse features will not be used for search..&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dense_similarity_scale</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Dense similarity scale is set to 0.0; dense features will not be used for search..&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.objects.index.IndexObject.upsert" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.objects.index.IndexObject.upsert</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">upsert</span><span class="p">(</span><span class="n">batch_ids</span><span class="p">,</span> <span class="n">batch_metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_vectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_sparse_values</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_sparse_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Upsert a batch of vectors and associated metadata to the index.</p>
+<p>This method upserts a batch of dense or sparse vectors, along with their associated metadata in the index. Note, if a datapoint with the same ID already exists, its metadata, vector, and sparse vector will be updated with the new values.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>batch_ids</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of unique identifiers for each vector.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>batch_metadata</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.List">List</span>[<span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of dictionaries containing metadata for each vector. For indexes configured 
+with an integrated embedding model, each dictionary should include a 'text' key whose 
+value is used to compute the embeddings.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>batch_vectors</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.List">List</span>[<span title="typing.List">List</span>[<span title="float">float</span>]]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of dense vectors (each represented as a list of floats) corresponding to 
+each ID. This field is required for indexes configured with a non-integrated embedding 
+model and should be omitted for indexes configured with an integrated embedding model.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>batch_sparse_values</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.List">List</span>[<span title="typing.List">List</span>[<span title="float">float</span>]]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of values in the sparse vector (each as a list of floats) 
+corresponding to each ID. Required for upserting in a hybrid index.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>batch_sparse_indices</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.List">List</span>[<span title="typing.List">List</span>[<span title="int">int</span>]]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of indices in the sparse vector (each as a list of ints) 
+corresponding to each ID. Required for upserting in a hybrid index.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/objects/index.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">upsert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+           <span class="n">batch_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> 
+           <span class="n">batch_metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+           <span class="n">batch_vectors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+           <span class="n">batch_sparse_values</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+           <span class="n">batch_sparse_indices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Upsert a batch of vectors and associated metadata to the index.</span>
+
+<span class="sd">    This method upserts a batch of dense or sparse vectors, along with their associated metadata in the index. Note, if a datapoint with the same ID already exists, its metadata, vector, and sparse vector will be updated with the new values.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        batch_ids: List of unique identifiers for each vector.</span>
+<span class="sd">        batch_metadata: List of dictionaries containing metadata for each vector. For indexes configured </span>
+<span class="sd">            with an integrated embedding model, each dictionary should include a &#39;text&#39; key whose </span>
+<span class="sd">            value is used to compute the embeddings.</span>
+<span class="sd">        batch_vectors: List of dense vectors (each represented as a list of floats) corresponding to </span>
+<span class="sd">            each ID. This field is required for indexes configured with a non-integrated embedding </span>
+<span class="sd">            model and should be omitted for indexes configured with an integrated embedding model.</span>
+<span class="sd">        batch_sparse_values: List of values in the sparse vector (each as a list of floats) </span>
+<span class="sd">            corresponding to each ID. Required for upserting in a hybrid index.</span>
+<span class="sd">        batch_sparse_indices: List of indices in the sparse vector (each as a list of ints) </span>
+<span class="sd">            corresponding to each ID. Required for upserting in a hybrid index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Validate input types</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_validate_upsert_input</span><span class="p">(</span><span class="n">batch_ids</span><span class="p">,</span> <span class="n">batch_metadata</span><span class="p">,</span> <span class="n">batch_vectors</span><span class="p">,</span> <span class="n">batch_sparse_values</span><span class="p">,</span> <span class="n">batch_sparse_indices</span><span class="p">)</span> 
+
+    <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;ids&quot;</span><span class="p">:</span> <span class="n">batch_ids</span><span class="p">,</span>
+        <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">batch_metadata</span><span class="p">,</span>
+        <span class="s2">&quot;vectors&quot;</span><span class="p">:</span> <span class="n">batch_vectors</span><span class="p">,</span>
+        <span class="s2">&quot;sparse_values&quot;</span><span class="p">:</span> <span class="n">batch_sparse_values</span><span class="p">,</span>
+        <span class="s2">&quot;sparse_indices&quot;</span><span class="p">:</span> <span class="n">batch_sparse_indices</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">api_resources</span><span class="o">.</span><span class="n">Index</span><span class="o">.</span><span class="n">upsert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_name</span><span class="p">,</span> <span class="n">json_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.objects.index.IndexObject.search" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.objects.index.IndexObject.search</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">search</span><span class="p">(</span><span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">query_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">query_vector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_metadata</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">query_sparse_values</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">query_sparse_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Search the index for entries similar to the query.</p>
+<p>Finds entries in the index that are most similar to the provided query. Query can be a text (if using an integrated embedding model) or a dense vector (if using a non-integrated embedding model), along with a sparse vector (if using a hybrid index).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>top_k</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of top-k results to return (should be &gt;= 1).</p>
+              </div>
+            </td>
+            <td>
+                  <code>10</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>query_text</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Query text (required for integrated embedding models).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>query_vector</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="float">float</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Query vector (required for non-integrated embedding models).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>return_metadata</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to return metadata for each result (optional, defaults to False).</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>query_sparse_values</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="float">float</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Query sparse values (required for hybrid indexes).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>query_sparse_indices</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="int">int</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Query sparse indices (required for hybrid indexes).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>search_results</code></td>            <td>
+                  <code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of dictionaries containing search results, sorted in descending order of similarity scores. Each dictionary contains:</p>
+<ul>
+<li>vector_id (int): ID of the retrieved vector.</li>
+<li>similarity (float): Similarity score between the query and the retrieved vector.</li>
+<li>metadata (dict): Metadata associated with the vector (present if return_metadata=True, otherwise defaults to an empty dict).</li>
+</ul>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/objects/index.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+           <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> 
+           <span class="n">query_text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+           <span class="n">query_vector</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+           <span class="n">return_metadata</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+           <span class="n">query_sparse_values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">query_sparse_indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search the index for entries similar to the query.</span>
+
+<span class="sd">    Finds entries in the index that are most similar to the provided query. Query can be a text (if using an integrated embedding model) or a dense vector (if using a non-integrated embedding model), along with a sparse vector (if using a hybrid index).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        top_k: Number of top-k results to return (should be &gt;= 1).</span>
+<span class="sd">        query_text: Query text (required for integrated embedding models).</span>
+<span class="sd">        query_vector: Query vector (required for non-integrated embedding models).</span>
+<span class="sd">        return_metadata: Whether to return metadata for each result (optional, defaults to False).</span>
+<span class="sd">        query_sparse_values: Query sparse values (required for hybrid indexes).</span>
+<span class="sd">        query_sparse_indices: Query sparse indices (required for hybrid indexes).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        search_results: List of dictionaries containing search results, sorted in descending order of similarity scores. Each dictionary contains:</span>
+
+<span class="sd">            - vector_id (int): ID of the retrieved vector.</span>
+<span class="sd">            - similarity (float): Similarity score between the query and the retrieved vector.</span>
+<span class="sd">            - metadata (dict): Metadata associated with the vector (present if return_metadata=True, otherwise defaults to an empty dict).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_validate_search_input</span><span class="p">(</span><span class="n">top_k</span><span class="p">,</span> <span class="n">query_text</span><span class="p">,</span> <span class="n">query_vector</span><span class="p">,</span> <span class="n">query_sparse_values</span><span class="p">,</span> <span class="n">query_sparse_indices</span><span class="p">)</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;top_k&quot;</span><span class="p">:</span> <span class="n">top_k</span><span class="p">,</span>
+        <span class="s2">&quot;query_text&quot;</span><span class="p">:</span> <span class="n">query_text</span><span class="p">,</span>
+        <span class="s2">&quot;return_metadata&quot;</span><span class="p">:</span> <span class="n">return_metadata</span><span class="p">,</span>
+        <span class="s2">&quot;query_vector&quot;</span><span class="p">:</span> <span class="n">query_vector</span><span class="p">,</span>
+        <span class="s2">&quot;query_sparse_values&quot;</span><span class="p">:</span> <span class="n">query_sparse_values</span><span class="p">,</span>
+        <span class="s2">&quot;query_sparse_indices&quot;</span><span class="p">:</span> <span class="n">query_sparse_indices</span><span class="p">,</span>
+        <span class="s2">&quot;dense_similarity_scale&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_similarity_scale</span><span class="p">,</span>
+        <span class="s2">&quot;sparse_similarity_scale&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_similarity_scale</span>
+    <span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">api_resources</span><span class="o">.</span><span class="n">Index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_name</span><span class="p">,</span> <span class="n">json_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;search_results&#39;</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.objects.index.IndexObject.info" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.objects.index.IndexObject.info</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">info</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Get information about the index.</p>
+<p>If the index is still being created (i.e., not yet ready), the returned dictionary 
+includes only <code>"index_name"</code> and a <code>"status"</code> (which is <code>"initializing"</code>). Once the index is configured, the status is set to<code>"ready"</code>, the returned dictionary includes additional information.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>index_info</code></td>            <td>
+                  <code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A dictionary containing information about the index with the following keys:</p>
+<ul>
+<li>index_name (str): The name of the index.</li>
+<li>status (str): The current status of the index ("initializing" or "ready").</li>
+<li>num_records (int): The number of records stored in the index.</li>
+<li>dimension (int): The dimensionality of the vectors in the index.</li>
+<li>metric (str): The distance metric used for similarity search ("cosine" or "dotproduct").</li>
+<li>features_type (str): The type of features stored ("dense" or "hybrid").</li>
+<li>embedding_model_name (str): The name of the embedding model used (if applicable).</li>
+<li>optimized_for_latency (bool): Indicates whether the index is optimized for low-latency queries.</li>
+</ul>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/objects/index.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get information about the index.</span>
+
+<span class="sd">    If the index is still being created (i.e., not yet ready), the returned dictionary </span>
+<span class="sd">    includes only `&quot;index_name&quot;` and a `&quot;status&quot;` (which is `&quot;initializing&quot;`). Once the index is configured, the status is set to`&quot;ready&quot;`, the returned dictionary includes additional information.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        index_info: A dictionary containing information about the index with the following keys:</span>
+
+<span class="sd">            - index_name (str): The name of the index.</span>
+<span class="sd">            - status (str): The current status of the index (&quot;initializing&quot; or &quot;ready&quot;).</span>
+<span class="sd">            - num_records (int): The number of records stored in the index.</span>
+<span class="sd">            - dimension (int): The dimensionality of the vectors in the index.</span>
+<span class="sd">            - metric (str): The distance metric used for similarity search (&quot;cosine&quot; or &quot;dotproduct&quot;).</span>
+<span class="sd">            - features_type (str): The type of features stored (&quot;dense&quot; or &quot;hybrid&quot;).</span>
+<span class="sd">            - embedding_model_name (str): The name of the embedding model used (if applicable).</span>
+<span class="sd">            - optimized_for_latency (bool): Indicates whether the index is optimized for low-latency queries.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">api_resources</span><span class="o">.</span><span class="n">Index</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.objects.index.IndexObject.delete" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.objects.index.IndexObject.delete</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">delete</span><span class="p">(</span><span class="n">ask_for_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Deletes the vector index.</p>
+<p>Permanently deletes the index and all its contents. The deletion is asynchronous, 
+and the deleted index cannot be recovered. </p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>ask_for_confirmation</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to ask for confirmation before deleting the index. Defaults to True. When True, the user will be prompted to type 'yes' to confirm deletion.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>None</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If the index doesn't exist or cannot be deleted.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/objects/index.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ask_for_confirmation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deletes the vector index.</span>
+
+<span class="sd">    Permanently deletes the index and all its contents. The deletion is asynchronous, </span>
+<span class="sd">    and the deleted index cannot be recovered. </span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ask_for_confirmation (bool): Whether to ask for confirmation before deleting the index. Defaults to True. When True, the user will be prompted to type &#39;yes&#39; to confirm deletion.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the index doesn&#39;t exist or cannot be deleted.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Ask the user to confirm the deletion</span>
+    <span class="c1">#########################################################</span>
+    <span class="k">if</span> <span class="n">ask_for_confirmation</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Are you sure you want to delete index &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">index_name</span><span class="si">}</span><span class="s2">&#39;? &quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;This action is irreversible.&quot;</span><span class="p">)</span>
+        <span class="n">confirm</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Type &#39;yes&#39; to confirm: &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">confirm</span> <span class="o">!=</span> <span class="s1">&#39;yes&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deletion cancelled.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> 
+
+    <span class="n">api_resources</span><span class="o">.</span><span class="n">Index</span><span class="o">.</span><span class="n">delete_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_name</span><span class="p">,</span> 
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.objects.index.IndexObject.delete_vectors" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.objects.index.IndexObject.delete_vectors</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">delete_vectors</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Deletes vectors from the index by their IDs.</p>
+<p>Permanently removes the specified vectors from the index based on their unique identifiers. The deletion operation cannot be undone. This operation is performed synchronously.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>ids</code>
+            </td>
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A list of string IDs identifying the vectors to delete from the index.
+Each ID must correspond to a vector previously added to the index.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/objects/index.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">delete_vectors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deletes vectors from the index by their IDs.</span>
+
+<span class="sd">    Permanently removes the specified vectors from the index based on their unique identifiers. The deletion operation cannot be undone. This operation is performed synchronously.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ids: A list of string IDs identifying the vectors to delete from the index.</span>
+<span class="sd">            Each ID must correspond to a vector previously added to the index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="s2">&quot;ids must be a list&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;ids must be a non-empty list&quot;</span>
+    <span class="k">assert</span> <span class="p">[</span><span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">],</span> <span class="s2">&quot;each element of ids must be a string&quot;</span>
+
+    <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;delete_vector_ids&quot;</span><span class="p">:</span> <span class="n">ids</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">api_resources</span><span class="o">.</span><span class="n">Index</span><span class="o">.</span><span class="n">delete_vectors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_name</span><span class="p">,</span> <span class="n">json_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully deleted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span><span class="si">}</span><span class="s2"> vectors from index </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">index_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="vectorstackai.objects.index.IndexObject.optimize_for_latency" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">vectorstackai.objects.index.IndexObject.optimize_for_latency</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">optimize_for_latency</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Optimizes the index for better latency and throughput.</p>
+<p>This method triggers an optimization process in the background to improve the latency and throughput of the index for search operations.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/vectorstackai/objects/index.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">optimize_for_latency</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Optimizes the index for better latency and throughput.</span>
+
+<span class="sd">    This method triggers an optimization process in the background to improve the latency and throughput of the index for search operations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">api_resources</span><span class="o">.</span><span class="n">Index</span><span class="o">.</span><span class="n">optimize_for_latency</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Request accepted: Index &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">index_name</span><span class="si">}</span><span class="s2">&#39; optimization scheduled.&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+    
+  </body>
+</html>
