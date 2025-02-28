@@ -40,3 +40,13 @@ Note, when creating an index, you can specify if you want to use an integrated e
 - Allows use of custom models or non-text data types
 - Ideal when you need specific embeddings or are working with non-text data
 
+#### How Hybrid Similarity is Computed
+The total similarity score is calculated as a weighted sum of the dense similarity and the sparse similarity:
+
+```python
+similarity_score = dense_scale * dense_similarity + sparse_scale * sparse_similarity
+```
+By default, both dense_scale and sparse_scale are 1.0. You can adjust these values at any time to emphasize one representation over the other:
+```python
+index.set_similarity_scale(dense_scale=0.2, sparse_scale=0.9)
+```
