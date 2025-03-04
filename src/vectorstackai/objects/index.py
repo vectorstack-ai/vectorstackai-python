@@ -28,32 +28,47 @@ class IndexObject:
     def set_similarity_scale(self, 
                             dense_similarity_scale: float = 1.0, 
                             sparse_similarity_scale: float = 1.0) -> None:
-        """
-        The similarity in a hybrid index is computed as a weighted sum of the dense and sparse similarity scores, 
-        i.e. similarity = dense_similarity * dense_similarity_scale + sparse_similarity * sparse_similarity_scale.
-        This method allows you to set the scale values for the dense and sparse similarity scores. Note, in a dense index, the scale values for dense and sparse features are ignored, i.e. similarity = dense_similarity.
-        The scale values must be between 0 and 1.
+        """Set the scale values for dense and sparse similarity scores in hybrid search.
+        
+        The similarity in a hybrid index is computed as a weighted sum of the dense and 
+        sparse similarity scores:
+        
+            similarity = dense_similarity * dense_similarity_scale + 
+                         sparse_similarity * sparse_similarity_scale
+                         
+        This method allows you to set the scale values for the dense and sparse similarity 
+        scores. The scale values must be between 0 and 1.
+        
+        Note:
+            In a dense index, the scale values are ignored. The similarity is computed as:
+            
+                similarity = dense_similarity.
         
         Args:
-            dense_similarity_scale (float): The scale value for the dense similarity score.
-            sparse_similarity_scale (float): The scale value for the sparse similarity score.
+            dense_similarity_scale: The scale value for the dense similarity score.
+                Defaults to 1.0.
+            sparse_similarity_scale: The scale value for the sparse similarity score.
+                Defaults to 1.0.
         """
         if self.features_type == 'dense':
-            warnings.warn("Scale values for dense and sparse features are ignored for dense indexes; "
-                         "will not be used for search..")
-        else:
-            if dense_similarity_scale == 0.0 and sparse_similarity_scale == 0.0:
-                raise ValueError("At least one of the scale values must be set to a non-zero value.")
-            
-            self.dense_similarity_scale = dense_similarity_scale
-            self.sparse_similarity_scale = sparse_similarity_scale
-            
-            if sparse_similarity_scale == 0.0:
-                warnings.warn("Sparse similarity scale is set to 0.0; sparse features will not be used for search..")
-            if dense_similarity_scale == 0.0:
-                warnings.warn("Dense similarity scale is set to 0.0; dense features will not be used for search..")
+            warnings.warn("Setting scale values for dense and sparse features is redundant for dense indexes, since index is dense only; they will not be used for search..")
+        
+        # Validate scale values
+        if dense_similarity_scale == 0.0 and sparse_similarity_scale == 0.0:
+            raise ValueError("At least one of the scale values must be set to a non-zero value.")
+        if dense_similarity_scale < 0.0 or dense_similarity_scale > 1.0:
+            raise ValueError("dense_similarity_scale must be between 0.0 and 1.0")
+        if sparse_similarity_scale < 0.0 or sparse_similarity_scale > 1.0:
+            raise ValueError("sparse_similarity_scale must be between 0.0 and 1.0")
+        
+        self.dense_similarity_scale = dense_similarity_scale
+        self.sparse_similarity_scale = sparse_similarity_scale
+        
+        if sparse_similarity_scale == 0.0:
+            warnings.warn("Sparse similarity scale is set to 0.0; sparse features will not be used for search..")
+        if dense_similarity_scale == 0.0:
+            warnings.warn("Dense similarity scale is set to 0.0; dense features will not be used for search..")
              
-    
     def upsert(self, 
                batch_ids: List[str], 
                batch_metadata: Optional[List[Dict[str, Any]]] = None, 
@@ -62,9 +77,8 @@ class IndexObject:
                batch_sparse_indices: Optional[List[List[int]]] = None) -> None:
         """Upsert a batch of vectors and associated metadata to the index.
 
-        This method constructs a JSON payload from the provided vector IDs, metadata, and optionally,
-        dense and sparse vector representations, then sends an upsert request to the configured index.
-
+        This method upserts a batch of dense or sparse vectors, along with their associated metadata in the index. Note, if a datapoint with the same ID already exists, its metadata, vector, and sparse vector will be updated with the new values.
+        
         Args:
             batch_ids: List of unique identifiers for each vector.
             batch_metadata: List of dictionaries containing metadata for each vector. For indexes configured 
@@ -97,25 +111,24 @@ class IndexObject:
                return_metadata: bool = False,
                query_sparse_values: List[float] = None,
                query_sparse_indices: List[int] = None) -> Dict[str, Any]:
-        """
-        Search for similar vectors in the index.
-
-        This method allows you to search for vectors in the index based on different parameters.
+        """Search the index for entries similar to the query.
+        
+        Finds entries in the index that are most similar to the provided query. Query can be a text (if using an integrated embedding model) or a dense vector (if using a non-integrated embedding model), along with a sparse vector (if using a hybrid index).
         
         Args:
-            top_k (int): Number of top-k results to return (should be >= 1).
-            query_text (str): Query text (required for integrated embedding models).
-            return_metadata (bool): Whether to return metadata for each result (optional, defaults to False).
-            query_vector (List[float]): Query vector (required for non-integrated embedding models).
-            query_sparse_values (List[float]): Query sparse values (required for hybrid indexes).
-            query_sparse_indices (List[int]): Query sparse indices (required for hybrid indexes).
+            top_k: Number of top-k results to return (should be >= 1).
+            query_text: Query text (required for integrated embedding models).
+            query_vector: Query vector (required for non-integrated embedding models).
+            return_metadata: Whether to return metadata for each result (optional, defaults to False).
+            query_sparse_values: Query sparse values (required for hybrid indexes).
+            query_sparse_indices: Query sparse indices (required for hybrid indexes).
         
         Returns:
-            Search results are returned as a list of dictionaries. The list is sorted in descending order of similarity scores.  
-            Each element of the list contains:
-            - vector_id (str): ID of the retrieved vector.
-            - similarity (float): Similarity score between the query and the retrieved vector.
-            - metadata (Dict, optional): Metadata associated with the vector (present if `return_metadata=True`, otherwise defaults to an empty dict).
+            search_results: List of dictionaries containing search results, sorted in descending order of similarity scores. Each dictionary contains:
+            
+                - id (str): ID of the retrieved vector.
+                - similarity (float): Similarity score between the query and the retrieved vector.
+                - metadata (dict): Metadata associated with the vector (present if return_metadata=True, otherwise defaults to an empty dict).
         """
         self._validate_search_input(top_k, query_text, query_vector, query_sparse_values, query_sparse_indices)
         json_data = {
@@ -132,34 +145,39 @@ class IndexObject:
         return response['search_results']
 
     def info(self) -> Dict[str, Any]:
-        """
-        Retrieve detailed information about the index.
+        """Get information about the index.
 
-        If the index is still being created (i.e., not yet ready), the returned dictionary will only
-        include the `index_name` and a `status` set to "initializing". Once the index is fully set up
-        (i.e., `status` is "ready"), the dictionary will include additional details.
-        
+        If the index is still being created (i.e., not yet ready), the returned dictionary 
+        includes only `"index_name"` and a `"status"` (which is `"initializing"`). Once the index is configured, the status is set to`"ready"`, the returned dictionary includes additional information.
+
         Returns:
-        Dict[str, Any]: A dictionary containing information about the index with the following keys:
-            - index_name (str): The name of the index.
-            - status (str): The current status of the index.
-            - num_records (int): The number of records in the index.
-            - dimension (int): The dimensionality of the vectors.
-            - metric (str): The distance metric used for similarity search.
-            - features_type (str): The type of features (e.g., "dense" or "hybrid").
-            - embedding_model_name (str): The name of the embedding model used.
-            - optimized_for_latency (bool): Whether the index is optimized for latency.
+            index_info: A dictionary containing information about the index with the following keys:
+            
+                - index_name (str): The name of the index.
+                - status (str): The current status of the index ("initializing" or "ready").
+                - num_records (int): The number of records stored in the index.
+                - dimension (int): The dimensionality of the vectors in the index.
+                - metric (str): The distance metric used for similarity search ("cosine" or "dotproduct").
+                - features_type (str): The type of features stored ("dense" or "hybrid").
+                - embedding_model_name (str): The name of the embedding model used (if applicable).
+                - optimized_for_latency (bool): Indicates whether the index is optimized for low-latency queries.
         """
         return api_resources.Index.info(self.index_name, self.connection_params)
 
     def delete(self, ask_for_confirmation: bool = True) -> None:
-        """
-        Delete the vector index.
+        """Deletes the vector index.
 
-        Permanently deletes the index and all its contents. The deletion is asynchronous, and the deleted index cannot be recovered. 
+        Permanently deletes the index and all its contents. The deletion is asynchronous, 
+        and the deleted index cannot be recovered. 
 
         Args:
-            ask_for_confirmation (bool): Whether to ask for confirmation before deleting the index.
+            ask_for_confirmation (bool): Whether to ask for confirmation before deleting the index. Defaults to True. When True, the user will be prompted to type 'yes' to confirm deletion.
+
+        Returns:
+            None
+
+        Raises:
+            ValueError: If the index doesn't exist or cannot be deleted.
         """
         # Ask the user to confirm the deletion
         #########################################################
@@ -175,14 +193,13 @@ class IndexObject:
                                          self.connection_params)
        
     def delete_vectors(self, ids: List[str]) -> None:
-        """
-        Delete vectors from the index by their IDs.
-
-        This method removes the specified vectors from the index. The IDs of the vectors to be deleted
-        are provided in the `ids` list.
+        """Deletes vectors from the index by their IDs.
+        
+        Permanently removes the specified vectors from the index based on their unique identifiers. The deletion operation cannot be undone. This operation is performed synchronously. Even if one of the IDs does not exist, the operation will raise an error, and the index state will remain unchanged (i.e., no vectors will be deleted).
         
         Args:
-            ids (List[str]): A list of IDs of the vectors to be deleted.
+            ids: A list of string IDs identifying the vectors to delete from the index.
+                Each ID must correspond to a vector previously added to the index.
         """
         assert isinstance(ids, list), "ids must be a list"
         assert len(ids) > 0, "ids must be a non-empty list"
@@ -196,7 +213,9 @@ class IndexObject:
     
     def optimize_for_latency(self) -> None:
         """
-        Optimize the index for better latency and throughput.
+        Optimizes the index for better latency and throughput.
+        
+        This method triggers an optimization process in the background to improve the latency and throughput of the index for search operations.
         """
         api_resources.Index.optimize_for_latency(self.index_name, self.connection_params)
         print(f"Request accepted: Index '{self.index_name}' optimization scheduled.")

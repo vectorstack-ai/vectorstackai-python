@@ -82,11 +82,14 @@ class Client:
     # High-level endpoints for VectorSearch API
     #########################################################
     def list_indexes(self) -> List[Dict[str, Any]]:
-        """
-        List info of all the indexes
+        """Lists information about all available indexes.
+        
+        Retrieves metadata for all indexes associated with the current API key.
         
         Returns:
-            List[Dict[str, Any]]: List of dictionaries containing info of all the indexes.
+            list_info: A list of dictionaries, where each dictionary 
+                contains metadata about an index, including properties such as 
+                name, dimension, metric type, etc.
         """
         return api_resources.Index.list_indexes(connection_params=self.connection_params)
   
@@ -96,18 +99,17 @@ class Client:
                      dimension: Optional[int] = None, 
                      metric: Optional[str] = 'dotproduct', 
                      features_type: Optional[str] = 'hybrid') -> None:
-        """
-        Create a new vector index
+        """Creates a new vector index with the specified parameters.
         
         Args:
-            index_name (str): Name of the index to create.
-            embedding_model_name (str): Name of the embedding model to use. There are two kinds of embedding models:  
-                - Integrated models: These are pre-trained models hosted on the vector2search platform.  
-                - Non-integrated models: These are custom models hosted on your platform/ application.  
+            index_name: Name of the index to create.
+            embedding_model_name: Name of the embedding model to use. There are two kinds of embedding models:
+                - Integrated models: These are pre-trained models hosted on the vector2search platform.
+                - Non-integrated models: These are custom models hosted on your platform/application.
                 - Set "embedding_model_name" to None for using your own embedding model (i.e. non-integrated model).
-            dimension (int): Vector dimension (required for non-integrated models).
-            metric (str): Distance metric for comparing dense and sparse vectors. Must be one of "cosine" or "dotproduct".
-            features_type (str): Type of features used in the index. Must be one of "dense" or "hybrid" (sparse + dense).
+            dimension: Vector dimension (required for non-integrated models).
+            metric: Distance metric for comparing dense and sparse vectors. Must be one of "cosine" or "dotproduct".
+            features_type: Type of features used in the index. Must be one of "dense" or "hybrid" (sparse + dense).
         """
         json_data = {
             "index_name": index_name,
@@ -121,10 +123,9 @@ class Client:
         print(f"{response_json['detail']}")
  
     def delete_index(self, index_name: str, ask_for_confirmation: bool = True) -> None:
-        """
-        Delete a vector index by its name.
+        """Deletes a vector index by its name.
 
-        Permanently deletes the specified index and all its contents. The deletion is asynchronous, and the deleted index cannot be recovered.
+        Permanently deletes the specified index and all its contents. The deletion is asynchronous, and the deleted index cannot be recovered. Note, this method is useful for deleting an index without having to connect to it.
 
         Args:
             index_name (str): Name of the index to delete.
@@ -146,14 +147,26 @@ class Client:
         print(f"{response_json['detail']}")
        
     def get_index_info(self, index_name: str) -> Dict[str, Any]:
-        """
-        Get info of an index by its name.
-
+        """Retrieves information about a specific vector index.
+        
+        This method searches for the index specified by `index_name` within the list of available indexes. 
+        If the index exists, it returns a dictionary containing information about the index. This method 
+        is useful to get information about the index without having to connect to it.
+        
         Args:
-            index_name (str): Name of the index to get info of.
+            index_name: Name of the index to retrieve information for.
 
         Returns:
-            Dict[str, Any]: Dictionary containing info of the index.
+            index_info: A dictionary containing information about the index with the following keys:
+            
+                - index_name (str): The name of the index.
+                - status (str): The current status of the index ("initializing" or "ready").
+                - num_records (int): The number of records stored in the index.
+                - dimension (int): The dimensionality of the vectors in the index.
+                - metric (str): The distance metric used for similarity search.
+                - features_type (str): The type of features stored.
+                - embedding_model_name (str): The name of the embedding model used (if applicable).
+                - optimized_for_latency (bool): Whether the index is optimized for low-latency queries.
         """
         info_all_indexes = self.list_indexes()
         for info_index in info_all_indexes:
@@ -163,8 +176,7 @@ class Client:
         raise ValueError(f"Index {index_name} not found in the list of existing indexes")
     
     def connect_to_index(self, index_name: str) -> IndexObject:
-        """
-        Connect to an existing vector index and return an IndexObject for further operations.
+        """Connects to an existing vector index and returns an IndexObject for further operations.
 
         This method searches for the index specified by `index_name` within the list of available indexes. If the index exists, it returns an `IndexObject` configured with the current connection parameters, which can be used to perform operations such as upsert, search, and more on the index.
 
