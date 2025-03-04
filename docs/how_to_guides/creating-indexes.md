@@ -6,7 +6,7 @@ PreciseSearch supports two types of indexes: **Dense** and **Hybrid**.
 - **Hybrid Indexes**: Combine dense embeddings with sparse embeddings to improve search relevance, especially for keyword-based queries.
 
 
-## Dense Indexes 
+## **Dense Indexes**
 Dense indexes are the most common type of vector index. They store embeddings as floating-point arrays. 
 When creating a dense index, you have two choices for generating and handling dense embeddings:
 
@@ -18,7 +18,7 @@ When creating a dense index, you have two choices for generating and handling de
 
     You manage the embeddings yourself—meaning you supply embeddings during both upsert and search.
 
-### Using an Integrated Embedding Model
+### **Using an Integrated Embedding Model**
 When you create a dense index with an integrated embedding model, you do not need to specify the vector dimension. The index will automatically:
 
 - Generate dense embeddings from text during upserts.
@@ -27,7 +27,7 @@ When you create a dense index with an integrated embedding model, you do not nee
 The example below creates a dense index with an integrated embedding model (e.g., `e5-small-v2`).
 The list of supported embedding models can be found [here].
 
-```python title="Creating a dense index with an integrated embedding model"
+```python title="Creating a dense index with an integrated embedding model" linenums="1"
 client.create_index(
     index_name="my_dense_index",
     embedding_model_name="e5-small-v2",  # Built-in embedding model
@@ -36,12 +36,12 @@ client.create_index(
 )
 ```
 
-### Using a Non-Integrated Embedding Model
+### **Using a Non-Integrated Embedding Model**
 If you prefer to manage your embeddings, set `embedding_model_name="none"` and explicitly provide:
 - The dimensionality `(dimension)` of your vectors.
 - Dense embeddings during upsert and search.
 
-```python title="Creating a dense index with a non-integrated embedding model"
+```python title="Creating a dense index with a non-integrated embedding model" linenums="1"
 client.create_index(
     index_name="my_dense_index",
     embedding_model_name="none",  # Indicates you'll provide your own vectors
@@ -52,7 +52,7 @@ client.create_index(
 ```
 
 
-## Hybrid Indexes 
+## **Hybrid Indexes**
 Hybrid indexes represent each data point with both a dense embedding and a sparse embedding:
 
 - **Dense embeddings** capture semantic similarity.
@@ -62,7 +62,7 @@ By combining these two representations, hybrid indexes often yield better search
 > **Note:** For performance reasons, hybrid indexes only support the `dotproduct` metric.
 
 
-### Choosing an Embedding Strategy
+### **Choosing an Embedding Strategy**
 Similar to dense indexes, hybrid indexes can use either integrated or non-integrated embedding models for the dense embeddings:
 
 1. **Integrated**: 
@@ -72,10 +72,10 @@ Similar to dense indexes, hybrid indexes can use either integrated or non-integr
 
 > **Important:** You must always provide the **sparse embeddings** yourself for hybrid indexes.
 
-### Using an Integrated Dense Embedding Model
+### **Using an Integrated Dense Embedding Model**
 If you rely on a built-in dense embedding model (e.g., `e5-small-v2`), you do not need to specify the dimension. Sparse embeddings must still be provided by the user.
 
-```python title="Creating a hybrid index with an integrated dense embedding model"
+```python title="Creating a hybrid index with an integrated dense embedding model" linenums="1"
 client.create_index(
     index_name="my_hybrid_index",
     embedding_model_name="e5-small-v2",  # Built-in dense embedding model
@@ -84,11 +84,11 @@ client.create_index(
 )
 ```
 
-### Using a Non-Integrated Dense Embedding Model
+### **Using a Non-Integrated Dense Embedding Model**
 For cases where you supply your own dense embeddings, set `embedding_model_name="none"` and specify the `dimension`. 
 You will provide both the dense and sparse vectors during upsert and search.
 
-```python title="Creating a hybrid index with a non-integrated dense embedding model"
+```python title="Creating a hybrid index with a non-integrated dense embedding model" linenums="1"
 client.create_index(
     index_name="my_custom_hybrid_index",
     embedding_model_name="none",  # Indicates user-provided dense embeddings
@@ -98,7 +98,7 @@ client.create_index(
 )
 ```
 
-## Summary
+## **Summary**
 1. Dense Indexes:
     - Have two options for dense embeddings:
         - Integrated model (`embedding_model_name="e5-small-v2", etc.`)
