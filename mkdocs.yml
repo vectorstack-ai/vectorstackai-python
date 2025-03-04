@@ -6,7 +6,26 @@ theme:
   hljs_languages:
     - python
 
+  palette:
+    scheme: slate
+    primary: green
+    accent: indigo
+  
+  features:
+    - toc.follow # Automatically scroll to the selected anchor
+    - toc.integrate # Automatically integrate the table of contents into the page
+    - navigation.top # Show the navigation bar at the top of the page
+    - navigation.expand
+    - navigation.tabs # Show the navigation bar at the top of the page
+    - navigation.tabs.sticky # Make the navigation bar sticky
+    - search.suggest # Show search suggestions
+    - search.share # Show search share
+
+
 plugins:
+  - privacy # Automatically downloads external files/ assets as part of the build process
+  - offline # Make the documentation available offline
+  - search
   - mkdocstrings:
       handlers:
         python:
