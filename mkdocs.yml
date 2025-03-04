@@ -2,9 +2,7 @@ site_name: PreciseSearch Documentation
 
 theme:
   name: material
-  highlightjs: true
-  hljs_languages:
-    - python
+
 
   palette:
     scheme: slate
@@ -16,12 +14,22 @@ theme:
     - toc.integrate # Automatically integrate the table of contents into the page
     - navigation.top # Show the navigation bar at the top of the page
     - navigation.expand # Expand the navigation bar
+    - navigation.sections  # Show the sections in the navigation bar
     - navigation.tabs # Show the navigation bar at the top of the page
     - navigation.instant.prefetch # Prefetch the navigation menu
     - navigation.tabs.sticky # Make the navigation bar sticky
     - search.suggest # Show search suggestions
     - search.share # Show search share
+    - content.code.copy # Show copy button for code blocks
 
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
 
 plugins:
   - privacy # Automatically downloads external files/ assets as part of the build process

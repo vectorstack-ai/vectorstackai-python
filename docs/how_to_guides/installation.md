@@ -1,11 +1,5 @@
 # Installation and Getting Started
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-
-
 ## **Installation**
 PreciseSearch is a product by [VectorStackAI](https://vectorstack.ai), designed to provide seamless vector search capabilities. 
 Currently, we offer a Python SDK to interact with the PreciseSearch service.

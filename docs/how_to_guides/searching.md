@@ -1,4 +1,4 @@
-# Searching
+# **Searching**
 
 The search method enables you to find the most relevant vectors in your index based on a query. 
 It returns a ranked list of the closest matches, sorted by similarity score.
@@ -9,9 +9,7 @@ Each search result (in the returned list) contains:
 - `similarity` – The similarity score for the match (higher is typically more relevant).
 - `metadata` – Any additional metadata stored with the vector (only returned if `return_metadata=True`).
 
-Below is a simple example of how to handle the list of results returned from `index.search()`:
-
-```python
+```python title="Example showing how to search an index and handle the list of results"
 results = index.search(
     query_text="What is a document?",
     top_k=5,
@@ -26,7 +24,7 @@ for item in results:
     print("---")
 ```
 
-## Required Arguments
+## **Required Arguments**
 Depending on your exact setup, the required inputs for each search can vary. 
 Use this table to see which arguments you must provide for each combination of index type and embedding model.
 
@@ -48,7 +46,7 @@ In the table above, the following terms apply:
 - **`query_sparse_values` (list of floats)** and **`query_sparse_indices` (list of ints)**  
   The numerical values and their corresponding indices for a sparse representation of the query (e.g., TF-IDF, BM25, etc.). 
 
-## Optional Arguments
+## **Optional Arguments**
 In addition to these required arguments, you may also specify following **optional arguments**:
 
 - **`top_k` (int, default=10)**  
@@ -58,17 +56,17 @@ In addition to these required arguments, you may also specify following **option
   When set to True, metadata for each result is returned. 
   If you only need IDs and similarity scores, leave this as False to speed up the query.
 
-## Detailed Search Scenarios
+## **Detailed Search Scenarios**
 Below are code examples demonstrating how to search your index based on different configurations. Each example shows the required and optional arguments needed for successful searching.
 
-### Dense Indexes
-#### With Integrated Embedding Model
+### **Dense Indexes**
+#### **With Integrated Embedding Model**
 To search a dense index configured with an integrated embedding model, you only need to provide a `query_text`. The method will automatically generate a dense query vector from this text.
 
 - Required: `query_text` 
 - Optional: `top_k`, `return_metadata`
 
-```python
+```python title="Searching a dense index with an integrated embedding model"
 # Search using query's text
 results = index.search(
     query_text="What is a document?", 
@@ -77,13 +75,13 @@ results = index.search(
 )
 ```
 
-#### With Non-Integrated Embedding Model
+#### **With Non-Integrated Embedding Model**
 To search a dense index configured with a non-integrated embedding model, you must explicitly provide the dense vector representation of the query (via `query_vector`).
 
 - Required: `query_vector` 
 - Optional: `top_k`, `return_metadata`
 
-```python
+```python title="Searching a dense index with a non-integrated embedding model"
 # Search using query's dense vector representation
 results = index.search(
     query_vector=[0.1, 0.2, 0.3, 0.4],
@@ -92,17 +90,17 @@ results = index.search(
 )
 ```
 
-### Hybrid Indexes
+### **Hybrid Indexes**
 A hybrid index combines both dense and sparse vector representations to enhance search quality. 
 **Dense vectors** capture the semantic meaning of text (through continuous embeddings), while **sparse vectors** (e.g., TF-IDF or BM25) capture exact keyword matches.
 
-#### Similarity Score in a Hybrid Index
+#### **Similarity Score in a Hybrid Index**
 When searching, the similarity score between a query and a document is computed as a weighted sum of the query–document similarity in both dense and sparse vector spaces:
 
 - `dense_similarity`: reflects how similar is the query’s dense representation to the document’s dense representation
 - `sparse_similarity`: reflects how similar is the query’s sparse representation to the document’s sparse representation
 
-```python
+```python title="Similarity score calculation in a hybrid index"
 similarity_score = (
     dense_similarity * dense_similarity_scale
     + sparse_similarity * sparse_similarity_scale
@@ -114,13 +112,13 @@ Here, `dense_similarity_scale` and `sparse_similarity_scale` are floating-point 
 You can adjust these values as needed via the `index.set_similarity_scale()` method. 
 For example, to make the sparse representation twice as influential as the dense representation, set:
 
-```python
+```python title="Setting the similarity scale for a hybrid index"
 index.set_similarity_scale(dense_scale=0.5, sparse_scale=1.0)
 ```
 
 **Note:** Setting weights to 0.0 for either representation will effectively disable that representation in the final similarity score.
 
-#### With Integrated Embedding Model
+#### **With Integrated Embedding Model**
 To search a hybrid index configured with an integrated embedding model, you need to provide the `query_text` and its sparse vector representation (via `query_sparse_values` and `query_sparse_indices`). 
 The dense vector will be automatically generated from the `query_text`.
 
@@ -130,7 +128,7 @@ The dense vector will be automatically generated from the `query_text`.
     - `query_sparse_indices` 
 - Optional: `top_k`, `return_metadata`
 
-```python
+```python title="Searching a hybrid index with an integrated embedding model"
 # Search using text query
 results = index.search(
     query_text="What is a document?",
@@ -141,7 +139,7 @@ results = index.search(
 )
 ```
 
-#### With Non-Integrated Embedding Model
+#### **With Non-Integrated Embedding Model**
 To search a hybrid index configured with a non-integrated embedding model, you must explicitly provide the dense and sparse vector representations of the query. The dense vector is provided via `query_vector` and the sparse vector is provided via `query_sparse_values` and `query_sparse_indices` respectively.
 
 - Required: 
@@ -150,7 +148,7 @@ To search a hybrid index configured with a non-integrated embedding model, you m
     - `query_sparse_indices` 
 - Optional: `top_k`, `return_metadata`
 
-```python
+```python title="Searching a hybrid index with a non-integrated embedding model"
 # Search using text query
 results = index.search(
     top_k=5,  # Return top 5 results

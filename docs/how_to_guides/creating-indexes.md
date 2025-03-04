@@ -6,8 +6,6 @@ PreciseSearch supports two types of indexes: **Dense** and **Hybrid**.
 - **Hybrid Indexes**: Combine dense embeddings with sparse embeddings to improve search relevance, especially for keyword-based queries.
 
 
-<a name="creating-dense-indexes"> </a>
-
 ## Dense Indexes 
 Dense indexes are the most common type of vector index. They store embeddings as floating-point arrays. 
 When creating a dense index, you have two choices for generating and handling dense embeddings:
@@ -27,9 +25,9 @@ When you create a dense index with an integrated embedding model, you do not nee
 - Generate embeddings for query text during searches.
 
 The example below creates a dense index with an integrated embedding model (e.g., `e5-small-v2`).
-The list of supported embedding models can be found [here](https://vectorstack.ai/docs/embedding-models).
+The list of supported embedding models can be found [here].
 
-```python
+```python title="Creating a dense index with an integrated embedding model"
 client.create_index(
     index_name="my_dense_index",
     embedding_model_name="e5-small-v2",  # Built-in embedding model
@@ -37,12 +35,13 @@ client.create_index(
     features_type="dense"
 )
 ```
+
 ### Using a Non-Integrated Embedding Model
 If you prefer to manage your embeddings, set `embedding_model_name="none"` and explicitly provide:
 - The dimensionality `(dimension)` of your vectors.
 - Dense embeddings during upsert and search.
 
-```python
+```python title="Creating a dense index with a non-integrated embedding model"
 client.create_index(
     index_name="my_dense_index",
     embedding_model_name="none",  # Indicates you'll provide your own vectors
@@ -52,7 +51,6 @@ client.create_index(
 )
 ```
 
-<a name="creating-hybrid-indexes"></a>
 
 ## Hybrid Indexes 
 Hybrid indexes represent each data point with both a dense embedding and a sparse embedding:
@@ -77,7 +75,7 @@ Similar to dense indexes, hybrid indexes can use either integrated or non-integr
 ### Using an Integrated Dense Embedding Model
 If you rely on a built-in dense embedding model (e.g., `e5-small-v2`), you do not need to specify the dimension. Sparse embeddings must still be provided by the user.
 
-```python
+```python title="Creating a hybrid index with an integrated dense embedding model"
 client.create_index(
     index_name="my_hybrid_index",
     embedding_model_name="e5-small-v2",  # Built-in dense embedding model
@@ -90,7 +88,7 @@ client.create_index(
 For cases where you supply your own dense embeddings, set `embedding_model_name="none"` and specify the `dimension`. 
 You will provide both the dense and sparse vectors during upsert and search.
 
-```python
+```python title="Creating a hybrid index with a non-integrated dense embedding model"
 client.create_index(
     index_name="my_custom_hybrid_index",
     embedding_model_name="none",  # Indicates user-provided dense embeddings

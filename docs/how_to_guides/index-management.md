@@ -2,7 +2,7 @@
 
 This section covers various operations for managing your indexes, including getting information about specific indexes, listing all indexes, optimizing indexes for performance, and deleting indexes.
 
-## Getting Index Info
+## **Getting Index Info**
 To get detailed information about a specific index, use the `get_index_info()` method:
 
 ```python
@@ -30,7 +30,7 @@ The returned dictionary contains metadata including:
 If the index is still being created (status is `"initializing"`), only basic information will be available. 
 Once the index is ready, you'll have access to all metadata fields.
 
-## Listing Indexes
+## **Listing Indexes**
 The `list_indexes()` method returns information about all indexes associated with your API key:
 
 ```python
@@ -47,8 +47,19 @@ for index in indexes:
 
 Each index in the returned list contains the same metadata fields as described in the [Getting Index Info](#getting-index-info) section.
 
-## Optimizing Indexes
-The `optimize_for_latency()` method triggers an optimization process on the backend to improve search performance. You should call this method if you are experiencing high latency in your search operations (true for indexes with > 500k vectors). This is an asynchronous operation, meaning that the method will return immediately and the optimization will run in the background.
+## **Optimizing For Latency**
+
+### **Introduction**
+When your dataset grows large, searching for the nearest neighbors in high-dimensional vector spaces becomes increasingly resource-intensive. To address this challenge, most modern vector databases use approximate nearest neighbor (ANN) search algorithms. These algorithms are typically built on specialized data structures—such as Inverted File Index (IVF), Hierarchical Navigable Small World (HNSW), or Vamana graphs—that enable fast lookups while preserving a high level of accuracy.
+
+### **Latency Optimization with No Manual Tuning**
+Most vector databases require manual configuration of various ANN parameters, such as *nprobe* for IVF or the *number of edges per node* in HNSW. By contrast, PreciseSearch is designed to automatically select the best data structure and optimize its parameters, eliminating the need for manual tuning and simplifying setup.
+
+To optimize for latency in PreciseSearch, you can use the `optimize_for_latency()` method. This method runs an optimization process on the backend to reduce search latency.
+
+- **When to Call**: You usually need to call this method only once, ideally after you have loaded most of your data. If the size of your index is less than 500,000 vectors, you do not need to call this method.
+- **Effect on Indexing**: You can still insert additional data afterward, but you typically won’t need to run the optimization again.
+- **Asynchronous Execution**: Because this operation runs in the background, the method returns immediately while optimization continues behind the scenes.
 
 ```python
 # Connect to an existing index
@@ -58,13 +69,9 @@ index = client.connect_to_index("my_index_name")
 index.optimize_for_latency()
 ```
 
-Key points about optimization:
-- The optimization process runs in the background
-- The index is available for searches during optimization
-- Optimization can improve both latency and throughput of search operations
-- The process may take some time depending on the index size (usually under a minute)
+> **Note**: The `optimize_for_latency()` method is automatically called when you create an index with the `create_index()` method.
 
-## Deleting Indexes
+## **Deleting Indexes**
 You can delete an index using either the client's `delete_index()` method or the index object's `delete()` method:
 
 ```python
