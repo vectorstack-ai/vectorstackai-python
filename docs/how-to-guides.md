@@ -7,17 +7,17 @@ This document provides how-to guides for various tasks which can be performed us
 - [Installation](#installation)
 - [Getting Started](#getting-started)
 - [Creating Indexes](#creating-indexes)
-    - [Dense Indexes](#dense-indexes)
-    - [Hybrid Indexes](#hybrid-indexes)
+    - [Dense Indexes](#creating-dense-indexes)
+    - [Hybrid Indexes](#creating-hybrid-indexes)
 - [Managing Data](#managing-data)
     - [Upserting Data](#upserting-data)
     - [Deleting Vectors](#deleting-vectors)
 - [Searching](#searching)
-    - [Basic Search](#basic-search)
-    - [Advanced Search Options](#advanced-search-options)
+    - [Required Arguments](#required-arguments)
+    - [Detailed Search Scenarios](#detailed-search-scenarios)
 - [Index Management](#index-management)
-    - [Listing Indexes](#listing-indexes)
     - [Getting Index Info](#getting-index-info)
+    - [Listing Indexes](#listing-indexes)
     - [Optimizing Indexes](#optimizing-indexes)
     - [Deleting Indexes](#deleting-indexes)
 
@@ -57,7 +57,10 @@ PreciseSearch supports two types of indexes: **Dense** and **Hybrid**.
 - **Dense Indexes**: Store and search data using dense embeddings.
 - **Hybrid Indexes**: Combine dense embeddings with sparse embeddings to improve search relevance, especially for keyword-based queries.
 
-### A. **Dense Indexes**
+
+<a name="creating-dense-indexes"> </a>
+
+### **Dense Indexes** 
 Dense indexes are the most common type of vector index. They store embeddings as floating-point arrays. 
 When creating a dense index, you have two choices for generating and handling dense embeddings:
 
@@ -69,7 +72,7 @@ When creating a dense index, you have two choices for generating and handling de
 
     You manage the embeddings yourself—meaning you supply embeddings during both upsert and search.
 
-#### A.1. Using an Integrated Embedding Model
+#### Using an Integrated Embedding Model
 When you create a dense index with an integrated embedding model, you do not need to specify the vector dimension. The index will automatically:
 
 - Generate dense embeddings from text during upserts.
@@ -86,7 +89,7 @@ client.create_index(
     features_type="dense"
 )
 ```
-#### A.2. Using a Non-Integrated Embedding Model
+#### Using a Non-Integrated Embedding Model
 If you prefer to manage your embeddings, set `embedding_model_name="none"` and explicitly provide:
 - The dimensionality `(dimension)` of your vectors.
 - Dense embeddings during upsert and search.
@@ -101,7 +104,9 @@ client.create_index(
 )
 ```
 
-### (B) **Hybrid Indexes**
+<a name="creating-hybrid-indexes"></a>
+
+### **Hybrid Indexes** 
 Hybrid indexes represent each data point with both a dense embedding and a sparse embedding:
 
 - **Dense embeddings** capture semantic similarity.
@@ -121,7 +126,7 @@ Similar to dense indexes, hybrid indexes can use either integrated or non-integr
 
 > **Important:** You must always provide the **sparse embeddings** yourself for hybrid indexes.
 
-#### B.1 Using an Integrated Dense Embedding Model
+#### Using an Integrated Dense Embedding Model
 If you rely on a built-in dense embedding model (e.g., `e5-small-v2`), you do not need to specify the dimension. Sparse embeddings must still be provided by the user.
 
 ```python
@@ -133,7 +138,7 @@ client.create_index(
 )
 ```
 
-#### B.2 Using a Non-Integrated Dense Embedding Model
+#### Using a Non-Integrated Dense Embedding Model
 For cases where you supply your own dense embeddings, set `embedding_model_name="none"` and specify the `dimension`. 
 You will provide both the dense and sparse vectors during upsert and search.
 
@@ -214,9 +219,9 @@ On a high level, you need following information for each item for an upsert oper
 The exact specifics/requirements of an upsert operation depend on your index type (dense or hybrid) and whether you are using an integrated or non-integrated embedding model.
 Below, we will go through the different scenarios in detail.
 
-#### A. Upserting to Dense Indexes
+#### Upserting to Dense Indexes
 
-##### A.1 With Integrated Embedding Model
+##### With Integrated Embedding Model
 For a dense index configured with an integrated embedding model, you only need to provide following information for each item in the batch:
 
 - IDs (unique for each item)
@@ -239,7 +244,7 @@ index.upsert(
 )
 ```
 
-##### A.2 With Non-Integrated Embedding Model
+##### With Non-Integrated Embedding Model
 For a dense index configured with a non-integrated embedding model, you must explicitly provide following information for each item in the batch:
 
 - IDs (unique for each item)
@@ -266,7 +271,7 @@ index.upsert(
 )
 ```
 
-#### B. Upserting to Hybrid Indexes
+#### Upserting to Hybrid Indexes
 When upserting to a hybrid index, you must provide both dense and sparse representations, along with a unique ID and any optional metadata. 
 The **key difference** from a purely dense index is the required **sparse vector**, which you must explicitly supply using `sparse_values` and `sparse_indices`. 
 The dense vector can either be:
@@ -275,7 +280,7 @@ The dense vector can either be:
 - Explicitly provided (if your index uses a non-integrated embedding model).
 
 
-##### B.1 With Integrated Embedding Model
+##### With Integrated Embedding Model
 For hybrid indexes configured with an integrated embedding model (for the dense vectors), you need to supply following information for each item in the batch:
 
 - IDs
@@ -298,7 +303,7 @@ index.upsert(
 )
 ```
 
-##### B.2 With Non-Integrated Embedding Model
+##### With Non-Integrated Embedding Model
 For hybrid indexes configured with a non-integrated embedding model, you must explicitly provide:
 
 - IDs
@@ -336,10 +341,34 @@ index.delete_vectors(ids=["doc1", "doc2"])
 
 ## **Searching**
 
-The search method lets you retrieve the most relevant vectors from an index based on a user query. 
-It supports both dense and hybrid indexes, and can work with integrated (automatically generated vectors) or non-integrated (user-supplied vectors) embedding models.  Depending on your setup, the required inputs for each search can vary. 
+The search method enables you to find the most relevant vectors in your index based on a query. 
+It returns a ranked list of the closest matches, sorted by similarity score.
 
-### Quick Reference
+Each search result (in the returned list) contains:
+
+- `id` – The identifier of the matching document/vector.
+- `similarity` – The similarity score for the match (higher is typically more relevant).
+- `metadata` – Any additional metadata stored with the vector (only returned if `return_metadata=True`).
+
+Below is a simple example of how to handle the list of results returned from `index.search()`:
+
+```python
+results = index.search(
+    query_text="What is a document?",
+    top_k=5,
+    return_metadata=True
+)
+
+for item in results:
+    print("ID:", item["id"])
+    print("Similarity:", item["similarity"])
+    if "metadata" in item:
+        print("Metadata:", item["metadata"])
+    print("---")
+```
+
+### Required Arguments
+Depending on your exact setup, the required inputs for each search can vary. 
 Use this table to see which arguments you must provide for each combination of index type and embedding model.
 
 | **Index Type** | **Embedding Model** | **Required Arguments**                                         |
@@ -351,15 +380,16 @@ Use this table to see which arguments you must provide for each combination of i
 
 In the table above, the following terms apply:
 
-- **`query_text`**  
-  A text-based query string. For indexes with an integrated embedding model, dense vector representation is automatically generated from this text. 
+- **`query_text` (string)**  
+  A text-based query string. For indexes configured with an integrated embedding model, dense vector representation is automatically generated from this text. 
 
-- **`query_vector`**  
-  A list of floats representing the dense vector for the query. This is required for non-integrated models, where you handle the dense vector generation yourself.
+- **`query_vector` (list of floats)**  
+  A list of floats representing the dense vector for the query. This is required for indexes configured with non-integrated embedding models, where you handle the dense vector generation yourself.
 
-- **`query_sparse_values`** and **`query_sparse_indices`**  
+- **`query_sparse_values` (list of floats)** and **`query_sparse_indices` (list of ints)**  
   The numerical values and their corresponding indices for a sparse representation of the query (e.g., TF-IDF, BM25, etc.). 
 
+### Optional Arguments
 In addition to these required arguments, you may also specify following **optional arguments**:
 
 - **`top_k` (int, default=10)**  
@@ -369,19 +399,12 @@ In addition to these required arguments, you may also specify following **option
   When set to True, metadata for each result is returned. 
   If you only need IDs and similarity scores, leave this as False to speed up the query.
 
-### Detailed Search Scenarios
+### **Detailed Search Scenarios**
+Below are code examples demonstrating how to search your index based on different configurations. Each example shows the required and optional arguments needed for successful searching.
 
-Below are code examples for each scenario, showing how to supply the correct arguments depending on your index configuration. 
-Each call returns a list of results, where each result includes:
-
-- `id` – The identifier of the matching document/vector.
-- `similarity` – The similarity score for the match (higher is typically more relevant).
-- `metadata` – Any additional metadata stored with the vector (only returned if `return_metadata=True`).
-
-
-#### A. Dense Indexes
-##### A.1 With Integrated Embedding Model
-For a dense index configured with an integrated embedding model, you only need to provide a `query_text`. The method will automatically generate a dense query vector from this text.
+#### Dense Indexes
+##### With Integrated Embedding Model
+To search a dense index configured with an integrated embedding model, you only need to provide a `query_text`. The method will automatically generate a dense query vector from this text.
 
 - Required: `query_text` 
 - Optional: `top_k`, `return_metadata`
@@ -393,17 +416,10 @@ results = index.search(
     top_k=5, 
     return_metadata=True
 )
-
-# Print the results
-for item in results:
-    print("ID:", item["id"])
-    print("Similarity:", item["similarity"])
-    print("Metadata:", item["metadata"])
-    print("---")
 ```
 
-##### A.2 With Non-Integrated Embedding Model
-For a dense index configured with a non-integrated embedding model, you must explicitly provide the dense vector representation of the query (via `query_vector`).
+##### With Non-Integrated Embedding Model
+To search a dense index configured with a non-integrated embedding model, you must explicitly provide the dense vector representation of the query (via `query_vector`).
 
 - Required: `query_vector` 
 - Optional: `top_k`, `return_metadata`
@@ -415,21 +431,38 @@ results = index.search(
     top_k=5,
     return_metadata=True
 )
-
-# Print the results
-for item in results:
-    print("ID:", item["id"])
-    print("Similarity:", item["similarity"])
-    print("Metadata:", item["metadata"])
-    print("---")
 ```
 
-#### B. Hybrid Indexes
-Hybrid indexes use both dense and sparse representations to find matches. 
-That means you will need to include query's sparse vector representation in all queries, plus the dense vector representation if using a non-integrated model.
+#### Hybrid Indexes
+A hybrid index combines both dense and sparse vector representations to enhance search quality. 
+**Dense vectors** capture the semantic meaning of text (through continuous embeddings), while **sparse vectors** (e.g., TF-IDF or BM25) capture exact keyword matches.
 
-##### B.1 With Integrated Embedding Model
-For a hybrid index configured with an integrated embedding model, you need to provide the `query_text` and its sparse vector representation (via `query_sparse_values` and `query_sparse_indices`). 
+##### Similarity Score in a Hybrid Index
+When searching, the similarity score between a query and a document is computed as a weighted sum of the query–document similarity in both dense and sparse vector spaces:
+
+- `dense_similarity`: reflects how similar is the query’s dense representation to the document’s dense representation
+- `sparse_similarity`: reflects how similar is the query’s sparse representation to the document’s sparse representation
+
+```python
+similarity_score = (
+    dense_similarity * dense_similarity_scale
+    + sparse_similarity * sparse_similarity_scale
+)
+```
+
+Here, `dense_similarity_scale` and `sparse_similarity_scale` are floating-point numbers between 0.0 and 1.0 that control the relative contribution of each representation. 
+**By default both are set to 1.0, giving equal weight to the dense and sparse vectors**.
+You can adjust these values as needed via the `index.set_similarity_scale()` method. 
+For example, to make the sparse representation twice as influential as the dense representation, set:
+
+```python
+index.set_similarity_scale(dense_scale=0.5, sparse_scale=1.0)
+```
+
+**Note:** Setting weights to 0.0 for either representation will effectively disable that representation in the final similarity score.
+
+##### With Integrated Embedding Model
+To search a hybrid index configured with an integrated embedding model, you need to provide the `query_text` and its sparse vector representation (via `query_sparse_values` and `query_sparse_indices`). 
 The dense vector will be automatically generated from the `query_text`.
 
 - Required: 
@@ -447,17 +480,10 @@ results = index.search(
     top_k=5,
     return_metadata=True
 )
-
-# Print the results
-for item in results:
-    print("ID:", item["id"])
-    print("Similarity:", item["similarity"])
-    print("Metadata:", item["metadata"])
-    print("---")
 ```
 
-##### B.2 With Non-Integrated Embedding Model
-For a hybrid index configured with a non-integrated embedding model, you must explicitly provide the dense and sparse vector representations of the query. The dense vector is provided via `query_vector` and the sparse vector is provided via `query_sparse_values` and `query_sparse_indices` respectively.
+##### With Non-Integrated Embedding Model
+To search a hybrid index configured with a non-integrated embedding model, you must explicitly provide the dense and sparse vector representations of the query. The dense vector is provided via `query_vector` and the sparse vector is provided via `query_sparse_values` and `query_sparse_indices` respectively.
 
 - Required: 
     - `query_vector` 
@@ -474,43 +500,95 @@ results = index.search(
     query_sparse_indices=[0, 3, 5],
     return_metadata=True  # Include metadata in results
 )
-
-# Print the results
-for item in results:
-    print("ID:", item["id"])
-    print("Similarity:", item["similarity"])
-    print("Metadata:", item["metadata"])
-    print("---")
 ```
 
 ## Index Management
+This section covers various operations for managing your indexes, including getting information about specific indexes, listing all indexes, optimizing indexes for performance, and deleting indexes.
+
+### Getting Index Info
+To get detailed information about a specific index, use the `get_index_info()` method:
+
+```python
+# Get info about a specific index
+index_info = client.get_index_info("my_index_name")
+
+# Access specific properties
+print(f"Status: {index_info['status']}")
+print(f"Number of records: {index_info['num_records']}")
+print(f"Dimension: {index_info['dimension']}")
+print(f"Metric: {index_info['metric']}")
+```
+
+The returned dictionary contains metadata including:
+
+- `index_name`: Name of the index
+- `status`: Current status ("initializing" or "ready")
+- `num_records`: Number of vectors stored in the index
+- `dimension`: Vector dimension
+- `metric`: Distance metric used ("cosine" or "dotproduct")
+- `features_type`: Type of features stored ("dense" or "hybrid")
+- `embedding_model_name`: Name of the integrated embedding model (if any)
+- `optimized_for_latency`: Whether the index is optimized for low-latency queries
+
+If the index is still being created (status is `"initializing"`), only basic information will be available. 
+Once the index is ready, you'll have access to all metadata fields.
 
 ### Listing Indexes
-
-You can list all your indexes:
+The `list_indexes()` method returns information about all indexes associated with your API key:
 
 ```python
 # Get a list of all indexes
 indexes = client.list_indexes()
+
+# Print information about each index
+for index in indexes:
+    print(f"Index name: {index['index_name']}")
+    print(f"Status: {index['status']}")
+    print(f"Number of records: {index['num_records']}")
+    print("---")
 ```
 
-### Getting Index Info
-
-```python
-# Get info about a specific index
-index_info = client.get_index_info("my_dense_index")
-```
+Each index in the returned list contains the same metadata fields as described in the [Getting Index Info](#getting-index-info) section.
 
 ### Optimizing Indexes
+The `optimize_for_latency()` method triggers an optimization process on the backend to improve search performance. You should call this method if you are experiencing high latency in your search operations (true for indexes with > 500k vectors). This is an asynchronous operation, meaning that the method will return immediately and the optimization will run in the background.
 
 ```python
-# Optimize the index for better latency
+# Connect to an existing index
+index = client.connect_to_index("my_index_name")
+
+# Optimize the index for better search performance
 index.optimize_for_latency()
 ```
 
+Key points about optimization:
+- The optimization process runs in the background
+- The index is available for searches during optimization
+- Optimization can improve both latency and throughput of search operations
+- The process may take some time depending on the index size (usually under a minute)
+
 ### Deleting Indexes
+You can delete an index using either the client's `delete_index()` method or the index object's `delete()` method:
 
 ```python
-# Delete an index
-client.delete_index("my_dense_index")
+# Method 1: Using the client
+client.delete_index("my_index_name")
+
+# Method 2: Using the index object
+index = client.connect_to_index("my_index_name")
+index.delete()
 ```
+
+Important considerations when deleting indexes:
+- Deletion is permanent and cannot be undone
+- By default, both methods will ask for confirmation before deletion
+- You can bypass the confirmation by setting `ask_for_confirmation=False`:
+
+```python
+# Delete without confirmation
+client.delete_index("my_index_name", ask_for_confirmation=False)
+# or
+index.delete(ask_for_confirmation=False)
+```
+
+> **Warning**: Be extremely careful when disabling confirmation, as deleted indexes cannot be recovered.
