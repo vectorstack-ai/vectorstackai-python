@@ -15,8 +15,9 @@ theme:
     - toc.follow # Automatically scroll to the selected anchor
     - toc.integrate # Automatically integrate the table of contents into the page
     - navigation.top # Show the navigation bar at the top of the page
-    - navigation.expand
+    - navigation.expand # Expand the navigation bar
     - navigation.tabs # Show the navigation bar at the top of the page
+    - navigation.instant.prefetch # Prefetch the navigation menu
     - navigation.tabs.sticky # Make the navigation bar sticky
     - search.suggest # Show search suggestions
     - search.share # Show search share
@@ -41,8 +42,13 @@ plugins:
 
 nav:
   - Home: index.md
-  - How-To Guides: how-to-guides.md
+  - How-To Guides: 
+    - Overview: how-to-guides.md
+    - Installation: how_to_guides/installation.md
+    - Creating Indexes: how_to_guides/creating-indexes.md
+    - Managing Data: how_to_guides/managing-data.md
+    - Searching: how_to_guides/searching.md
+    - Index Management: how_to_guides/index-management.md
   - Python Client Reference: reference.md
   - Tutorials: tutorials.md
   - Explanation: explanation.md
-
