@@ -108,9 +108,9 @@ class IndexObject:
                top_k: int = 10, 
                query_text: str = None, 
                query_vector: List[float] = None, 
-               return_metadata: bool = False,
                query_sparse_values: List[float] = None,
-               query_sparse_indices: List[int] = None) -> Dict[str, Any]:
+               query_sparse_indices: List[int] = None,
+               return_metadata: bool = True) -> Dict[str, Any]:
         """Search the index for entries similar to the query.
         
         Finds entries in the index that are most similar to the provided query. Query can be a text (if using an integrated embedding model) or a dense vector (if using a non-integrated embedding model), along with a sparse vector (if using a hybrid index).
@@ -119,9 +119,9 @@ class IndexObject:
             top_k: Number of top-k results to return (should be >= 1).
             query_text: Query text (required for integrated embedding models).
             query_vector: Query vector (required for non-integrated embedding models).
-            return_metadata: Whether to return metadata for each result (optional, defaults to False).
             query_sparse_values: Query sparse values (required for hybrid indexes).
             query_sparse_indices: Query sparse indices (required for hybrid indexes).
+            return_metadata: Whether to return metadata for each result (optional, defaults to True).
         
         Returns:
             search_results: List of dictionaries containing search results, sorted in descending order of similarity scores. Each dictionary contains:
@@ -191,6 +191,7 @@ class IndexObject:
         
         api_resources.Index.delete_index(self.index_name, 
                                          self.connection_params)
+        print(f"Request accepted: Index '{self.index_name}' deletion scheduled.")
        
     def delete_vectors(self, ids: List[str]) -> None:
         """Deletes vectors from the index by their IDs.

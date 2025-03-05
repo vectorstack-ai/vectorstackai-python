@@ -98,7 +98,7 @@ class Client:
                      embedding_model_name: str, 
                      dimension: Optional[int] = None, 
                      metric: Optional[str] = 'dotproduct', 
-                     features_type: Optional[str] = 'hybrid') -> None:
+                     features_type: Optional[str] = 'dense') -> None:
         """Creates a new vector index with the specified parameters.
         
         Args:
