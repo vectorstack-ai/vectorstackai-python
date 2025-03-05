@@ -11,10 +11,8 @@ These practical examples will show you how to use the library, and also provide 
 ## Examples
 Below is a list of the available tutorials along with a short description of what they cover.
 
-- [Semantic search with an integrated embedding model](tutorials/semantic_search_on_documents.ipynb)
+- [Semantic search on Wikipedia with integrated embedding model](tutorials/semantic_search_on_wikipedia_with_integrated_model.ipynb)
+- [Semantic search on Wikipedia with OpenAI's embedding model](tutorials/semantic_search_on_wikipedia_with_openai_model.ipynb)
+- [Semantic search on Wikipedia with embedding model from Sentence Transformers](tutorials/semantic_search_on_wikipedia_with_sentence_transformers.ipynb)
+- [Hybrid search on Wikipedia](tutorials/hybrid_search_on_wikipedia.ipynb)
 
-- [Semantic search with a non-integrated embedding model](tutorials/semantic_search_on_documents_with_non_integrated_model.ipynb)
-
-- [Hybrid search with an integrated embedding model](tutorials/hybrid_search_on_documents.ipynb)
-
-- [Hybrid search with a non-integrated embedding model](tutorials/hybrid_search_on_documents_with_non_integrated_model.ipynb)

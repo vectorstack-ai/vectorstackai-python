@@ -3,6 +3,7 @@
 The search method enables you to find the most relevant vectors in your index based on a query. 
 It returns a ranked list of the closest matches, sorted by similarity score.
 
+## **Response format**
 Each search result (in the returned list) contains:
 
 - `id` – The identifier of the matching document/vector.
