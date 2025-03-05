@@ -52,9 +52,9 @@ In addition to these required arguments, you may also specify following **option
 - **`top_k` (int, default=10)**  
   The number of results to return. 
 
-- **`return_metadata` (bool, default=False)**  
+- **`return_metadata` (bool, default=True)**  
   When set to True, metadata for each result is returned. 
-  If you only need IDs and similarity scores, leave this as False to speed up the query.
+  If you only need IDs and similarity scores, set this to False to speed up the query.
 
 ## **Detailed Search Scenarios**
 Below are code examples demonstrating how to search your index based on different configurations. Each example shows the required and optional arguments needed for successful searching.
@@ -70,8 +70,7 @@ To search a dense index configured with an integrated embedding model, you only 
 # Search using query's text
 results = index.search(
     query_text="What is a document?", 
-    top_k=5, 
-    return_metadata=True
+    top_k=5
 )
 ```
 
@@ -85,8 +84,7 @@ To search a dense index configured with a non-integrated embedding model, you mu
 # Search using query's dense vector representation
 results = index.search(
     query_vector=[0.1, 0.2, 0.3, 0.4],
-    top_k=5,
-    return_metadata=True
+    top_k=5
 )
 ```
 
@@ -134,8 +132,7 @@ results = index.search(
     query_text="What is a document?",
     query_sparse_values=[0.5, 0.8, 0.3],
     query_sparse_indices=[0, 3, 5],
-    top_k=5,
-    return_metadata=True
+    top_k=5
 )
 ```
 
@@ -151,11 +148,10 @@ To search a hybrid index configured with a non-integrated embedding model, you m
 ```python title="Searching a hybrid index with a non-integrated embedding model"
 # Search using text query
 results = index.search(
-    top_k=5,  # Return top 5 results
     query_vector=[0.1, 0.2, 0.3, 0.4],
     query_sparse_values=[0.5, 0.8, 0.3],
     query_sparse_indices=[0, 3, 5],
-    return_metadata=True  # Include metadata in results
+    top_k=5
 )
 ```
 

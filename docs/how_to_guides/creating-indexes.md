@@ -28,6 +28,10 @@ The example below creates a dense index with an integrated embedding model (e.g.
 The list of supported embedding models can be found [here].
 
 ```python title="Creating a dense index with an integrated embedding model" linenums="1"
+from vectorstackai import Client
+client = Client(api_key="your_api_key_here")
+
+# Create the index
 client.create_index(
     index_name="my_dense_index",
     embedding_model_name="e5-small-v2",  # Built-in embedding model
@@ -38,10 +42,15 @@ client.create_index(
 
 ### **Using a Non-Integrated Embedding Model**
 If you prefer to manage your embeddings, set `embedding_model_name="none"` and explicitly provide:
+
 - The dimensionality `(dimension)` of your vectors.
 - Dense embeddings during upsert and search.
 
 ```python title="Creating a dense index with a non-integrated embedding model" linenums="1"
+from vectorstackai import Client
+client = Client(api_key="your_api_key_here")
+
+# Create the index
 client.create_index(
     index_name="my_dense_index",
     embedding_model_name="none",  # Indicates you'll provide your own vectors
@@ -59,7 +68,9 @@ Hybrid indexes represent each data point with both a dense embedding and a spars
 - **Sparse embeddings** (e.g., BM25, TF-IDF, eg. Splade) capture exact or near-exact term matches.
 
 By combining these two representations, hybrid indexes often yield better search relevance, since they account for both semantic meaning and keyword importance.
-> **Note:** For performance reasons, hybrid indexes only support the `dotproduct` metric.
+
+!!! Note "Performance"
+    For performance reasons, hybrid indexes only support the `dotproduct` metric.
 
 
 ### **Choosing an Embedding Strategy**
@@ -70,12 +81,16 @@ Similar to dense indexes, hybrid indexes can use either integrated or non-integr
 2. **Non-integrated**: 
     You provide your own dense embeddings (in addition to the sparse embeddings).
 
-> **Important:** You must always provide the **sparse embeddings** yourself for hybrid indexes.
+!!! Note "Sparse Embeddings"
+    You must always provide the **sparse embeddings** yourself for hybrid indexes.
 
 ### **Using an Integrated Dense Embedding Model**
 If you rely on a built-in dense embedding model (e.g., `e5-small-v2`), you do not need to specify the dimension. Sparse embeddings must still be provided by the user.
 
 ```python title="Creating a hybrid index with an integrated dense embedding model" linenums="1"
+from vectorstackai import Client
+client = Client(api_key="your_api_key_here")
+
 client.create_index(
     index_name="my_hybrid_index",
     embedding_model_name="e5-small-v2",  # Built-in dense embedding model
@@ -89,6 +104,9 @@ For cases where you supply your own dense embeddings, set `embedding_model_name=
 You will provide both the dense and sparse vectors during upsert and search.
 
 ```python title="Creating a hybrid index with a non-integrated dense embedding model" linenums="1"
+from vectorstackai import Client
+client = Client(api_key="your_api_key_here")
+
 client.create_index(
     index_name="my_custom_hybrid_index",
     embedding_model_name="none",  # Indicates user-provided dense embeddings

@@ -28,7 +28,15 @@ markdown_extensions:
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  # Allows for code snippets in the text
+  - pymdownx.snippets 
+  # Allows for using caret, mark and tilde in the text for highlighting, italics, etc.
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  # Allows for call-outs in the text
+  - admonition
+  - pymdownx.details
   - pymdownx.superfences
 
 plugins:
@@ -50,6 +58,7 @@ plugins:
 
 nav:
   - Home: index.md
+  - Quickstart: quickstart.md
   - How-To Guides: 
     - Overview: how-to-guides.md
     - Installation: how_to_guides/installation.md

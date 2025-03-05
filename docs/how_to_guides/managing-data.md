@@ -2,8 +2,10 @@
 This section describes how to manage data in PreciseSearch, specifically how to upsert and delete data.
 
 ## Upserting Data
-**Upserting** is an operation that combines **insert** and **update**, allowing you to add new vectors or update existing ones if the ID already exists. 
-To improve performance, our SDK supports **batching**, enabling you to upsert multiple data points in a single call.
+**Upserting** is an operation that combines **insert** and **update**, allowing you to add new vectors or update existing ones based on their Unique ID. When upserting a vector with an ID that already exists in the index, the existing vector and its metadata will be updated with the new values. For new IDs, a new vector will be inserted into the index.
+
+!!! Tip "Batching"
+    To improve performance, our SDK supports **batching**, enabling you to upsert multiple data points in a single call.
 
 On a high level, you need following information for each item for an upsert operation:
 
@@ -45,9 +47,10 @@ The exact specifics/requirements of an upsert operation depend on your index typ
 Below, we will go through the different scenarios in detail.
 
 ## **Upserting to Dense Indexes**
+TODO: Describe the high-leval requirement for upserting to dense indexes. Mirror that in the hybrid section.
 
-### **With Integrated Embedding Model**
-For a dense index configured with an integrated embedding model, you only need to provide following information for each item in the batch:
+### **Dense Index with an Integrated Embedding Model**
+To upsert data in a dense index configured with an integrated embedding model, you only need to provide following information for each item in the batch:
 
 - IDs (unique for each item)
 - Metadata (containing a "text" field)
@@ -56,6 +59,9 @@ The index will automatically generate the dense vector from the "text" field.
 You may include additional metadata (e.g., "price") for filtering or reference, but it will not affect the vector creation.
 
 ```python title="Upserting to a dense index with an integrated model"
+from vectorstackai import Client
+client = Client(api_key="your_api_key_here")
+
 # Connect to an existing dense index with integrated model
 index = client.connect_to_index("my_dense_index")
 
@@ -69,8 +75,9 @@ index.upsert(
 )
 ```
 
-### **With Non-Integrated Embedding Model**
-For a dense index configured with a non-integrated embedding model, you must explicitly provide following information for each item in the batch:
+### **Dense Index with a Non-Integrated Embedding Model**
+To upsert data in a dense index configured with a non-integrated embedding model, you must explicitly provide 
+following information for each item in the batch:
 
 - IDs (unique for each item)
 - Dense vectors (via `vectors`)
@@ -79,6 +86,9 @@ For a dense index configured with a non-integrated embedding model, you must exp
 > **Important:** Ensure the dimensionality of each `vector` matches the dimension specified when you created the index.
 
 ```python title="Upserting to a dense index with a non-integrated model"
+from vectorstackai import Client
+client = Client(api_key="your_api_key_here")
+
 # Connect to a dense index with non-integrated model
 index = client.connect_to_index("my_dense_index")
 
@@ -98,21 +108,26 @@ index.upsert(
 
 ## **Upserting to Hybrid Indexes**
 When upserting to a hybrid index, you must provide both dense and sparse representations, along with a unique ID and any optional metadata. 
-The **key difference** from a purely dense index is the required **sparse vector**, which you must explicitly supply using `sparse_values` and `sparse_indices`. 
-The dense vector can either be:
+The **key difference** from a dense index is the required **sparse vector**, which you must explicitly supply using `sparse_values` and `sparse_indices`. 
+
+For the dense vector component in hybrid indexes, there are two options, just like with dense indexes:
 
 - Automatically generated (if your index uses an integrated embedding model, in which case you only need to include text in the metadata), or
 - Explicitly provided (if your index uses a non-integrated embedding model).
 
 
-### **With Integrated Embedding Model**
-For hybrid indexes configured with an integrated embedding model (for the dense vectors), you need to supply following information for each item in the batch:
+### **Hybrid Index with an Integrated Embedding Model**
+For hybrid indexes configured with an integrated embedding model (for the dense vectors), 
+you need to supply following information for each item in the batch:
 
 - IDs
-- Metadata (including a `"text"` field, from which dense vectors are automatically generated)
 - Sparse vectors (via `sparse_values` and `sparse_indices`)
+- Metadata (including a `"text"` field, from which dense vectors are automatically generated)
 
 ```python title="Upserting to a hybrid index with an integrated model"
+from vectorstackai import Client
+client = Client(api_key="your_api_key_here")
+
 # Connect to a hybrid index with integrated model
 index = client.connect_to_index("my_hybrid_index")
 
@@ -137,6 +152,9 @@ For hybrid indexes configured with a non-integrated embedding model, you must ex
 - Metadata (optional fields)
 
 ```python title="Upserting to a hybrid index with a non-integrated model"
+from vectorstackai import Client
+client = Client(api_key="your_api_key_here")
+
 # Connect to a hybrid index with non-integrated model
 index = client.connect_to_index("my_hybrid_index")
 
@@ -160,6 +178,12 @@ To remove vectors from the index, call `delete_vectors` with the `ids` of the ve
 - All provided `ids` must exist in the index, otherwise an error is raised and no vectors are deleted.
 
 ```python title="Deleting vectors by ID"
+from vectorstackai import Client
+client = Client(api_key="your_api_key_here")
+
+# Connect to an existing index
+index = client.connect_to_index("my_index")
+
 # Delete vectors by ID
 index.delete_vectors(ids=["doc1", "doc2"])
 ```
