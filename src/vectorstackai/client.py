@@ -95,7 +95,7 @@ class Client:
   
     def create_index(self, 
                      index_name: str, 
-                     embedding_model_name: str, 
+                     embedding_model_name: str = 'none', 
                      dimension: Optional[int] = None, 
                      metric: Optional[str] = 'dotproduct', 
                      features_type: Optional[str] = 'dense') -> None:
@@ -106,11 +106,15 @@ class Client:
             embedding_model_name: Name of the embedding model to use. There are two kinds of embedding models:
                 - Integrated models: These are pre-trained models hosted on the vector2search platform.
                 - Non-integrated models: These are custom models hosted on your platform/application.
-                - Set "embedding_model_name" to None for using your own embedding model (i.e. non-integrated model).
+                - Set "embedding_model_name" to "none" for using your own embedding model (i.e. non-integrated model).
             dimension: Vector dimension (required for non-integrated models).
             metric: Distance metric for comparing dense and sparse vectors. Must be one of "cosine" or "dotproduct".
             features_type: Type of features used in the index. Must be one of "dense" or "hybrid" (sparse + dense).
         """
+        # Convert "None" to "none"
+        if embedding_model_name == 'None':
+            embedding_model_name = 'none'
+            
         json_data = {
             "index_name": index_name,
             "embedding_model_name": embedding_model_name,
