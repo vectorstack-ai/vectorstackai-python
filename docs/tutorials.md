@@ -9,10 +9,7 @@ These practical examples will show you how to use the library, and also provide 
 
 ## Examples
 Below is a list of the available tutorials:
-
- You can find and run the code for this quickstart in our [Google Colab Notebook](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/add_vector_store_resource/examples/quickstart.ipynb)
-
-- [Semantic search on Wikipedia with integrated embedding model](tutorials/semantic_search_on_wikipedia_with_integrated_model.ipynb)
+- [Semantic search on Wikipedia with PreciseSearch's integrated embedding model](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/add_vector_store_resource/examples/tutorials/semantic_search_on_wikipedia_with_precise_search_integrated.ipynb)
 - [Semantic search on Wikipedia with OpenAI's embedding model](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/add_vector_store_resource/examples/tutorials/semantic_search_on_wikipedia_with_openai_model.ipynb)
 - [Semantic search on Wikipedia with embedding model from Sentence Transformers](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/add_vector_store_resource/examples/tutorials/semantic_search_on_wikipedia_with_sentence_transformer_models.ipynb)
 - [Hybrid search on Wikipedia](tutorials/hybrid_search_on_wikipedia.ipynb)
