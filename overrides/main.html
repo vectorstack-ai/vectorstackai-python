@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block htmltitle %}
+    {% if page.title != "Home" %}
+        <title>{{ page.title }} - Precise Search</title>
+    {% else %}
+        <title>{{ page.title }}</title>
+    {% endif %}
+{% endblock %}
