@@ -26,15 +26,15 @@ class IndexObject:
    
    
     def set_similarity_scale(self, 
-                            dense_similarity_scale: float = 1.0, 
-                            sparse_similarity_scale: float = 1.0) -> None:
+                            dense_scale: float = 1.0, 
+                            sparse_scale: float = 1.0) -> None:
         """Set the scale values for dense and sparse similarity scores in hybrid search.
         
         The similarity in a hybrid index is computed as a weighted sum of the dense and 
         sparse similarity scores:
         
-            similarity = dense_similarity * dense_similarity_scale + 
-                         sparse_similarity * sparse_similarity_scale
+            similarity = dense_similarity * dense_scale + 
+                         sparse_similarity * sparse_scale
                          
         This method allows you to set the scale values for the dense and sparse similarity 
         scores. The scale values must be between 0 and 1.
@@ -45,28 +45,28 @@ class IndexObject:
                 similarity = dense_similarity.
         
         Args:
-            dense_similarity_scale: The scale value for the dense similarity score.
+            dense_scale: The scale value for the dense similarity score.
                 Defaults to 1.0.
-            sparse_similarity_scale: The scale value for the sparse similarity score.
+            sparse_scale: The scale value for the sparse similarity score.
                 Defaults to 1.0.
         """
         if self.features_type == 'dense':
             warnings.warn("Setting scale values for dense and sparse features is redundant for dense indexes, since index is dense only; they will not be used for search..")
         
         # Validate scale values
-        if dense_similarity_scale == 0.0 and sparse_similarity_scale == 0.0:
+        if dense_scale == 0.0 and sparse_scale == 0.0:
             raise ValueError("At least one of the scale values must be set to a non-zero value.")
-        if dense_similarity_scale < 0.0 or dense_similarity_scale > 1.0:
-            raise ValueError("dense_similarity_scale must be between 0.0 and 1.0")
-        if sparse_similarity_scale < 0.0 or sparse_similarity_scale > 1.0:
-            raise ValueError("sparse_similarity_scale must be between 0.0 and 1.0")
+        if dense_scale < 0.0 or dense_scale > 1.0:
+            raise ValueError("dense_scale must be between 0.0 and 1.0")
+        if sparse_scale < 0.0 or sparse_scale > 1.0:
+            raise ValueError("sparse_scale must be between 0.0 and 1.0")
         
-        self.dense_similarity_scale = dense_similarity_scale
-        self.sparse_similarity_scale = sparse_similarity_scale
+        self.dense_similarity_scale = dense_scale
+        self.sparse_similarity_scale = sparse_scale
         
-        if sparse_similarity_scale == 0.0:
+        if sparse_scale == 0.0:
             warnings.warn("Sparse similarity scale is set to 0.0; sparse features will not be used for search..")
-        if dense_similarity_scale == 0.0:
+        if dense_scale == 0.0:
             warnings.warn("Dense similarity scale is set to 0.0; dense features will not be used for search..")
              
     def upsert(self, 
