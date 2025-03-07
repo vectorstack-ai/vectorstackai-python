@@ -16,18 +16,18 @@ Once, you have the API key, you can either set it as an environment variable or 
 
 ### Option 1: Pass API Key Directly  
 ```python title="Initializing the client with an API key" linenums="1"
-from vectorstackai import Client
+from vectorstackai import PreciseSearch
 
 # Initialize the client with your API key
-client = Client(api_key="your_api_key_here")
+client = PreciseSearch(api_key="your_api_key_here")
 ```
 
 ### Option 2: Set API Key as Environment Variable  
 If you've set the `VECTORSTACK_API_KEY` environment variable, you can initialize the client without explicitly passing the API key:
 ```python title="Initializing the client using an environment variable" linenums="1"
-from vectorstackai import Client
+from vectorstackai import PreciseSearch
 
 # Initialize the client using the API key from environment variables
-client = Client()
+client = PreciseSearch()
 ```
 This allows for better security and flexibility when managing API credentials. 

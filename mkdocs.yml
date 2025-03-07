@@ -65,10 +65,12 @@ nav:
   - PreciseSearch:
       - Overview: precise_search/index.md
       - Quickstart: precise_search/quickstart.md
-      - Installation: precise_search/how_to_guides/installation.md
-      - Creating Indexes: precise_search/how_to_guides/creating-indexes.md
-      - Managing Data: precise_search/how_to_guides/managing-data.md
-      - Searching: precise_search/how_to_guides/searching.md
-      - Index Management: precise_search/how_to_guides/index-management.md
       - Python Client Reference: precise_search/reference.md
-      - Tutorials: precise_search/tutorials.md 
+      - Tutorials: precise_search/tutorials.md
+      - How-to Guides:
+          - Overview: precise_search/how-to-guides.md
+          - Installation: precise_search/how_to_guides/installation.md
+          - Creating Indexes: precise_search/how_to_guides/creating-indexes.md
+          - Managing Data: precise_search/how_to_guides/managing-data.md
+          - Searching: precise_search/how_to_guides/searching.md
+          - Index Management: precise_search/how_to_guides/index-management.md

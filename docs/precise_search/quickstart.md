@@ -30,17 +30,17 @@ With dense indexes configured with an integrated embedding model, during upsert 
 **PreciseSearch** will generate the dense vector representations of the data automatically.
 
 ```python linenums="1"
-from vectorstackai import Client
+from vectorstackai import PreciseSearch
 import time
 
 # Initialize the client with your API key
-client = Client(api_key="your_api_key")
+client = PreciseSearch(api_key="your_api_key")
 
 # Create the index with an integrated embedding model (e.g., 'e5-small-v2')
 client.create_index(index_name="my_dense_index", embedding_model_name="e5-small-v2")
 
 # Wait for the index to be ready
-while client.get_index_info(index_name="my_dense_index")['status'] != "ready":
+while client.index_status(index_name="my_dense_index") != "ready":
     time.sleep(2)
     print("Index is not ready yet. Waiting for 2 seconds...")
 

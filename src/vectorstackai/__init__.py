@@ -1,1 +1,1 @@
-from vectorstackai.client import Client
+from vectorstackai.client import Client, PreciseSearch

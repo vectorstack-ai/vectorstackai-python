@@ -15,11 +15,10 @@ import vectorstackai.api_resources as api_resources
 
 
 class Client:
-    """VectorStackAI Client for interacting with the VectorStackAI's API.
+    """VectorStackAI's Client for interacting with proprietary models provided by VectorStackAI.
     
-    This client provides methods to:
-    - Generate embeddings from text using various models
-    - Manage and search vector search indexes
+    Currently, the client provides methods to:
+    - Generate embeddings from text using domain-specific models (eg. vstackai-law-1)
     
     Args:
         api_key (str): Your API key.
@@ -79,8 +78,43 @@ class Client:
                 )
         return EmbeddingsObject(response_json, batch_size=len(texts))
     
-    # High-level endpoints for PreciseSearch API
-    #########################################################
+class PreciseSearch:
+    """Client for managing PreciseSearch indexes.
+    
+    PreciseSearch is a vertically integrated search offering, which allows you to search your data in a more efficient way.
+    
+    Currently, this client provides methods to:
+    - List indexes: List all indexes associated with the current API key.
+    - Create indexes: Create a new vector index with the specified parameters.
+    - Delete indexes: Delete a vector index by its name.
+    - Connect to an index: Connect to an existing vector index and return an IndexObject for further operations.
+    - Get index information: Retrieve information about a specific vector index.
+    """
+    
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        max_retries: int = 3,
+        timeout: Optional[float] = 30,
+    ) -> None:
+
+        self.api_key = api_key or get_api_key()
+
+        self.connection_params = {
+            "api_key": self.api_key,
+            "request_timeout": timeout,
+        }
+        self.retry_controller = Retrying(
+            reraise=True,
+            stop=stop_after_attempt(max_retries),
+            wait=wait_exponential_jitter(initial=1, max=16),
+            retry=(
+                retry_if_exception_type(error.RateLimitError)
+                | retry_if_exception_type(error.ServiceUnavailableError)
+                | retry_if_exception_type(error.Timeout)
+            ),
+        )
+        
     def list_indexes(self) -> List[Dict[str, Any]]:
         """Lists information about all available indexes.
         
@@ -129,7 +163,9 @@ class Client:
     def delete_index(self, index_name: str, ask_for_confirmation: bool = True) -> None:
         """Deletes a vector index by its name.
 
-        Permanently deletes the specified index and all its contents. The deletion is asynchronous, and the deleted index cannot be recovered. Note, this method is useful for deleting an index without having to connect to it.
+        Permanently deletes the specified index and all its contents. 
+        The deletion is asynchronous, and the deleted index cannot be recovered. 
+        Note, this method is useful for deleting an index without having to connect to it.
 
         Args:
             index_name (str): Name of the index to delete.
@@ -149,8 +185,28 @@ class Client:
         response_json = api_resources.Index.delete_index(index_name=index_name, 
                                          connection_params=self.connection_params)
         print(f"{response_json['detail']}")
+        
+    def index_status(self, index_name: str) -> Dict[str, Any]:
+        """Retrieves the status of a specific vector index.
+        
+        This method retrieves the status of the index specified by `index_name`.
+        Here are the possible statuses:
+        
+        - "initializing": The index is being initialized.
+        - "ready": The index is ready for use.
+        - "failed": The index failed to initialize.
+        - "deleting": The index is being deleted.
+        - "undergoing_optimization_for_latency": The index is undergoing optimization for better latency and throughput.
+        
+        Args:
+            index_name: Name of the index to retrieve status for.
+            
+        Returns:
+            index_status (str): The current status of the index.
+        """
+        return self.index_info(index_name)['status']
        
-    def get_index_info(self, index_name: str) -> Dict[str, Any]:
+    def index_info(self, index_name: str) -> Dict[str, Any]:
         """Retrieves information about a specific vector index.
         
         This method searches for the index specified by `index_name` within the list of available indexes. 
@@ -182,7 +238,9 @@ class Client:
     def connect_to_index(self, index_name: str) -> IndexObject:
         """Connects to an existing vector index and returns an IndexObject for further operations.
 
-        This method searches for the index specified by `index_name` within the list of available indexes. If the index exists, it returns an `IndexObject` configured with the current connection parameters, which can be used to perform operations such as upsert, search, and more on the index.
+        This method searches for the index specified by `index_name` within the list of available indexes. 
+        If the index exists, it returns an `IndexObject` configured with the current connection parameters, 
+        which can be used to perform operations such as upsert, search, and more on the index.
 
         Args:
             index_name (str): The name of the index to connect to.
@@ -197,3 +255,5 @@ class Client:
                 return IndexObject(index_name=index_name, connection_params=self.connection_params)
             
         raise ValueError(f"Index {index_name} not found in the list of existing indexes")
+    
+ 

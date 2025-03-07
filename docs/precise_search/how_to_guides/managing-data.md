@@ -59,8 +59,8 @@ The index will automatically generate the dense vector from the "text" field.
 You may include additional metadata (e.g., "price") for filtering or reference, but it will not affect the vector creation.
 
 ```python title="Upserting to a dense index with an integrated model"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
 
 # Connect to an existing dense index with integrated model
 index = client.connect_to_index("my_dense_index")
@@ -86,8 +86,8 @@ following information for each item in the batch:
 > **Important:** Ensure the dimensionality of each `vector` matches the dimension specified when you created the index.
 
 ```python title="Upserting to a dense index with a non-integrated model"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
 
 # Connect to a dense index with non-integrated model
 index = client.connect_to_index("my_dense_index")
@@ -125,8 +125,8 @@ you need to supply following information for each item in the batch:
 - Metadata (including a `"text"` field, from which dense vectors are automatically generated)
 
 ```python title="Upserting to a hybrid index with an integrated model"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
 
 # Connect to a hybrid index with integrated model
 index = client.connect_to_index("my_hybrid_index")
@@ -152,8 +152,8 @@ For hybrid indexes configured with a non-integrated embedding model, you must ex
 - Metadata (optional fields)
 
 ```python title="Upserting to a hybrid index with a non-integrated model"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
 
 # Connect to a hybrid index with non-integrated model
 index = client.connect_to_index("my_hybrid_index")
@@ -178,8 +178,8 @@ To remove vectors from the index, call `delete_vectors` with the `ids` of the ve
 - All provided `ids` must exist in the index, otherwise an error is raised and no vectors are deleted.
 
 ```python title="Deleting vectors by ID"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
 
 # Connect to an existing index
 index = client.connect_to_index("my_index")
