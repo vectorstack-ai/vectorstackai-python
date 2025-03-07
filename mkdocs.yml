@@ -1,8 +1,11 @@
-site_name: PreciseSearch Documentation
+site_name: VectorStackAI Documentation
+
+#extra_javascript:
+#  - js/dynamic_title.js  # Link to our JavaScript file that will handle title changes
 
 theme:
   name: material
-
+  custom_dir: docs/overrides
 
   palette:
     scheme: slate
@@ -58,13 +61,15 @@ plugins:
 
 nav:
   - Home: index.md
-  - Quickstart: quickstart.md
-  - How-To Guides: 
-    - Overview: how-to-guides.md
-    - Installation: how_to_guides/installation.md
-    - Creating Indexes: how_to_guides/creating-indexes.md
-    - Managing Data: how_to_guides/managing-data.md
-    - Searching: how_to_guides/searching.md
-    - Index Management: how_to_guides/index-management.md
-  - Python Client Reference: reference.md
-  - Tutorials: tutorials.md
+  - PreciseSearch:
+      - Overview: precise_search/index.md
+      - Quickstart: precise_search/quickstart.md
+      - How-To Guides: 
+          - Overview: precise_search/how-to-guides.md
+          - Installation: precise_search/how_to_guides/installation.md
+          - Creating Indexes: precise_search/how_to_guides/creating-indexes.md
+          - Managing Data: precise_search/how_to_guides/managing-data.md
+          - Searching: precise_search/how_to_guides/searching.md
+          - Index Management: precise_search/how_to_guides/index-management.md
+      - Python Client Reference: precise_search/reference.md
+      - Tutorials: precise_search/tutorials.md
