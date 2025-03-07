@@ -1,6 +1,6 @@
 # Vector Index API Reference
 
-## Client-Level Operations
+## Index Management Operations
 
 These operations are performed at the client level and don't require connecting to a specific index.
 
@@ -14,7 +14,7 @@ These operations are performed at the client level and don't require connecting 
 
 ::: vectorstackai.client.Client.delete_index
 
-## Index-Level Operations
+## Index Operations
 
 These operations are performed on a specific index after connecting to it.
 
