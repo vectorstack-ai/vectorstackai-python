@@ -15,7 +15,7 @@ import vectorstackai.api_resources as api_resources
 
 
 class Client:
-    """VectorStack AI Client for interacting with the VectorStack API.
+    """VectorStackAI Client for interacting with the VectorStackAI's API.
     
     This client provides methods to:
     - Generate embeddings from text using various models
