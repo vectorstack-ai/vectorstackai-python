@@ -79,7 +79,7 @@ class Client:
                 )
         return EmbeddingsObject(response_json, batch_size=len(texts))
     
-    # High-level endpoints for VectorSearch API
+    # High-level endpoints for PreciseSearch API
     #########################################################
     def list_indexes(self) -> List[Dict[str, Any]]:
         """Lists information about all available indexes.
