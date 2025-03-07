@@ -52,6 +52,29 @@ Both methods return a dictionary containing metadata including:
     
     Once the index is ready, you will have access to all metadata fields.
 
+## **Checking Index Status**
+The `index_status()` method returns the current status of an index:
+
+```python title="Checking index status" linenums="1"
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
+
+# Get the status of an index
+status = client.index_status("my_index_name")
+
+# Print the status
+print(f"Index status: {status}")
+```
+
+!!! Note "Possible statuses"
+    The possible statuses are:
+
+    - "initializing": The index is being initialized.
+    - "ready": The index is ready for use.
+    - "failed": The index failed to initialize.
+    - "deleting": The index is being deleted.
+- "undergoing_optimization_for_latency": The index is undergoing optimization for better latency and throughput.
+
 ## **Listing Indexes**
 The `list_indexes()` method returns information about all indexes associated with your API key:
 

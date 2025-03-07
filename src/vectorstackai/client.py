@@ -185,6 +185,26 @@ class PreciseSearch:
         response_json = api_resources.Index.delete_index(index_name=index_name, 
                                          connection_params=self.connection_params)
         print(f"{response_json['detail']}")
+        
+    def index_status(self, index_name: str) -> Dict[str, Any]:
+        """Retrieves the status of a specific vector index.
+        
+        This method retrieves the status of the index specified by `index_name`.
+        Here are the possible statuses:
+        
+        - "initializing": The index is being initialized.
+        - "ready": The index is ready for use.
+        - "failed": The index failed to initialize.
+        - "deleting": The index is being deleted.
+        - "undergoing_optimization_for_latency": The index is undergoing optimization for better latency and throughput.
+        
+        Args:
+            index_name: Name of the index to retrieve status for.
+            
+        Returns:
+            index_status (str): The current status of the index.
+        """
+        return self.index_info(index_name)['status']
        
     def index_info(self, index_name: str) -> Dict[str, Any]:
         """Retrieves information about a specific vector index.

@@ -10,6 +10,8 @@ These operations are performed at the client level and don't require connecting 
 
 ::: vectorstackai.PreciseSearch.index_info
 
+::: vectorstackai.PreciseSearch.index_status
+
 ::: vectorstackai.PreciseSearch.connect_to_index
 
 ::: vectorstackai.PreciseSearch.delete_index
