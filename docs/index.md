@@ -3,14 +3,14 @@ hide:
   - navigation
   - toc
 ---
-# **VectorStackAI Documentation**
+# **VectorStackAI: Vertically Integrated Generative AI Stack for Enterprises**
 
-VectorStackAI builds vertically integrated Generative AI solutions for enterprises.
+VectorStackAI develops lean and efficient Generative AI solutions tailored for enterprise needs.
 
 ## Offerings by VectorStackAI
-Documentation for specific VectorStackAI offerings is available below.
+Explore documentation for our specialized solutions:
 
-- [PreciseSearch](precise_search/index.md): PreciseSearch is a high-performance vector search engine that enables fast and accurate similarity search across large-scale vector datasets.
+- [PreciseSearch](precise_search/index.md): A vertically integrated search-as-a-service solution, providing fast and accurate similarity search across large-scale datasets.
 
 
 
