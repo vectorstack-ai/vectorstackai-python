@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+  - toc
+---
 # **VectorStackAI Documentation**
 
 VectorStackAI builds vertically integrated Generative AI solutions for enterprises.
