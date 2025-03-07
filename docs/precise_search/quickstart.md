@@ -40,7 +40,7 @@ client = Client(api_key="your_api_key")
 client.create_index(index_name="my_dense_index", embedding_model_name="e5-small-v2")
 
 # Wait for the index to be ready
-while client.get_index_info(index_name="my_dense_index")['status'] != "ready":
+while client.index_info(index_name="my_dense_index")['status'] != "ready":
     time.sleep(2)
     print("Index is not ready yet. Waiting for 2 seconds...")
 

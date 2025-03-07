@@ -3,14 +3,14 @@
 This section covers various operations for managing your indexes, including getting information about specific indexes, listing all indexes, optimizing indexes for performance, and deleting indexes.
 
 ## **Getting Index Info**
-To get detailed information about a specific index, use the `get_index_info()` method:
+To get detailed information about a specific index, use the `index_info()` method:
 
 ```python title="Getting information about an index" linenums="1"
 from vectorstackai import Client
 client = Client(api_key="your_api_key_here")
 
 # Get info about a specific index
-index_info = client.get_index_info("my_index_name")
+index_info = client.index_info("my_index_name")
 
 # Access specific properties
 print(f"Status: {index_info['status']}")
