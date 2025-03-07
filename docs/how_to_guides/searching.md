@@ -101,12 +101,12 @@ When searching, the similarity score between a query and a document is computed 
 
 ```python title="Similarity score calculation in a hybrid index"
 similarity_score = (
-    dense_similarity * dense_similarity_scale
-    + sparse_similarity * sparse_similarity_scale
+    dense_similarity * dense_scale
+    + sparse_similarity * sparse_scale
 )
 ```
 
-Here, `dense_similarity_scale` and `sparse_similarity_scale` are floating-point numbers between 0.0 and 1.0 that control the relative contribution of each representation. 
+Here, `dense_scale` and `sparse_scale` are floating-point numbers between 0.0 and 1.0 that control the relative contribution of each representation. 
 **By default both are set to 1.0, giving equal weight to the dense and sparse vectors**.
 You can adjust these values as needed via the `index.set_similarity_scale()` method. 
 For example, to make the sparse representation twice as influential as the dense representation, set:
