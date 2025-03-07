@@ -65,8 +65,8 @@ nav:
   - PreciseSearch:
       - Overview: precise_search/index.md
       - Quickstart: precise_search/quickstart.md
-      - Python Client Reference: precise_search/reference.md
       - Tutorials: precise_search/tutorials.md
+      - Python Client Reference: precise_search/reference.md
       - How-to Guides:
           - Overview: precise_search/how-to-guides.md
           - Installation: precise_search/how_to_guides/installation.md
