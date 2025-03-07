@@ -3,11 +3,12 @@
 This section covers various operations for managing your indexes, including getting information about specific indexes, listing all indexes, optimizing indexes for performance, and deleting indexes.
 
 ## **Getting Index Info**
-To get detailed information about a specific index, use the `index_info()` method:
+There are two ways to get detailed information about a specific index:
 
-```python title="Getting information about an index" linenums="1"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
+1. Using the client's `index_info()` method:
+```python title="Getting information using the client" linenums="1"
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
 
 # Get info about a specific index
 index_info = client.index_info("my_index_name")
@@ -19,7 +20,23 @@ print(f"Dimension: {index_info['dimension']}")
 print(f"Metric: {index_info['metric']}")
 ```
 
-The returned dictionary contains metadata including:
+2. Using the index object's `info()` method:
+```python title="Getting information using the index object" linenums="1"
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
+
+# Connect to an existing index
+index = client.connect_to_index("my_index_name")
+
+# Get info about the index
+index_info = index.info()
+
+# Access specific properties
+print(f"Status: {index_info['status']}")
+print(f"Number of records: {index_info['num_records']}")
+```
+
+Both methods return a dictionary containing metadata including:
 
 - `index_name`: Name of the index
 - `status`: Current status ("initializing" or "ready")
@@ -39,8 +56,8 @@ The returned dictionary contains metadata including:
 The `list_indexes()` method returns information about all indexes associated with your API key:
 
 ```python title="Listing all indexes" linenums="1"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
 
 # Get a list of all indexes
 indexes = client.list_indexes()
@@ -74,8 +91,8 @@ You can still insert additional data afterward, but you will not need to run the
 Because this operation runs in the background, the method returns immediately while optimization continues behind the scenes.
 
 ```python title="Optimizing an index for latency" linenums="1"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
 
 # Connect to an existing index
 index = client.connect_to_index("my_index_name")
@@ -86,38 +103,38 @@ index.optimize_for_latency()
 
 
 ## **Deleting Indexes**
-You can delete an index using either the client's `delete_index()` method or the index object's `delete()` method.
 
-!!! Warning "Important considerations when deleting indexes"
-
+!!! Danger "Important considerations when deleting indexes"
     - Deletion is permanent and cannot be undone
     - By default, both methods will ask for confirmation before deletion
-
-```python title="Deleting an index" linenums="1"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
-
-# Method 1: Using the client
-client.delete_index("my_index_name")
-
-# Method 2: Using the index object
-index = client.connect_to_index("my_index_name")
-index.delete()
-```
-
-
-!!! Danger "Be extremely careful when disabling confirmation"
-
     - You can bypass the confirmation by setting `ask_for_confirmation=False`. 
     - Be extremely careful when disabling confirmation, as deleted indexes cannot be recovered.
 
-```python title="Deleting an index without confirmation" linenums="1"
-from vectorstackai import Client
-client = Client(api_key="your_api_key_here")
+There are two ways to delete an index:
 
-# Delete without confirmation
+1. Using the client's `delete_index()` method:
+```python title="Deleting using the client" linenums="1"
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
+
+# Delete an index (will ask for confirmation)
+client.delete_index("my_index_name")
+
+# Or delete without confirmation
 client.delete_index("my_index_name", ask_for_confirmation=False)
-# or
+```
+
+2. Using the index object's `delete()` method:
+```python title="Deleting using the index object" linenums="1"
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
+
+# Connect to an existing index
 index = client.connect_to_index("my_index_name")
+
+# Delete the index (will ask for confirmation)
+index.delete()
+
+# Or delete without confirmation
 index.delete(ask_for_confirmation=False)
 ```

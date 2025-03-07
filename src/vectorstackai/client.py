@@ -78,7 +78,7 @@ class Client:
                 )
         return EmbeddingsObject(response_json, batch_size=len(texts))
     
-class PreciseSearchClient:
+class PreciseSearch:
     """Client for managing PreciseSearch indexes.
     
     PreciseSearch is a vertically integrated search offering, which allows you to search your data in a more efficient way.

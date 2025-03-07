@@ -4,15 +4,15 @@
 
 These operations are performed at the client level and don't require connecting to a specific index.
 
-::: vectorstackai.PreciseSearchClient.list_indexes
+::: vectorstackai.PreciseSearch.list_indexes
 
-::: vectorstackai.PreciseSearchClient.create_index
+::: vectorstackai.PreciseSearch.create_index
 
-::: vectorstackai.PreciseSearchClient.index_info
+::: vectorstackai.PreciseSearch.index_info
 
-::: vectorstackai.PreciseSearchClient.connect_to_index
+::: vectorstackai.PreciseSearch.connect_to_index
 
-::: vectorstackai.PreciseSearchClient.delete_index
+::: vectorstackai.PreciseSearch.delete_index
 
 ## Index Operations
 
