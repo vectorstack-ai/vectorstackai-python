@@ -1,7 +1,7 @@
 site_name: VectorStackAI Documentation
 
-#extra_javascript:
-#  - js/dynamic_title.js  # Link to our JavaScript file that will handle title changes
+extra_javascript:
+  - js/dynamic_title.js  # Link to our JavaScript file that will handle title changes
 
 theme:
   name: material
@@ -19,6 +19,7 @@ theme:
     - navigation.expand # Expand the navigation bar
     - navigation.sections  # Show the sections in the navigation bar
     - navigation.tabs # Show the navigation bar at the top of the page
+    - navigation.path # Show the path in the navigation bar
     - navigation.instant.prefetch # Prefetch the navigation menu
     - navigation.tabs.sticky # Make the navigation bar sticky
     - search.suggest # Show search suggestions
