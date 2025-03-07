@@ -1,0 +1,74 @@
+site_name: VectorStackAI Documentation
+
+extra_javascript:
+  - js/dynamic_title.js  # Link to our JavaScript file that will handle title changes
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+
+  palette:
+    scheme: slate
+    primary: green
+    accent: indigo
+  
+  features:
+    - toc.follow # Automatically scroll to the selected anchor
+    - toc.integrate # Automatically integrate the table of contents into the page
+    - navigation.top # Show the navigation bar at the top of the page
+    - navigation.expand # Expand the navigation bar
+    - navigation.sections  # Show the sections in the navigation bar
+    - navigation.tabs # Show the navigation bar at the top of the page
+    - navigation.path # Show the path in the navigation bar
+    - navigation.instant.prefetch # Prefetch the navigation menu
+    - navigation.tabs.sticky # Make the navigation bar sticky
+    - search.suggest # Show search suggestions
+    - search.share # Show search share
+    - content.code.copy # Show copy button for code blocks
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  # Allows for code snippets in the text
+  - pymdownx.snippets 
+  # Allows for using caret, mark and tilde in the text for highlighting, italics, etc.
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  # Allows for call-outs in the text
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+plugins:
+  - privacy # Automatically downloads external files/ assets as part of the build process
+  - offline # Make the documentation available offline
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+              show_source: true  # Hide source code
+              heading_level: 3
+              docstring_style: google  # Use Google-style docstrings
+              show_signature: true  # Show function signatures
+              show_root_heading: true  # Show module/class headings
+              separate_signature: true # Keep function signature separate from docstring
+              line_length: 80  # Wrap text at 80 characters for better readability 
+              filters: ["!^vectorstackai.objects.index"]  # Hides long path prefixes
+
+nav:
+  - Home: index.md
+  - PreciseSearch:
+      - Overview: precise_search/index.md
+      - Quickstart: precise_search/quickstart.md
+      - Installation: precise_search/how_to_guides/installation.md
+      - Creating Indexes: precise_search/how_to_guides/creating-indexes.md
+      - Managing Data: precise_search/how_to_guides/managing-data.md
+      - Searching: precise_search/how_to_guides/searching.md
+      - Index Management: precise_search/how_to_guides/index-management.md
+      - Python Client Reference: precise_search/reference.md
+      - Tutorials: precise_search/tutorials.md 

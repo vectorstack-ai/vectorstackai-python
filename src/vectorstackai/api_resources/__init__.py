@@ -1,1 +1,2 @@
 from vectorstackai.api_resources.embeddings import Embedding
+from vectorstackai.api_resources.index import Index

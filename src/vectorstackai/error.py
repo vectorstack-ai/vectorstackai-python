@@ -46,7 +46,7 @@ class VectorStackAIError(Exception):
             return msg
 
     # Returns the underlying `Exception` (base class) message, which is usually
-    # the raw message returned by OpenAI's API. This was previously available
+    # the raw message returned by an API. This was previously available
     # in python2 via `error.message`. Unlike `str(error)`, it omits "Request
     # req_..." from the beginning of the string.
     @property
@@ -85,7 +85,11 @@ class AuthenticationError(VectorStackAIError):
     """
     pass
 
-
+class InternalServerError(VectorStackAIError):
+    """
+    Exception raised when there is an internal server error.
+    """
+    pass
     
 class RateLimitError(VectorStackAIError):
     """
@@ -101,6 +105,11 @@ class ServiceUnavailableError(VectorStackAIError):
     """
     pass
 
+class MethodNotAllowedError(VectorStackAIError):
+    """
+    Exception raised when the GET/POSTmethod is not allowed.
+    """
+    pass
 
 class Timeout(VectorStackAIError):
     """
@@ -115,3 +124,14 @@ class BadRequestError(VectorStackAIError):
     """
     pass
 
+class NotFoundError(VectorStackAIError):
+    """
+    Exception raised when the resource is not found.
+    """
+    pass
+
+class ResourceBusyError(VectorStackAIError):
+    """
+    Exception raised when the resource is busy, and hence the request cannot be processed.
+    """
+    pass

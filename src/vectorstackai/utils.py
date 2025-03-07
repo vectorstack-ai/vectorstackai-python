@@ -32,47 +32,77 @@ def raise_error_from_response(response):
 
     Note:
         This function assumes that the error response is in JSON format and follows
-        a specific structure with an 'error' key containing error details.
+        a specific structure with an 'error' key containing error details. If the 
+        response is not in JSON format or does not contain an 'error' key, the function
+        will raise a VectorStackAIError with the response content as the message.
     """
-    
-    # Dynamically create mapping of error types to exception classes
-    error_class_mapping = {
-        name: getattr(error, name)
-        for name in dir(error)
-        if isinstance(getattr(error, name), type) and issubclass(getattr(error, name), error.VectorStackAIError)
-    }
-    
-    # Handle server unavailable or bad gateway error
-    if response.status_code in [404, 502]:
-        raise error.ServiceUnavailableError(message='Server unavailable/down ..', 
-                                      http_status=response.status_code, 
-                                      json_body={}, 
-                                      headers=response.headers)
-
-    # Get the error data from the response
+            
+    # Parse the error_data from the response as JSON
+    #########################################################
     try:
-        error_data = response.json().get('error', {})
-    except requests.exceptions.JSONDecodeError:
-        # Handle the case where the response does not contain valid JSON
+        response_json = response.json()
+        error_data = response_json['error']
+        ERROR_RAISED_BY_VECTORSTACKAI = True
+    except (requests.exceptions.JSONDecodeError, KeyError, ValueError):
+        # Case where the response does not contain valid JSON or 'error' key
+        ERROR_RAISED_BY_VECTORSTACKAI = False
         error_data = {}
         error_data['message'] = response.content.decode('utf-8', errors='replace')
+    
+    # The error can originate from either server due to unexpected event or raise by our API containing error data
+    # Below, we will handle both cases.
+    #########################################################
+    if ERROR_RAISED_BY_VECTORSTACKAI:
+        message = error_data.get('message')
+        http_status = error_data.get('http_status')
+        code = error_data.get('code')
+        http_body = error_data.get('http_body')
+        json_body = error_data.get('json_body')
+        headers = response.headers
         
-    message = error_data.get('message')
-    http_status = error_data.get('http_status')
-    code = error_data.get('code')
-    http_body = error_data.get('http_body')
-    json_body = error_data.get('json_body')
-    headers = response.headers
+        # Dynamically create mapping of error types to exception classes
+        error_class_mapping = {
+            name: getattr(error, name)
+            for name in dir(error)
+            if isinstance(getattr(error, name), type) and issubclass(getattr(error, name), error.VectorStackAIError)
+        }
 
-    # Get the corresponding exception class based on the error type
-    exception_class = error_class_mapping.get(error_data.get('type'), error.VectorStackAIError)
+        # Get the corresponding exception class based on the error type
+        exception_class = error_class_mapping.get(error_data.get('type'),
+                                                  error.VectorStackAIError)
 
-    # Raise the exception with the appropriate data
-    raise exception_class(
-        message=message,
-        http_body=http_body,
-        http_status=http_status,
-        json_body=json_body,
-        headers=headers,
-        code=code,
-    )
+        # Raise the exception with the appropriate data
+        raise exception_class(
+            message=message,
+            http_body=http_body,
+            http_status=http_status,
+            json_body=json_body,
+            headers=headers,
+            code=code,
+        )
+    else:
+        # Map the error (raised by server) to the appropriate exception class
+        #########################################################
+        if response.status_code == 405:
+            # Handle 405 method not allowed error
+            raise error.MethodNotAllowedError(message=f'Method not allowed: {error_data["message"]}', 
+                                          http_status=response.status_code, 
+                                          json_body={}, 
+                                          headers=response.headers)
+        elif response.status_code == 402:
+            raise error.BadRequestError(message=f'Bad request: {error_data["message"]}', 
+                                       http_status=response.status_code, 
+                                       json_body={}, 
+                                       headers=response.headers)
+        elif response.status_code in [404, 502]:
+            # Handle server unavailable or bad gateway error
+            raise error.ServiceUnavailableError(message=f'Server unavailable/down: {error_data["message"]}', 
+                                          http_status=response.status_code, 
+                                          json_body={}, 
+                                          headers=response.headers)
+        else:
+            # Raise a general VectorStackAIError with the response content as the message
+            raise error.VectorStackAIError(message=f'Unexpected error: {error_data["message"]}', 
+                                          http_status=response.status_code, 
+                                          json_body={}, 
+                                          headers=response.headers)
