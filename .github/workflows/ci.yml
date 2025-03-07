@@ -26,4 +26,7 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: pip install mkdocs-material mkdocstrings mkdocstrings-python
+      - run: |
+          pip install mkdocs mkdocs-material mkdocstrings mkdocstrings-python
+          pip install -e .  # Install vectorstackai in editable mode (required since we generate API reference automatically)
       - run: mkdocs gh-deploy --force
