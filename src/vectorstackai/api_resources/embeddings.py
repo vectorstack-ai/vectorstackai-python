@@ -29,13 +29,14 @@ class Embedding(BaseAPIResource):
         Raises:
             VectorStackError: An appropriate subclass of VectorStackError based on the error type.
         """
-        
+        # Post refactor, we send the API_key in the authorization header. Change embedding server to read from header.
         json_data = {
             'input': {
                 'texts': texts,
                 'is_query': is_query,
                 'instruction': instruction,
             },
+            'api_key': connection_params['api_key'], 
             'model': model,
         }
 
