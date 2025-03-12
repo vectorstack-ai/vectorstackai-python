@@ -7,8 +7,7 @@ from vectorstackai.utils import raise_error_from_response
 
 class Index(BaseAPIResource):
     """API Resource for vector store (index) operations."""
-    #CLASS_URL = "https://api.vectorstack.ai/vector2search"
-    CLASS_URL = "http://localhost:8000/vector2search/"
+    CLASS_URL = "https://api.vectorstack.ai/precise_search/"
     
     @classmethod
     def create_index(cls, json_data: Dict[str, Any], connection_params: Dict[str, Any]):
