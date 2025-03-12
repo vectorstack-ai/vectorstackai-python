@@ -1,6 +1,5 @@
 import os
-import requests
-
+import json
 import vectorstackai
 from vectorstackai import error
 
@@ -25,7 +24,7 @@ def raise_error_from_response(response):
     extracts error information from the response, and raises the appropriate exception.
 
     Args:
-        response (requests.Response): The API response object containing error information.
+        response (urllib3.response.HTTPResponse): The API response object containing error information in bytes.
 
     Raises:
         VectorStackAIError: An appropriate subclass of VectorStackAIError based on the error type.
@@ -43,11 +42,11 @@ def raise_error_from_response(response):
         response_json = response.json()
         error_data = response_json['error']
         ERROR_RAISED_BY_VECTORSTACKAI = True
-    except (requests.exceptions.JSONDecodeError, KeyError, ValueError):
+    except (json.JSONDecodeError, KeyError, ValueError):
         # Case where the response does not contain valid JSON or 'error' key
         ERROR_RAISED_BY_VECTORSTACKAI = False
         error_data = {}
-        error_data['message'] = response.content.decode('utf-8', errors='replace')
+        error_data['message'] = response.data.decode('utf-8', errors='replace')
     
     # The error can originate from either server due to unexpected event or raise by our API containing error data
     # Below, we will handle both cases.
@@ -81,28 +80,28 @@ def raise_error_from_response(response):
             code=code,
         )
     else:
-        # Map the error (raised by server) to the appropriate exception class
+        # Map the error (raised by server) to the appropriate exception class of VectorStackAIError
         #########################################################
-        if response.status_code == 405:
+        if response.status == 405:
             # Handle 405 method not allowed error
-            raise error.MethodNotAllowedError(message=f'Method not allowed: {error_data["message"]}', 
-                                          http_status=response.status_code, 
+            raise error.MethodNotAllowedError(message=f'{error_data["message"]}', 
+                                          http_status=response.status, 
                                           json_body={}, 
                                           headers=response.headers)
-        elif response.status_code == 402:
-            raise error.BadRequestError(message=f'Bad request: {error_data["message"]}', 
-                                       http_status=response.status_code, 
+        elif response.status == 402:
+            raise error.BadRequestError(message=f'{error_data["message"]}', 
+                                       http_status=response.status, 
                                        json_body={}, 
                                        headers=response.headers)
-        elif response.status_code in [404, 502]:
+        elif response.status in [404, 502]:
             # Handle server unavailable or bad gateway error
-            raise error.ServiceUnavailableError(message=f'Server unavailable/down: {error_data["message"]}', 
-                                          http_status=response.status_code, 
+            raise error.ServiceUnavailableError(message=f'{error_data["message"]}', 
+                                          http_status=response.status, 
                                           json_body={}, 
                                           headers=response.headers)
         else:
             # Raise a general VectorStackAIError with the response content as the message
             raise error.VectorStackAIError(message=f'Unexpected error: {error_data["message"]}', 
-                                          http_status=response.status_code, 
+                                          http_status=response.status, 
                                           json_body={}, 
                                           headers=response.headers)
