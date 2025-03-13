@@ -20,10 +20,18 @@ class IndexObject:
         self.dense_similarity_scale = 1.0
         self.sparse_similarity_scale = 1.0
         
+    def __repr__(self):
+        info = self.info()
+        return (f"IndexObject(index_name='{self.index_name}', "
+                f"dimension={self.dimension}, "
+                f"features_type='{self.features_type}', "
+                f"embedding_model_name='{self.embedding_model_name}', "
+                f"dense_similarity_scale={self.dense_similarity_scale}, "
+                f"sparse_similarity_scale={self.sparse_similarity_scale})")
+        
     def __str__(self):
         info = self.info()
         return f"Index(Name: {info['index_name']}, Status: {info['status']})"
-   
    
     def set_similarity_scale(self, 
                             dense_scale: float = 1.0, 
