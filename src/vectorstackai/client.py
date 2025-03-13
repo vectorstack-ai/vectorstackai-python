@@ -121,9 +121,16 @@ class PreciseSearch:
         Retrieves metadata for all indexes associated with the current API key.
         
         Returns:
-            list_info: A list of dictionaries, where each dictionary 
-                contains metadata about an index, including properties such as 
-                name, dimension, metric type, etc.
+            list_info: A list of dictionaries, where each dictionary contains information about an index with the following keys:
+            
+                - index_name (str): The name of the index.
+                - status (str): The current status of the index ("initializing" or "ready").
+                - num_records (int): The number of records stored in the index.
+                - dimension (int): The dimensionality of the vectors in the index.
+                - metric (str): The distance metric used for similarity search ("cosine" or "dotproduct").
+                - features_type (str): The type of features stored ("dense" or "hybrid").
+                - embedding_model_name (str): The name of the embedding model used (if applicable).
+                - optimized_for_latency (bool): Indicates whether the index is optimized for low-latency queries.
         """
         return api_resources.Index.list_indexes(connection_params=self.connection_params)
   
