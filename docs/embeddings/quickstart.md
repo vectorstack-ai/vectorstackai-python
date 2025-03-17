@@ -106,8 +106,12 @@ print(similarities)
 
 The document with the highest similarity score corresponds to the most relevant match for the query.
 
-## **5. Conclusion**
-This concludes the quickstart guide. You can now use the VectorStackAI Embeddings service to generate embeddings for your documents and queries.
+## **5. Batching**
+It is recommended to generate embeddings by batching multiple texts at once (as shown in the examples above).
+However, there is a limit to the number of texts you can embed in a single request.
 
-!!! Note
-    To learn more about the VectorStackAI Embeddings service, checkout the [API reference](reference.md).
+!!! Note "Batch Limits"
+    - `vstackai-law-1`: 64 texts (i.e. `batch_size`)
+
+## **6. Conclusion**
+This concludes the quickstart guide. You can now use the VectorStackAI Embeddings service to generate embeddings for your documents and queries.

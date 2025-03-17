@@ -58,17 +58,17 @@ class Client:
         instruction: str = "",
     ) -> EmbeddingsObject:
         """
-        Generates embeddings for a list of text inputs using the specified model.
+        Generates embeddings for a batch of text inputs using the specified model.
 
-        This method encodes a list of text documents or queries into dense vector 
+        This method encodes a batch of text documents or queries into dense vector 
         representations using the selected embedding model. It supports both 
         document and query embeddings, with an optional instruction for 
         instruction-tuned models.
 
         Args:
             texts (List[str]): 
-                A list of text strings to be embedded. Each string represents 
-                either a document or a query.
+                Batch of text strings to be embedded as a list of strings. 
+                Each string represents either a document or a query.
             model (str): 
                 The name of the embedding model to use (e.g., `"vstackai-law-1"` 
                 for legal documents).
@@ -81,8 +81,10 @@ class Client:
 
         Returns:
             EmbeddingsObject: 
-                An object containing the generated embeddings, with embeddings 
-                stored as a NumPy array of shape `(num_texts, embedding_dimension)`.
+                An object that holds embeddings for the batch of texts. 
+                The embeddings are stored as a NumPy array of shape
+                `(num_texts, embedding_dimension)`, accesible via the 
+                `embeddings` attribute.
 
         Raises:
             ValueError: 
