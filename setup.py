@@ -1,8 +1,10 @@
 from setuptools import setup, find_packages
 
+from src.vectorstackai.__version__ import __version__
+
 setup(
     name="vectorstackai",
-    version="0.1.6",
+    version=__version__,
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
