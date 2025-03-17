@@ -10,7 +10,7 @@ These practical examples will show you how to use the library, and also provide 
 ## Examples
 Below is a list of the available tutorials:
 
-- [Semantic search with VectorStackAI's integrated embedding model](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/tutorials/semantic_search_with_integrated_embeddings.ipynb)
-- [Semantic search with OpenAI's embedding model](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/tutorials/semantic_search_with_openai_embeddings.ipynb)
-- [Semantic search with embedding model from Sentence Transformers](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/tutorials/semantic_search_with_sentence_transformer.ipynb)
-- [Hybrid search](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/tutorials/hybrid_search.ipynb)
+- [Semantic search with VectorStackAI's integrated embedding model](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/precise_search/tutorials/semantic_search_with_integrated_embeddings.ipynb)
+- [Semantic search with OpenAI's embedding model](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/precise_search/tutorials/semantic_search_with_openai_embeddings.ipynb)
+- [Semantic search with embedding model from Sentence Transformers](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/precise_search/tutorials/semantic_search_with_sentence_transformer.ipynb)
+- [Hybrid search](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/precise_search/tutorials/hybrid_search.ipynb)

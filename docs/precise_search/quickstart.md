@@ -3,7 +3,7 @@
 This guide will show you how to get started with **PreciseSearch**. 
 
 !!! Note "Code for this quickstart"
-    You can find and run the code for this quickstart in [Colab Notebook](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/add_vector_store_resource/examples/quickstart.ipynb)
+    You can find and run the code for this quickstart in [Colab Notebook](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/precise_search/quickstart.ipynb)
 
 ## **1. Install the SDK**
 **PreciseSearch** is a search-as-a-service product by [VectorStackAI](https://vectorstack.ai), 
