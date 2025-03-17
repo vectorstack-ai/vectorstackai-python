@@ -11,7 +11,7 @@ VectorStackAI develops lean and efficient Generative AI solutions tailored for e
 Explore documentation for our specialized solutions:
 
 - [PreciseSearch](precise_search/index.md): A vertically integrated search-as-a-service solution, providing fast and accurate similarity search across large-scale datasets.
-
+- [Embeddings](embeddings/index.md): Embeddings-as-a-service solution, providing state of the art domain specific embeddings.
 
 
 

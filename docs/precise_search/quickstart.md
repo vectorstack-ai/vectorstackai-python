@@ -25,7 +25,7 @@ Dense indexes search over dense vector representations of the data, where
 as hybrid indexes search over a combination of dense 
 and sparse representations of the data. 
 
-In this quickstart, we will create a dense index with an integrated embedding model (hosted by [VectorStackAI](https://vectorstack.ai)).
+In this quickstart, you will create a dense index with an integrated embedding model (hosted by [VectorStackAI](https://vectorstack.ai)).
 With dense indexes configured with an integrated embedding model, during upsert and search, you only need to provide the text data.
 **PreciseSearch** will generate the dense vector representations of the data automatically.
 
@@ -48,12 +48,12 @@ index = client.connect_to_index(index_name="my_dense_index")
 ```
 
 !!! Note "Learn More"
-    To read about the different types of indexes you can create with **PreciseSearch**, see the [Creating Indexes](../how_to_guides/creating-indexes.md) guide.
+    To read about the different types of indexes you can create with **PreciseSearch**, see the [Creating Indexes](./how_to_guides/creating-indexes.md) guide.
 
 ## **4. Upsert Data into the Index**
 To upsert data into the index, you need to provide the text data and assign a unique ID to each data point.
 
-For this example, we will create a dataset with *10 random facts about food and history*.
+For this example, let's create a dataset with *10 random facts about food and history*.
 
 ```python linenums="18"
 dataset = [
@@ -96,13 +96,13 @@ optimized_for_latency: False
 ```
 
 !!! Note "Learn More"
-    For more details, see the How-To Guide on [Upserting Data](../how_to_guides/managing-data.md).
+    For more details, see the How-To Guide on [Upserting Data](./how_to_guides/managing-data.md).
 
 ## **5. Search the index**
-Now that we have our index ready, we can search it.
-In this example, we will search the index for the query "Where was pizza invented?".
+Now that you have your index ready, you can search it.
+In this example, you will search the index for the query "Where was pizza invented?".
 
-Since our index is configured with an integrated embedding model, we only need to provide the query text. 
+Since the index is configured with an integrated embedding model, you only need to provide the query text. 
 
 ```python linenums="42"
 # Search the index
@@ -124,7 +124,7 @@ ID: 1, Similarity: 0.75, Text: The shortest war in history was between Britain a
 
 
 !!! Note "Learn More"
-    For more details, see the How-To Guide on [Searching the Index](../how_to_guides/searching.md).
+    For more details, see the How-To Guide on [Searching the Index](./how_to_guides/searching.md).
 
 ## **6. Clean up**
 Once you are done with the quickstart, you can delete the index.
