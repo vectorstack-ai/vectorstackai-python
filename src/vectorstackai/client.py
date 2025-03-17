@@ -57,6 +57,54 @@ class Client:
         is_query: bool = False,
         instruction: str = "",
     ) -> EmbeddingsObject:
+        """
+        Generates embeddings for a list of text inputs using the specified model.
+
+        This method encodes a list of text documents or queries into dense vector 
+        representations using the selected embedding model. It supports both 
+        document and query embeddings, with an optional instruction for 
+        instruction-tuned models.
+
+        Args:
+            texts (List[str]): 
+                A list of text strings to be embedded. Each string represents 
+                either a document or a query.
+            model (str): 
+                The name of the embedding model to use (e.g., `"vstackai-law-1"` 
+                for legal documents).
+            is_query (bool, optional): 
+                A flag indicating whether the input texts are queries (`True`) 
+                or documents (`False`). Defaults to `False`.
+            instruction (str, optional): 
+                An optional instruction to guide the model when embedding queries. 
+                Recommended for instruction-tuned models. Defaults to an empty string.
+
+        Returns:
+            EmbeddingsObject: 
+                An object containing the generated embeddings, with embeddings 
+                stored as a NumPy array of shape `(num_texts, embedding_dimension)`.
+
+        Raises:
+            ValueError: 
+                If `texts` is not a list of strings.
+                If `model` is not a string.
+                If `is_query` is not a boolean.
+                If `instruction` is not a string.
+
+        Example:
+            ```python
+            client = vectorstackai.Client(api_key="your_api_key")
+
+            texts = [
+                "The defendant was charged with violation of contract terms.",
+                "Consumers have 30 days to return a defective product."
+            ]
+            
+            embeddings = client.embed(texts=texts, model="vstackai-law-1", is_query=False)
+            
+            print(embeddings.embeddings.shape)  # (2, 1536)
+            ```
+        """ 
         # Validate input arguments
         if not isinstance(texts, list) or not all(isinstance(text, str) for text in texts):
             raise ValueError("'texts' must be a list of strings")

@@ -74,3 +74,7 @@ nav:
           - Managing Data: precise_search/how_to_guides/managing-data.md
           - Searching: precise_search/how_to_guides/searching.md
           - Index Management: precise_search/how_to_guides/index-management.md
+  - Embeddings:
+      - Overview: embeddings/index.md
+      - Quickstart: embeddings/quickstart.md
+      - Python Client Reference: embeddings/reference.md

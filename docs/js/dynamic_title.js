@@ -4,7 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Check if the URL contains "/precise_search/"
     if (window.location.pathname.includes("/precise_search/")) {
-        siteTitle = "PreciseSearch";
+        siteTitle = "VectorStackAI | PreciseSearch";
+    }
+
+    // Check if the URL contains "/embeddings/"
+    if (window.location.pathname.includes("/embeddings/")) {
+        siteTitle = "VectorStackAI | Embeddings";
     }
 
     // Update the document title in the browser tab
