@@ -1,3 +1,7 @@
+---
+search:
+  exclude: true
+---
 # Embeddings
 
 # Table of Contents
