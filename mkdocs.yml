@@ -5,7 +5,6 @@ extra_javascript:
 
 theme:
   name: material
-  custom_dir: docs/overrides
 
   palette:
     scheme: slate
