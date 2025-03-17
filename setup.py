@@ -1,10 +1,16 @@
+import os
 from setuptools import setup, find_packages
 
-from src.vectorstackai.__version__ import __version__
+def get_version():
+    version_path = os.path.join(os.path.dirname(__file__), "src", "vectorstackai", "__version__.py")
+    version_dict = {}
+    with open(version_path, encoding="utf-8") as f:
+        exec(f.read(), version_dict)
+    return version_dict["__version__"]
 
 setup(
     name="vectorstackai",
-    version=__version__,
+    version=get_version(),
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
