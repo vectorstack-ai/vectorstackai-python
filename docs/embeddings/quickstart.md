@@ -14,7 +14,7 @@ You'll learn how to:
 
 
 !!! Note "Code for this quickstart"
-    You can find and run the code for this quickstart in [Colab Notebook](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/add_vector_store_resource/examples/quickstart.ipynb)
+    You can find and run the code for this quickstart in [Colab Notebook](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/embeddings/quickstart.ipynb)
 
 ## **1. Install the SDK**
 **VectorStackAI Embeddings** is an embeddings-as-a-service product by [VectorStackAI](https://vectorstack.ai), 
@@ -108,3 +108,6 @@ The document with the highest similarity score corresponds to the most relevant 
 
 ## **5. Conclusion**
 This concludes the quickstart guide. You can now use the VectorStackAI Embeddings service to generate embeddings for your documents and queries.
+
+!!! Note
+    To learn more about the VectorStackAI Embeddings service, checkout the [API reference](reference.md).
