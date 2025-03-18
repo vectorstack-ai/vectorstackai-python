@@ -14,7 +14,7 @@ You'll learn how to:
 
 
 !!! Note "Code for this quickstart"
-    You can find and run the code for this quickstart in [Colab Notebook](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/embeddings/quickstart.ipynb)
+    You can find and run the code for this quickstart in this [colab notebook](https://colab.research.google.com/github/vectorstack-ai/vectorstackai-python/blob/main/examples/embeddings/quickstart.ipynb)
 
 ## **1. Install the SDK**
 **VectorStackAI Embeddings** is an embeddings-as-a-service product by [VectorStackAI](https://vectorstack.ai), 
@@ -57,7 +57,7 @@ The embeddings are in numpy array format, and can be accessed using the `embeddi
 
 For more details on the `embed` method, checkout the API reference [here](reference.md).
 
-```python linenums="1"
+```python linenums="6"
 # Documents related to law domain (e.g., court cases, consumer contracts, etc.)
 documents = [
     "The defendant was charged with violation of contract terms in the lease agreement signed on January 1, 2022.",
@@ -77,7 +77,7 @@ Now, let's generate embeddings for a query.
 Since `vstackai-law-1` is an instruction-tuned model, it is recommended to provide an instruction when embedding queries. This helps guide the model to produce embeddings that are more relevant to the task/instruction.
 You can learn more about instruction-tuned models [here](https://instructor-embedding.github.io).
 
-```python linenums="18"
+```python linenums="16"
 # Encode a query
 query = "How many days does the consumer have to return the product?"
 query_embedding = client.embed(
@@ -94,7 +94,7 @@ Once you have embeddings for both documents and queries, you can compute similar
 
 Below, we compute the dot product of the document embeddings and the query embedding to get the similarity scores. You can use other similarity metrics as well (eg. cosine similarity, euclidean distance, etc.).
 
-```python linenums="1"
+```python linenums="25"
 # Compute similarity between query and documents
 similarities = np.dot(doc_embeddings, query_embedding.T)
 print(similarities)
@@ -106,12 +106,14 @@ print(similarities)
 
 The document with the highest similarity score corresponds to the most relevant match for the query.
 
-## **5. Batching**
-It is recommended to generate embeddings by batching multiple texts at once (as shown in the examples above).
-However, there is a limit to the number of texts you can embed in a single request.
+## **5. Batch Size Limits**
+For optimal performance, it is recommended to generate embeddings by batching multiple texts at once (as shown in the examples above). 
+Batching helps reduce the number of API calls and improves throughput.
 
-!!! Note "Batch Limits"
-    - `vstackai-law-1`: 64 texts (i.e. `batch_size`)
+!!! Warning "Batch Size Limits"
+    There are limits to the number of texts you can embed in a single request:
+
+    - `vstackai-law-1`: Maximum of 64 texts per batch
 
 ## **6. Conclusion**
 This concludes the quickstart guide. You can now use the VectorStackAI Embeddings service to generate embeddings for your documents and queries.
