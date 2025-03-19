@@ -1,4 +1,5 @@
 site_name: VectorStackAI Documentation
+site_url: https://docs.vectorstack.ai
 
 extra_javascript:
   - js/dynamic_title.js  # Link to our JavaScript file that will handle title changes
