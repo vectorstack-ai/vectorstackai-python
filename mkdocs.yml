@@ -6,6 +6,7 @@ extra_javascript:
 
 theme:
   name: material
+  custom_dir: docs/templates
 
   palette:
     scheme: slate
@@ -47,6 +48,7 @@ plugins:
   - privacy # Automatically downloads external files/ assets as part of the build process
   - offline # Make the documentation available offline
   - search
+  - git-revision-date-localized
   - mkdocstrings:
       handlers:
         python:
