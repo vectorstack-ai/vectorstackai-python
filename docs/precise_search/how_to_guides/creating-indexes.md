@@ -25,7 +25,7 @@ When you create a dense index with an integrated embedding model, you do not nee
 - Generate embeddings for query text during searches.
 
 The example below creates a dense index with an integrated embedding model (e.g., `e5-small-v2`).
-The list of supported embedding models can be found [here].
+The list of supported embedding models can be found [here](https://docs.vectorstack.ai/precise_search/reference.html#vectorstackai.PreciseSearch.create_index).
 
 ```python title="Creating a dense index with an integrated embedding model" linenums="1"
 from vectorstackai import PreciseSearch
