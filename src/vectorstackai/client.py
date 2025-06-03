@@ -194,10 +194,10 @@ class PreciseSearch:
         
         Args:
             index_name: Name of the index to create.
-            embedding_model_name: Name of the embedding model to use. There are two kinds of embedding models:
-                - Integrated models: These are pre-trained models hosted on the vector2search platform.
-                - Non-integrated models: These are custom models hosted on your platform/application.
-                - Set "embedding_model_name" to "none" for using your own embedding model (i.e. non-integrated model).
+            embedding_model_name: Name of the embedding model to use. There are two kinds of embedding models (integrated and non-integrated):
+            
+                - Integrated models: These are pre-trained models hosted on the vector2search platform. Following models are supported: "e5-small-v2", "e5-base-v2", "vstackai-law-1", "voyage-law-2", "openai-text-embedding-3-small", "openai-text-embedding-3-large".
+                - Non-integrated models: These are custom models hosted on your platform/application. To use your own embedding model (i.e. non-integrated model), set "embedding_model_name" to "none".
             dimension: Vector dimension (required for non-integrated models).
             metric: Distance metric for comparing dense and sparse vectors. Must be one of "cosine" or "dotproduct".
             features_type: Type of features used in the index. Must be one of "dense" or "hybrid" (sparse + dense).
