@@ -30,7 +30,7 @@ class Client:
         self,
         api_key: Optional[str] = None,
         max_retries: int = 3,
-        timeout: Optional[float] = 30,
+        timeout: Optional[float] = 60,
     ) -> None:
 
         self.api_key = api_key or get_api_key()
@@ -43,11 +43,11 @@ class Client:
             reraise=True,
             stop=stop_after_attempt(max_retries),
             wait=wait_exponential_jitter(initial=1, max=16),
-            retry=(
-                retry_if_exception_type(error.RateLimitError)
-                | retry_if_exception_type(error.ServiceUnavailableError)
-                | retry_if_exception_type(error.Timeout)
-            ),
+            retry=retry_if_exception_type((error.RateLimitError, 
+                                        error.ServiceUnavailableError,
+                                        error.Timeout,
+                                        error.VectorStackAIError,
+                                        Exception))
         )
 
     def embed(
