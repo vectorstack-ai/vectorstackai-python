@@ -33,3 +33,7 @@ These operations are performed on a specific index after connecting to it.
 ::: vectorstackai.objects.index.IndexObject.delete_vectors
 
 ::: vectorstackai.objects.index.IndexObject.optimize_for_latency
+
+::: vectorstackai.objects.index.IndexObject.get_all_ids
+
+::: vectorstackai.objects.index.IndexObject.get_metadata
