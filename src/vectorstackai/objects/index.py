@@ -220,8 +220,6 @@ class IndexObject:
         api_resources.Index.delete_vectors(self.index_name, json_data, self.connection_params)
         print(f"Successfully deleted {len(ids)} vectors from index {self.index_name}")
    
-    
-    
     def optimize_for_latency(self) -> None:
         """
         Optimizes the index for better latency and throughput.
@@ -230,6 +228,40 @@ class IndexObject:
         """
         api_resources.Index.optimize_for_latency(self.index_name, self.connection_params)
         print(f"Request accepted: Index '{self.index_name}' optimization scheduled.")
+        
+    def get_all_ids(self) -> List[str]:
+        """Get all vector IDs in the index.
+        
+        Retrieves all vector IDs currently stored in the index.
+        
+        Returns:
+            ids: A list of string IDs representing all vectors in the index. 
+        """
+        return api_resources.Index.get_all_ids(self.index_name, self.connection_params)
+
+    def get_metadata(self, vector_ids: List[str]) -> List[Dict[str, Any]]:
+        """Get metadata for a list of vector IDs.
+        
+        Retrieves the metadata associated with the specified vector IDs.
+        Note: The maximum number of IDs that can be fetched in a single request is 100.
+            
+        Args:
+            vector_ids: A list of string IDs identifying the vectors to retrieve metadata for.
+
+        Returns:
+            metadata: A list of dictionaries containing metadata for the specified vector IDs.
+                Each dictionary contains the metadata associated with the corresponding vector ID.
+        """
+        assert isinstance(vector_ids, list), "vector_ids must be a list"
+        assert len(vector_ids) > 0, "vector_ids must be a non-empty list"
+        assert [isinstance(id, str) for id in vector_ids], "each element of vector_ids must be a string"
+        if len(vector_ids) > 100:
+            raise ValueError("vector_ids must be a list of at most 100 IDs; will fetch metadata for at most 100 IDs at a time.")
+        
+        json_data = {
+            "vector_ids": vector_ids,
+        }
+        return api_resources.Index.get_metadata(self.index_name, json_data, self.connection_params) 
         
     def _validate_upsert_input(self, 
                                batch_ids: List[str], 
@@ -356,14 +388,3 @@ class IndexObject:
             if query_sparse_values is not None or query_sparse_indices is not None:
                 warnings.warn("query_sparse_values and query_sparse_indices are not required for search in dense indexes; "
                              "will not be used for search..")
-
-    def get_all_ids(self) -> List[str]:
-        """Get all vector IDs in the index."""
-        return api_resources.Index.get_all_ids(self.index_name, self.connection_params)
-
-    def get_metadata(self, vector_ids: List[str]) -> List[Dict[str, Any]]:
-        """Get metadata for a list of vector IDs."""
-        json_data = {
-            "vector_ids": vector_ids,
-        }
-        return api_resources.Index.get_metadata(self.index_name, json_data, self.connection_params)
