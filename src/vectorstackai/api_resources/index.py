@@ -84,3 +84,22 @@ class Index(BaseAPIResource):
             connection_params=connection_params,
             endpoint_name=f"optimize_for_latency/{index_name}"
         )
+
+    @classmethod
+    def get_all_ids(cls, index_name: str, connection_params: Dict[str, Any]):
+        """Get all vector IDs in the index."""
+        return cls._make_request_class(
+            method="GET",
+            connection_params=connection_params,
+            endpoint_name=f"get_all_ids/{index_name}"
+        )
+
+    @classmethod
+    def get_metadata(cls, index_name: str, json_data: Dict[str, Any], connection_params: Dict[str, Any]):
+        """Get metadata for a list of vector IDs."""
+        return cls._make_request_class(
+            method="GET",
+            connection_params=connection_params,
+            endpoint_name=f"get_metadata/{index_name}",
+            json_data=json_data
+        )

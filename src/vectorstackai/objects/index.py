@@ -219,6 +219,8 @@ class IndexObject:
         }
         api_resources.Index.delete_vectors(self.index_name, json_data, self.connection_params)
         print(f"Successfully deleted {len(ids)} vectors from index {self.index_name}")
+   
+    
     
     def optimize_for_latency(self) -> None:
         """
@@ -354,3 +356,14 @@ class IndexObject:
             if query_sparse_values is not None or query_sparse_indices is not None:
                 warnings.warn("query_sparse_values and query_sparse_indices are not required for search in dense indexes; "
                              "will not be used for search..")
+
+    def get_all_ids(self) -> List[str]:
+        """Get all vector IDs in the index."""
+        return api_resources.Index.get_all_ids(self.index_name, self.connection_params)
+
+    def get_metadata(self, vector_ids: List[str]) -> List[Dict[str, Any]]:
+        """Get metadata for a list of vector IDs."""
+        json_data = {
+            "vector_ids": vector_ids,
+        }
+        return api_resources.Index.get_metadata(self.index_name, json_data, self.connection_params)
