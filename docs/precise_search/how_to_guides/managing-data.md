@@ -187,3 +187,52 @@ index = client.connect_to_index("my_index")
 # Delete vectors by ID
 index.delete_vectors(ids=["doc1", "doc2"])
 ```
+
+
+## **Fetching Data**
+
+You can retrieve information about the data stored in your index using the following methods:
+
+### **Fetching All Vector IDs**
+To get a list of all vector IDs currently stored in the index, use the `get_all_ids` method. This is useful for enumerating all items in your index, for example, to iterate over or audit your data.
+
+```python title="Fetching all vector IDs in an index"
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
+
+# Connect to an existing index
+index = client.connect_to_index("my_index")
+
+# Fetch all vector IDs
+all_ids = index.get_all_ids()
+print(f"Total vectors in index: {len(all_ids)}")
+print(all_ids[:5])  # Print the first 5 IDs
+```
+
+- **Returns:** A list of string IDs representing all vectors in the index.
+
+### **Fetching Metadata for Specific IDs**
+To retrieve the metadata associated with specific vectors, use the `get_metadata` method. You must provide a list of vector IDs (up to 100 at a time). This is useful for looking up details about particular items without retrieving the vectors themselves.
+
+```python title="Fetching metadata for specific vector IDs"
+from vectorstackai import PreciseSearch
+client = PreciseSearch(api_key="your_api_key_here")
+
+# Connect to an existing index
+index = client.connect_to_index("my_index")
+
+# Specify the IDs you want metadata for
+ids_to_lookup = ["doc_123", "product_456"]
+
+# Fetch metadata
+metadata_list = index.get_metadata(ids_to_lookup)
+for metadata in metadata_list:
+    print(metadata)
+```
+
+- **Arguments:**
+    - `vector_ids`: List of string IDs (max 100 per call).
+- **Returns:**
+    - A list of dictionaries, each containing the metadata for the corresponding vector ID.
+
+> **Note:** If you request metadata for more than 100 IDs at once, a `ValueError` will be raised. Fetch metadata in batches if you need to retrieve information for more than 100 vectors.
