@@ -7,7 +7,6 @@ from tenacity import (
     retry_if_exception_type,
 )
 
-import vectorstackai
 import vectorstackai.error as error
 from vectorstackai.utils import get_api_key
 from vectorstackai.objects import EmbeddingsObject, IndexObject
