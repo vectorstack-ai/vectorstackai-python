@@ -212,7 +212,7 @@ class IndexObject:
         """
         assert isinstance(ids, list), "ids must be a list"
         assert len(ids) > 0, "ids must be a non-empty list"
-        assert [isinstance(id, str) for id in ids], "each element of ids must be a string"
+        assert all(isinstance(id, str) for id in ids), "each element of ids must be a string"
         
         json_data = {
             "delete_vector_ids": ids,
@@ -254,7 +254,7 @@ class IndexObject:
         """
         assert isinstance(vector_ids, list), "vector_ids must be a list"
         assert len(vector_ids) > 0, "vector_ids must be a non-empty list"
-        assert [isinstance(id, str) for id in vector_ids], "each element of vector_ids must be a string"
+        assert all(isinstance(id, str) for id in vector_ids), "each element of vector_ids must be a string"
         if len(vector_ids) > 100:
             raise ValueError("vector_ids must be a list of at most 100 IDs; will fetch metadata for at most 100 IDs at a time.")
         
@@ -287,8 +287,9 @@ class IndexObject:
         """
         
         # Validate batch_ids
-        num_ids = len(batch_ids)
         assert isinstance(batch_ids, list), "batch_ids must be a list"
+        assert all(isinstance(id, str) for id in batch_ids), "each element of batch_ids must be a string"
+        num_ids = len(batch_ids)
       
         # Validate dense vectors 
         #########################################################
@@ -312,13 +313,13 @@ class IndexObject:
         #########################################################
         if batch_metadata is not None:
             assert isinstance(batch_metadata, list), "batch_metadata must be a list"
-            assert [isinstance(x, dict) for x in batch_metadata], "each element of batch_metadata must be a dictionary"
+            assert all(isinstance(x, dict) for x in batch_metadata), "each element of batch_metadata must be a dictionary"
             assert len(batch_metadata) == num_ids, (
                 f"length mismatch: batch_metadata length = {len(batch_metadata)} != batch_ids length = {num_ids}"
             )
             
             if self.embedding_model_name != 'none':
-                assert ['text' in item.keys() for item in batch_metadata], (
+                assert all('text' in item for item in batch_metadata), (
                     "each element of batch_metadata must contain a 'text' key for indexes with "
                     "integrated embedding models. This text will be used to compute the embeddings."
                 )
@@ -339,8 +340,8 @@ class IndexObject:
             for sparse_values, sparse_indices in zip(batch_sparse_values, batch_sparse_indices):
                 assert isinstance(sparse_values, list), "each element of batch_sparse_values must be a list"
                 assert isinstance(sparse_indices, list), "each element of batch_sparse_indices must be a list"
-                assert [isinstance(x, float) for x in sparse_values], "values in batch_sparse_values must be floats"
-                assert [isinstance(x, int) for x in sparse_indices], "values in batch_sparse_indices must be ints"
+                assert all(isinstance(x, (int, float)) for x in sparse_values), "values in batch_sparse_values must be numbers"
+                assert all(isinstance(x, int) for x in sparse_indices), "values in batch_sparse_indices must be ints"
         else:
             # Dense index
             assert batch_sparse_values is None, "batch_sparse_values must be None for dense indexes"
