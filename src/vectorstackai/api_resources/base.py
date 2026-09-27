@@ -49,15 +49,16 @@ class BaseAPIResource(object):
         method: str,
         json_data: Optional[Dict[str, Any]] = None,
         endpoint_name: Optional[str] = None,
-        connection_params: Optional[Dict[str, Any]] = None
+        *,
+        connection_params: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Make HTTP request to API endpoint via class method.
-        
+
         Args:
             method (str): HTTP method (GET, POST, DELETE)
             json_data (Optional[Dict[str, Any]]): JSON body data
             endpoint_name (Optional[str]): Endpoint name to append to the base URL
-            connection_params (Optional[Dict[str, Any]]): Connection parameters
+            connection_params (Dict[str, Any]): Connection parameters
 
         Returns:
             Dict[str, Any]: Response data
