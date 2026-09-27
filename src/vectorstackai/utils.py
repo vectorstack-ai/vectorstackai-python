@@ -39,10 +39,11 @@ def raise_error_from_response(response):
     # Parse the error_data from the response as JSON
     #########################################################
     try:
-        response_json = response.json()
+        # Decode manually: HTTPResponse.json() only exists in urllib3 >= 2.0
+        response_json = json.loads(response.data.decode('utf-8'))
         error_data = response_json['error']
         ERROR_RAISED_BY_VECTORSTACKAI = True
-    except (json.JSONDecodeError, KeyError, ValueError):
+    except (KeyError, TypeError, ValueError):
         # Case where the response does not contain valid JSON or 'error' key
         ERROR_RAISED_BY_VECTORSTACKAI = False
         error_data = {}

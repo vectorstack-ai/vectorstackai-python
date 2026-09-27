@@ -1,9 +1,6 @@
-import re
-import requests
 from typing import List, Dict, Optional, Any
 
 from vectorstackai.api_resources.base import BaseAPIResource
-from vectorstackai.utils import raise_error_from_response
 
 class Index(BaseAPIResource):
     """API Resource for vector store (index) operations."""
