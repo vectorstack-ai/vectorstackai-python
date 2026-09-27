@@ -14,7 +14,7 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
-        "urllib3>=1.26",
+        "urllib3>=1.26,<3",
         "tenacity==8.5.0",
         "numpy>=1.26.0"
     ],
