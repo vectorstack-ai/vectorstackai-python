@@ -73,6 +73,7 @@ class BaseAPIResource(object):
         for attempt in retry_controller:
             with attempt:
                 return cls._send_request(method, json_data, endpoint_name, connection_params)
+        raise RuntimeError("retry controller exhausted without result")
 
     @classmethod
     def _send_request(
