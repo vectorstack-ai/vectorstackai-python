@@ -111,6 +111,13 @@ class MethodNotAllowedError(VectorStackAIError):
     """
     pass
 
+class APIConnectionError(VectorStackAIError):
+    """
+    Exception raised when the client cannot connect to the API
+    (e.g. DNS failure, refused or dropped connection).
+    """
+    pass
+
 class Timeout(VectorStackAIError):
     """
     Exception raised when the request times out.

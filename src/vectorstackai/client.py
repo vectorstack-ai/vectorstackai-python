@@ -1,13 +1,5 @@
 from typing import Any, List, Optional, Dict
 
-from tenacity import (
-    Retrying,
-    stop_after_attempt,
-    wait_exponential_jitter,
-    retry_if_exception_type,
-)
-
-import vectorstackai.error as error
 from vectorstackai.utils import get_api_key
 from vectorstackai.objects import EmbeddingsObject, IndexObject
 import vectorstackai.api_resources as api_resources
@@ -21,7 +13,8 @@ class Client:
     
     Args:
         api_key (str): Your API key.
-        max_retries (int): Maximum number of retries if API call fails.
+        max_retries (int): Maximum number of attempts per API call. Only transient failures
+            (rate limits, timeouts, connection errors, 5xx responses) are retried.
         timeout (float): Timeout in seconds.
     """
     
@@ -37,17 +30,8 @@ class Client:
         self.connection_params = {
             "api_key": self.api_key,
             "request_timeout": timeout,
+            "max_retries": max_retries,
         }
-        self.retry_controller = Retrying(
-            reraise=True,
-            stop=stop_after_attempt(max_retries),
-            wait=wait_exponential_jitter(initial=1, max=16),
-            retry=retry_if_exception_type((error.RateLimitError, 
-                                        error.ServiceUnavailableError,
-                                        error.Timeout,
-                                        error.VectorStackAIError,
-                                        Exception))
-        )
 
     def embed(
         self,
@@ -116,15 +100,13 @@ class Client:
         if not isinstance(instruction, str):
             raise ValueError("'instruction' must be a string")
 
-        for attempt in self.retry_controller:
-            with attempt:
-                response_json = api_resources.Embedding.encode(
-                    texts=texts,
-                    model=model,
-                    is_query=is_query,
-                    instruction=instruction,
-                    connection_params=self.connection_params
-                )
+        response_json = api_resources.Embedding.encode(
+            texts=texts,
+            model=model,
+            is_query=is_query,
+            instruction=instruction,
+            connection_params=self.connection_params
+        )
         return EmbeddingsObject(response_json, batch_size=len(texts))
     
 class PreciseSearch:
@@ -152,17 +134,8 @@ class PreciseSearch:
         self.connection_params = {
             "api_key": self.api_key,
             "request_timeout": timeout,
+            "max_retries": max_retries,
         }
-        self.retry_controller = Retrying(
-            reraise=True,
-            stop=stop_after_attempt(max_retries),
-            wait=wait_exponential_jitter(initial=1, max=16),
-            retry=(
-                retry_if_exception_type(error.RateLimitError)
-                | retry_if_exception_type(error.ServiceUnavailableError)
-                | retry_if_exception_type(error.Timeout)
-            ),
-        )
         
     def list_indexes(self) -> List[Dict[str, Any]]:
         """Lists information about all available indexes.
@@ -242,7 +215,7 @@ class PreciseSearch:
                                          connection_params=self.connection_params)
         print(f"{response_json['detail']}")
         
-    def index_status(self, index_name: str) -> Dict[str, Any]:
+    def index_status(self, index_name: str) -> str:
         """Retrieves the status of a specific vector index.
         
         This method retrieves the status of the index specified by `index_name`.
