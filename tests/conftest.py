@@ -6,6 +6,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import pytest
 
 from vectorstackai.api_resources import Embedding, Index
+from vectorstackai.api_resources.base import BaseAPIResource
 
 
 class MockAPI:
@@ -15,8 +16,10 @@ class MockAPI:
         self.responses = []
         self.requests = []
         self._server = ThreadingHTTPServer(("127.0.0.1", 0), self._handler())
+        self._server.daemon_threads = True  # don't wait for slow handlers on close
         self.base_url = f"http://127.0.0.1:{self._server.server_address[1]}/"
-        threading.Thread(target=self._server.serve_forever, daemon=True).start()
+        threading.Thread(target=self._server.serve_forever, kwargs={"poll_interval": 0.01},
+                         daemon=True).start()
 
     def respond(self, status=200, body=None, headers=None, delay=0.0):
         """Queue a response. The last queued response repeats once the queue drains."""
@@ -65,7 +68,20 @@ class MockAPI:
 
 
 @pytest.fixture
-def api(monkeypatch):
+def retry_waits(monkeypatch):
+    """Skip retry backoff; records the attempt number each time a backoff is computed."""
+    waits = []
+
+    def no_wait(retry_state):
+        waits.append(retry_state.attempt_number)
+        return 0
+
+    monkeypatch.setattr(BaseAPIResource, "RETRY_WAIT", no_wait)
+    return waits
+
+
+@pytest.fixture
+def api(monkeypatch, retry_waits):
     """Point every API resource at a local mock server."""
     mock = MockAPI()
     monkeypatch.setattr(Embedding, "CLASS_URL", mock.base_url + "embeddings")
