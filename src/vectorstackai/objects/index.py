@@ -21,7 +21,6 @@ class IndexObject:
         self.sparse_similarity_scale = 1.0
         
     def __repr__(self):
-        info = self.info()
         return (f"IndexObject(index_name='{self.index_name}', "
                 f"dimension={self.dimension}, "
                 f"features_type='{self.features_type}', "

@@ -145,3 +145,12 @@ def test_connection_refused_raises_connection_error_and_is_retried(monkeypatch, 
     with pytest.raises(error.APIConnectionError, match="Failed to connect"):
         list_indexes(max_retries=3)
     assert len(attempts) == 3
+
+
+def test_index_repr_does_not_call_the_api(api):
+    api.respond(200, [INDEX_INFO])  # list_indexes (connect_to_index)
+    api.respond(200, INDEX_INFO)    # info (IndexObject.__init__)
+    index = vectorstackai.PreciseSearch(api_key="test-key").connect_to_index("idx")
+    hits = api.hits
+    assert repr(index).startswith("IndexObject(index_name='idx', dimension=2")
+    assert api.hits == hits

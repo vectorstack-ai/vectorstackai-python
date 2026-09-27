@@ -47,7 +47,7 @@ class BaseAPIResource(object):
     def _make_request_class(
         cls,
         method: str,
-        json_data: Optional[Dict[str, Any]] = {},
+        json_data: Optional[Dict[str, Any]] = None,
         endpoint_name: Optional[str] = None,
         connection_params: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:

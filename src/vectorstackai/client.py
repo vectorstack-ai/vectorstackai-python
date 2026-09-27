@@ -215,7 +215,7 @@ class PreciseSearch:
                                          connection_params=self.connection_params)
         print(f"{response_json['detail']}")
         
-    def index_status(self, index_name: str) -> Dict[str, Any]:
+    def index_status(self, index_name: str) -> str:
         """Retrieves the status of a specific vector index.
         
         This method retrieves the status of the index specified by `index_name`.
