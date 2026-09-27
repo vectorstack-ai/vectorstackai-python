@@ -23,7 +23,7 @@ STATUS_CODE_ERRORS = {
     401: error.AuthenticationError,
     402: error.BadRequestError,
     403: error.AuthenticationError,
-    404: error.ServiceUnavailableError,  # route not served, i.e. backend unavailable
+    404: error.NotFoundError,
     405: error.MethodNotAllowedError,
     408: error.Timeout,
     429: error.RateLimitError,

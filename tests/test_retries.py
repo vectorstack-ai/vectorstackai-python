@@ -30,7 +30,7 @@ def list_indexes(max_retries=3, timeout=2):
     (400, error.BadRequestError),
     (401, error.AuthenticationError),
     (403, error.AuthenticationError),
-    (404, error.ServiceUnavailableError),
+    (404, error.NotFoundError),
     (408, error.Timeout),
     (429, error.RateLimitError),
     (500, error.InternalServerError),
@@ -63,6 +63,13 @@ def test_client_errors_are_not_retried(api, status, body):
     api.respond(status, body)
     with pytest.raises(error.VectorStackAIError):
         embed(max_retries=3)
+    assert api.hits == 1
+
+
+def test_not_found_is_not_retried(api):
+    api.respond(404, "index not found")
+    with pytest.raises(error.NotFoundError):
+        list_indexes(max_retries=3)
     assert api.hits == 1
 
 
